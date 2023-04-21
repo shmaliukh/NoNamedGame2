@@ -2,6 +2,10 @@
 
 .backgroundVBox {
     -fx-background-image: url('../images/menusBackground.png');
+
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
 }
 
 .yellow {
