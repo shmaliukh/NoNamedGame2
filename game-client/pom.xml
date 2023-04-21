@@ -93,7 +93,7 @@
                                 <file>../game-app/config/client_logo.bmp</file>
                                 <waitForWindow>true</waitForWindow>
                                 <timeout>5</timeout>
-                                <timeoutErr>false</timeoutErr>
+                                <timeoutErr>true</timeoutErr>
                             </splash>
                         </configuration>
                     </execution>
