@@ -1,11 +1,9 @@
 package xyz.nonamed.gameclient.handlers;
 
 import feign.Feign;
-import feign.Param;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import xyz.nonamed.dto.Bot;
-import xyz.nonamed.gameclient.client_protocols.BotAPI;
 import xyz.nonamed.gameclient.client_protocols.BotAPI;
 
 import java.util.List;
