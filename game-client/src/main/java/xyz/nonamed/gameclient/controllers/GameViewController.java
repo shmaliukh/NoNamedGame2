@@ -11,6 +11,7 @@ import javafx.stage.Screen;
 import lombok.extern.slf4j.Slf4j;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.gameclient.ClientApplication;
+import xyz.nonamed.gameclient.printable.GameObjectFX;
 import xyz.nonamed.gameclient.printable.HeroFX;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SessionParam;
@@ -21,6 +22,9 @@ import xyz.nonamed.gameclient.handlers.UserHandler;
 import xyz.nonamed.gameclient.printable.WorldFX;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import static xyz.nonamed.Constants.*;
@@ -39,11 +43,15 @@ public class GameViewController implements Initializable {
     public Pane miniMapPane;
     public Pane hudPane;
     static WorldFX WORLD_FX = new WorldFX();
+    static List<GameObjectFX> gameObjectFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        generateGameObjects();
+
+
         handleHeroAction();
         setInfoPanelValues();
         setScreenSize();
@@ -52,10 +60,28 @@ public class GameViewController implements Initializable {
         gamePane.setLayoutX(0);
         gamePane.setLayoutY(0);
 
+        MY_HERO_FX.setSpeed(50); // dev
+
         WORLD_FX.addToPane(gamePane);
         WORLD_FX.print(gamePane);
         MY_HERO_FX.addToPane(gamePane);
         MY_HERO_FX.print(gamePane);
+        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.addToPane(gamePane));
+        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
+
+
+    }
+
+    private void generateGameObjects() {
+        Random random = new Random();
+
+        for (int x = 0; x < WorldFX.WORLD_IMAGE.getWidth(); x += 1500) {
+            for (int y = 0; y < WorldFX.WORLD_IMAGE.getHeight(); y += 1500) {
+                if (random.nextInt(100) > 33) {
+                    gameObjectFXList.add(new GameObjectFX(x + random.nextDouble(1500), y + random.nextDouble(1500/2)));
+                }
+            }
+        }
 
     }
 
@@ -66,14 +92,14 @@ public class GameViewController implements Initializable {
                 actionList.add(MOVE_UP);
                 MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
 //                if (MY_HERO_FX.getPosY() < mainView.getHeight() / 2 - mainView.getHeight() * 0.2) {
-                    gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
+                gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
 //                }
             }
             if (key == KeyCode.S || key == KeyCode.DOWN) {
                 actionList.add(MOVE_DOWN);
                 MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
 //                if (MY_HERO_FX.getPosY() > mainView.getHeight() / 2 + mainView.getHeight() * 0.2) {
-                    gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
+                gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
 //                }
             }
             if (key == KeyCode.A || key == KeyCode.LEFT) {
