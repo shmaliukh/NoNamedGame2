@@ -196,7 +196,6 @@ public class SessionViewController implements Initializable {
     public void setScreenSize() {
         mainView.setPrefWidth(Screen.getPrimary().getBounds().getWidth() * ScreenParam.SCREEN_WIDTH_RATIO);
         mainView.setPrefHeight(Screen.getPrimary().getBounds().getHeight() * ScreenParam.SCREEN_HEIGHT_RATIO);
-
     }
 
     public void addFilterToUserInputFields() {

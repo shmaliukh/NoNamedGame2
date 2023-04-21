@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="700.0" prefHeight="487.0" prefWidth="1149.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.SessionViewController">
+<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="700.0" prefHeight="997.0" prefWidth="1588.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.SessionViewController">
    <children>
-      <VBox alignment="CENTER" prefHeight="487.0" prefWidth="1149.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="487.0" prefWidth="1149.0" styleClass="backgroundVBox" stylesheets="@../styles/session-view-style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox fx:id="headerBackgroundHBox" alignment="CENTER" prefHeight="90.0" prefWidth="800.0" spacing="80.0" styleClass="headerHbox" stylesheets="@../styles/session-view-style.css">
                <children>
@@ -48,7 +48,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="286.0" prefWidth="1149.0" spacing="150.0">
+            <HBox alignment="TOP_CENTER" prefHeight="286.0" prefWidth="1244.0" spacing="150.0">
                <children>
                   <Group HBox.hgrow="ALWAYS">
                      <children>
