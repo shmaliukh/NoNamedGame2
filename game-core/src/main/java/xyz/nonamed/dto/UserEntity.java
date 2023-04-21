@@ -1,18 +1,24 @@
 package xyz.nonamed.dto;
 
+import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserEntity {
 
     public static final int DEFAULT_USER_SCORE = 0;
     public static final boolean DEFAULT_USER_IS_ACTIVE = true;
 
-    public Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     public String name;
     public String sessionCode;
 

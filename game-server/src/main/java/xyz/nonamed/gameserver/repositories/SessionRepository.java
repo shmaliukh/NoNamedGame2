@@ -2,11 +2,11 @@ package xyz.nonamed.gameserver.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import xyz.nonamed.gameserver.entities.SessionEntity;
+import xyz.nonamed.dto.Session;
 
 @Repository
-public interface SessionRepository extends JpaRepository<SessionEntity, Long> {
+public interface SessionRepository extends JpaRepository<Session, Long> {
 
-    SessionEntity readFirstBySessionCodeEqualsIgnoreCase(String sessionCode);
+    Session readFirstBySessionCodeEqualsIgnoreCase(String sessionCode);
 
 }
