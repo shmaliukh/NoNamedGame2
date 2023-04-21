@@ -1,14 +1,31 @@
-package xyz.nonamed.gameserver.utils;
+package xyz.nonamed.utils;
 
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @UtilityClass
 public class DataUtils {
 
+    public static final Random random = new Random();
+
+    public static String getRandomName() {
+        return DEFAULT_NAME_LIST.get(random.nextInt(DEFAULT_NAME_LIST.size()));
+    }
+
     public static final List<String> DEFAULT_NAME_LIST = Arrays.asList(
+            "Vlad is love",
+            // developers))
+            // ***
+            "Vlad",
+            "Artem",
+            "Yana",
+            "Vanya",
+            "Dima",
+            "Kate",
+            // ***
             "Joey",
             "Aurelio",
             "Evan",
