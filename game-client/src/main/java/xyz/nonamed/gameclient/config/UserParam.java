@@ -12,4 +12,6 @@ public class UserParam {
 
     public static Hero USER_HERO;
 
+    public static String HERO_TYPE = null;
+
 }
