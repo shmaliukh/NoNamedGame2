@@ -24,23 +24,6 @@
                      <font>
                         <Font size="65.0" />
                      </font>
-                     <effect>
-                        <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
-                           <color>
-                              <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
-                           </color>
-                           <input>
-                              <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
-                                 <color>
-                                    <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
-                                 </color>
-                                 <input>
-                                    <Reflection fraction="0.25" />
-                                 </input>
-                              </InnerShadow>
-                           </input>
-                        </DropShadow>
-                     </effect>
                   </TextField>
                </children>
             </HBox>

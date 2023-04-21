@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 import static xyz.nonamed.gameclient.ClientApplication.backgroundMusic;
+import static xyz.nonamed.gameclient.ClientApplication.changeScreen;
 
 /**
  * @author artem1018
@@ -75,6 +76,7 @@ public class MainMenuViewController implements Initializable {
     @FXML
     public void onSettingsButtonClick() {
         ClientApplication.playButtonClickSound();
+        ClientApplication.changeScreen("views/settings-menu-view.fxml", "Налаштування");
     }
 
     @FXML
@@ -86,6 +88,7 @@ public class MainMenuViewController implements Initializable {
     @FXML
     public void onInfoButtonClick() {
         ClientApplication.playButtonClickSound();
+        ClientApplication.changeScreen("views/info-menu-view.fxml", "Про програму");
     }
 
     @FXML
@@ -132,8 +135,7 @@ public class MainMenuViewController implements Initializable {
         if(globalServerStatus){
             globalServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif"));
         }else {
-            System.out.println("global server unavailavle");
-            //TODO add global host not available image
+            globalServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostNonAvailable.gif"));
         }
 
     }
