@@ -1,4 +1,4 @@
-package xyz.vshmaliukh.gameclient;
+package xyz.nonamed.gameclient;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
