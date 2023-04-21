@@ -7,6 +7,7 @@ import xyz.nonamed.gameserver.repositories.SessionRepository;
 import xyz.nonamed.dto.Session;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,7 +32,9 @@ public class SessionService {
     }
 
     public List<Session> readAllVisibleSessions() {
-        return sessionRepository.readAllByVisible(true);
+        return sessionRepository.findAll().stream()
+                .filter(session -> session.isVisible)
+                .collect(Collectors.toList());
     }
 
     public Session registerSession(String userName, String sessionCode) {
