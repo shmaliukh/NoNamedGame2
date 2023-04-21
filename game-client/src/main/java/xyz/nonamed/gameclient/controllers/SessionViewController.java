@@ -81,31 +81,10 @@ public class SessionViewController implements Initializable {
         activeSessionInfoTable.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
         activeSessionInfoTable.getStyleClass().add("table-view");
 
-
-
         addFilterToUserInputFields();
 
         fillTableDataFromServer();
-
-
-
-
-
-
     }
-
-
-    private static void initGameSetting() {
-
-
-
-        userHandler.postRegisterUser(UserParam.USERNAME);
-
-        sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
-        sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);
-    }
-
-
 
     private void fillTableDataFromServer(){
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -272,11 +251,8 @@ public class SessionViewController implements Initializable {
                             }
 
                         });
-
-
                         btn.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
                         btn.getStyleClass().add("yellow");
-
                     }
 
                     @Override
