@@ -91,6 +91,8 @@
                 </configuration>
             </plugin>
 
+            <!-- TODO config launch4j plugin-->
+
         </plugins>
     </build>
 
