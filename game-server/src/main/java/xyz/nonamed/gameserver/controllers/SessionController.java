@@ -35,4 +35,9 @@ public class SessionController {
         return sessionService.runSession(userName, sessionCode);
     }
 
+    @GetMapping(value = "/getAllVisibleSessions")
+    public List<Session> getAllVisibleSessions() {
+        return sessionService.readAllVisibleSessions();
+    }
+
 }

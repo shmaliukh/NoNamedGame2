@@ -27,9 +27,11 @@ public class SessionService {
     }
 
     public List<Session> readAllSessions() {
-        // TODO implement pagination
-        // TODO filter only visible sessions
         return sessionRepository.findAll();
+    }
+
+    public List<Session> readAllVisibleSessions() {
+        return sessionRepository.readAllByVisible(true);
     }
 
     public Session registerSession(String userName, String sessionCode) {

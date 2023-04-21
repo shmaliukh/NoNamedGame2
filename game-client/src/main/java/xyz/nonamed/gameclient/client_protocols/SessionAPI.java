@@ -21,4 +21,7 @@ public interface SessionAPI {
     @RequestLine("GET /getAllSessions")
     List<Session> getAllSessions();
 
+    @RequestLine("GET /getAllVisibleSessions")
+    List<Session> getAllVisibleSessions();
+
 }

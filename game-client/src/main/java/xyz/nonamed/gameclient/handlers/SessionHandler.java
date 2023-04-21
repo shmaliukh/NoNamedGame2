@@ -28,6 +28,11 @@ public class SessionHandler implements SessionAPI {
     }
 
     @Override
+    public List<Session> getAllVisibleSessions() {
+        return sessionAPI.getAllVisibleSessions();
+    }
+
+    @Override
     public boolean postRunSession(String userName, String sessionCode) {
         return sessionAPI.postRunSession(userName, sessionCode);
     }
