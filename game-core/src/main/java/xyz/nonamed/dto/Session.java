@@ -23,6 +23,8 @@ public class Session {
 
     public String ownerName;
     public String sessionCode;
+    // TODO implement level ???
+    // public String level;
 
     public boolean isVisible = DEFAULT_SESSION_IS_VISIBLE;
     public int maxUser = DEFAULT_SESSION_MAX_USERS;
