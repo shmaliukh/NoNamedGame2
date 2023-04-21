@@ -24,6 +24,7 @@
         <lombok.version>1.18.26</lombok.version>
         <project.organization.name>NoNamed</project.organization.name>
         <project.inceptionYear>2023</project.inceptionYear>
+        <project.description>NoNamed server</project.description>
     </properties>
 
     <dependencies>
