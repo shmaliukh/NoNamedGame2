@@ -1,7 +1,9 @@
 package xyz.nonamed.dto;
 
+import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @ToString
@@ -13,6 +15,11 @@ public class Session {
     public static final int DEFAULT_SESSION_MAX_USERS = 4;
     public static final int DEFAULT_SESSION_USER_COUNTER = 1;
     public static final int DEFAULT_SESSION_MAX_BOTS = 50; // TODO
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public Long id;
 
     public String ownerName;
     public String sessionCode;

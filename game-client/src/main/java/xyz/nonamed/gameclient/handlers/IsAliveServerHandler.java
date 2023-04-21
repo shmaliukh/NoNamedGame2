@@ -4,7 +4,6 @@ import feign.Feign;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import xyz.nonamed.gameclient.client_protocols.IsAliveServerAPI;
-import xyz.nonamed.gameclient.client_protocols.SessionAPI;
 
 import static xyz.nonamed.Constants.*;
 
