@@ -1,4 +1,4 @@
-package xyz.nonamed.gameserver.factories;
+package xyz.nonamed.factories;
 
 import java.util.List;
 
