@@ -22,6 +22,8 @@
         <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
         <h2.version>2.1.214</h2.version>
         <lombok.version>1.18.26</lombok.version>
+        <project.organization.name>NoNamed</project.organization.name>
+        <project.inceptionYear>2023</project.inceptionYear>
     </properties>
 
     <dependencies>
@@ -30,7 +32,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot-starter.version}</version>
         </dependency>
-
 
         <!-- game core-->
         <dependency>
@@ -92,6 +93,42 @@
             </plugin>
 
             <!-- TODO config launch4j plugin-->
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.3.3</version>
+                <executions>
+                    <execution>
+                        <id>l4j</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <dontWrapJar>false</dontWrapJar>
+                            <headerType>console</headerType>
+                            <jar>${project.basedir}/target/game-server-${project.version}.jar</jar>
+                            <outfile>../game-app/server-app-${project.version}.exe</outfile>
+                            <chdir>.</chdir>
+                            <priority>normal</priority>
+                            <stayAlive>false</stayAlive>
+                            <restartOnCrash>true</restartOnCrash>
+                            <!-- FIXME set up custom image -->
+                            <icon>../game-app/config/servers_icon.ico</icon>
+                            <singleInstance>
+                                <mutexName>game-server</mutexName>
+                                <windowTitle>game-server</windowTitle>
+                            </singleInstance>
+                            <jre>
+                                <path>jre</path>
+                                <requires64Bit>true</requires64Bit>
+                                <requiresJdk>jdkOnly</requiresJdk>
+                                <requires64Bit>64/32</requires64Bit>
+                            </jre>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
