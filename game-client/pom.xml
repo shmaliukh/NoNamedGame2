@@ -60,7 +60,45 @@
     </dependencies>
 
     <build>
-        <!-- TODO config launch4j plugin-->
+        <plugins>
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.3.3</version>
+                <executions>
+                    <execution>
+                        <id>l4j</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <dontWrapJar>false</dontWrapJar>
+                            <headerType>gui</headerType>
+                            <jar>${project.basedir}/target/game-client-${project.version}.jar</jar>
+                            <outfile>../game-app/client-app-${project.version}.exe</outfile>
+                            <chdir>.</chdir>
+                            <priority>normal</priority>
+                            <stayAlive>false</stayAlive>
+                            <restartOnCrash>false</restartOnCrash>
+                            <icon>../game-app/config/client_icon.ico</icon>
+                            <jre>
+                                <path>jre</path>
+                                <requires64Bit>true</requires64Bit>
+                                <requiresJdk>jdkOnly</requiresJdk>
+                                <requires64Bit>64/32</requires64Bit>
+                            </jre>
+                            <splash>
+                                <file>../game-app/config/client_logo.bmp</file>
+                                <waitForWindow>true</waitForWindow>
+                                <timeout>5</timeout>
+                                <timeoutErr>false</timeoutErr>
+                            </splash>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
