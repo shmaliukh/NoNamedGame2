@@ -1,11 +1,9 @@
 package xyz.nonamed.gameclient.controllers;
 
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import xyz.nonamed.gameclient.ClientApplication;
@@ -38,28 +36,30 @@ public class MainMenuViewController implements Initializable {
 
 
     @FXML
-    public void onChangeUserNameTextField(KeyEvent keyEvent) {
+    public void onChangeUserNameTextField() {
+        UserParam.USERNAME = userNameTextField.getText();
     }
 
     @FXML
-    public void onMouseMovedEntered(MouseEvent mouseEvent) {
+    public void onMouseMovedEntered() {
     }
 
     @FXML
-    public void onNewGameButtonClick(ActionEvent actionEvent) {
+    public void onNewGameButtonClick() {
         ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
     }
 
     @FXML
-    public void onSettingsButtonClick(ActionEvent actionEvent) {
+    public void onSettingsButtonClick() {
     }
 
     @FXML
-    public void onExitButtonClick(ActionEvent actionEvent) {
+    public void onExitButtonClick() {
+        ClientApplication.mainStage.close();
     }
 
     @FXML
-    public void onInfoButtonClick(MouseEvent mouseEvent) {
+    public void onInfoButtonClick() {
 
     }
 
@@ -67,4 +67,5 @@ public class MainMenuViewController implements Initializable {
     public void onFastVolumeSwitchButtonClick(){
 
     }
+
 }
