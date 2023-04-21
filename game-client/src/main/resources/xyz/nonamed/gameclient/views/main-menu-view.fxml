@@ -3,11 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="700.0" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.MainMenuViewController">
@@ -16,16 +20,85 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="userNameTextField" alignment="BOTTOM_CENTER" onKeyTyped="#onChangeUserNameTextField" onMouseEntered="#onMouseMovedEntered" prefHeight="124.0" prefWidth="402.0" styleClass="text-field" stylesheets="@../styles/main-menu-view-style.css" text="player">
+                  <TextField fx:id="userNameTextField" alignment="BOTTOM_CENTER" onKeyTyped="#onChangeUserNameTextField" onMouseEntered="#onMouseMovedEntered" prefHeight="124.0" prefWidth="402.0" stylesheets="@../styles/main-menu-view-style.css" text="player">
                      <font>
                         <Font size="65.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
+                           <color>
+                              <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                           </color>
+                           <input>
+                              <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                                 <color>
+                                    <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                                 </color>
+                                 <input>
+                                    <Reflection fraction="0.25" />
+                                 </input>
+                              </InnerShadow>
+                           </input>
+                        </DropShadow>
+                     </effect>
                   </TextField>
                </children>
             </HBox>
-            <Button id="button" fx:id="newGameButton" defaultButton="true" mnemonicParsing="false" onAction="#onNewGameButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Нова гра" />
-            <Button fx:id="settingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Сетінги" />
+            <Button id="button" fx:id="newGameButton" defaultButton="true" mnemonicParsing="false" onAction="#onNewGameButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Нова гра">
+               <effect>
+                  <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
+                     <color>
+                        <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                     </color>
+                     <input>
+                        <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                           <color>
+                              <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                           </color>
+                           <input>
+                              <Reflection fraction="0.25" />
+                           </input>
+                        </InnerShadow>
+                     </input>
+                  </DropShadow>
+               </effect></Button>
+            <Button fx:id="settingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Сетінги">
+            <effect>
+               <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
+                  <color>
+                     <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                  </color>
+                  <input>
+                     <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                        <color>
+                           <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                        </color>
+                        <input>
+                           <Reflection fraction="0.25" />
+                        </input>
+                     </InnerShadow>
+                  </input>
+               </DropShadow>
+            </effect></Button>
+
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Вихід">
+               <effect>
+                  <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
+                     <color>
+                        <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                     </color>
+                     <input>
+                        <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                           <color>
+                              <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                           </color>
+                           <input>
+                              <Reflection fraction="0.25" />
+                           </input>
+                        </InnerShadow>
+                     </input>
+                  </DropShadow>
+               </effect>
                <opaqueInsets>
                   <Insets top="20.0" />
                </opaqueInsets></Button>
@@ -39,11 +112,11 @@
          <image>
             <Image url="@../images/mainMenuImages/soundInfoButtonON.png" />
          </image></ImageView>
-      <ImageView fx:id="localServerStatusImage" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#onInfoButtonClick" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
+      <ImageView fx:id="localServerStatusImage" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
          <image>
             <Image url="@../images/mainMenuImages/localhostAvailable.gif" />
          </image></ImageView>
-      <ImageView fx:id="globalServerStatusImage" fitHeight="100.0" fitWidth="100.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#onFastVolumeSwitchButtonClick" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+      <ImageView fx:id="globalServerStatusImage" fitHeight="100.0" fitWidth="100.0" layoutX="20.0" layoutY="20.0" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
          <image>
             <Image url="@../images/mainMenuImages/globalhostAvailable.gif" />
          </image></ImageView>
