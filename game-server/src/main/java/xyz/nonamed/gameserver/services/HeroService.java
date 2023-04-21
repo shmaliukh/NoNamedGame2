@@ -34,11 +34,11 @@ public class HeroService {
             heroEntity.setName(hero.getName());
             heroEntity.setColor(hero.getColor());
             heroEntity.setSessionCode(sessionCode);
-            if (isCustom) { // todo implement ???
-                heroEntity = hero;
-            }
+//            if (isCustom) { // todo implement ???
+//                heroEntity = hero;
+//            }
             heroEntity = save(heroEntity);
-            log.info("registered hero: '{}'", hero);
+            log.info("registered hero: '{}'", heroEntity);
         }
         return heroEntity;
     }

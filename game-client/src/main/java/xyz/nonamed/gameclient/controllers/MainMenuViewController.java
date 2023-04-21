@@ -28,6 +28,10 @@ import static xyz.nonamed.gameclient.ClientApplication.backgroundMusic;
  */
 public class MainMenuViewController implements Initializable {
 
+    public static final Image LOCALHOST_AVAILABLE_IMAGE = new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif");
+    public static final Image LOCALHOST_NON_AVAILABLE_IMAGE = new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif");
+    public static final Image GLOBALHOST_AVAILABLE_IMAGE = new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif");
+
     public AnchorPane mainView;
     public TextField userNameTextField;
     public Button newGameButton;
@@ -117,25 +121,26 @@ public class MainMenuViewController implements Initializable {
 
     @FXML
     public void onRefreshServerStatus(){
-        ClientApplication.playButtonClickSound();
-        IsAliveServerHandler isAliveServerHandler = new IsAliveServerHandler();
+        new Thread(() -> {
+            ClientApplication.playButtonClickSound();
+            IsAliveServerHandler isAliveServerHandler = new IsAliveServerHandler();
 
-        boolean localServerStatus = isAliveServerHandler.isLocalAlive();
-        boolean globalServerStatus = isAliveServerHandler.isGlobalAlive();
+            boolean localServerStatus = isAliveServerHandler.isLocalAlive();
+            boolean globalServerStatus = isAliveServerHandler.isGlobalAlive();
 
-        if (localServerStatus){
-            localServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif"));
-        }else {
-            localServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif"));
-        }
+            if (localServerStatus) {
+                localServerStatusImage.setImage(LOCALHOST_AVAILABLE_IMAGE);
+            } else {
+                localServerStatusImage.setImage(LOCALHOST_NON_AVAILABLE_IMAGE);
+            }
 
-        if(globalServerStatus){
-            globalServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif"));
-        }else {
-            System.out.println("global server unavailavle");
-            //TODO add global host not available image
-        }
-
+            if (globalServerStatus) {
+                globalServerStatusImage.setImage(GLOBALHOST_AVAILABLE_IMAGE);
+            } else {
+                System.out.println("global server unavailavle");
+                //TODO add global host not available image
+            }
+        }).start();
     }
 
     public void addFilterToUserInputFields() {

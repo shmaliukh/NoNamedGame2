@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="876.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.GameViewController">
    <children>
-      <Pane fx:id="gamePane" layoutX="238.0" layoutY="258.0" prefHeight="1884.0" prefWidth="2624.0" styleClass="backgroundPane" stylesheets="@../styles/game-view-style.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane fx:id="gamePane" layoutX="238.0" layoutY="258.0" prefHeight="1884.0" prefWidth="2624.0" styleClass="backgroundPane" stylesheets="@../styles/game-view-style.css" />
       <Pane fx:id="miniMapPane" layoutX="10.0" layoutY="516.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #8D7471;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
       <Pane fx:id="hudPane" layoutX="160.0" layoutY="566.0" prefHeight="100.0" prefWidth="695.0" style="-fx-background-color: #8D7471; -fx-background-radius: 50;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" />
       <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="339.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
