@@ -17,6 +17,7 @@ import xyz.nonamed.gameserver.services.SessionService;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static xyz.nonamed.Constants.MOVE_LEFT;
 import static xyz.nonamed.Constants.MOVE_RIGHT;
@@ -43,7 +44,9 @@ public class ScheduleTaskExecutor {
     }
 
     private void moveBotsBySession(String sessionCode) {
-        List<Bot> botList = botService.readBotListBySessionCode(sessionCode);
+        List<Bot> botList = botService.readBotListBySessionCode(sessionCode).stream()
+                .filter(bot -> bot.getUserName() != null)
+                .collect(Collectors.toList()); // todo
         List<Hero> heroEntities = heroService.readHeroesBySessionCode(sessionCode);
 
         for (Bot bot : botList) {

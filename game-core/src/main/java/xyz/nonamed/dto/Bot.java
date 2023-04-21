@@ -70,6 +70,7 @@ public class Bot {
 
     public String name = DataUtils.getRandomName();
     public String sessionCode;
+    public String userName = null; // who delegate actions
 
     public double posX = DEFAULT_BOT_POS_X;
     public double posY = DEFAULT_BOT_POS_Y;
