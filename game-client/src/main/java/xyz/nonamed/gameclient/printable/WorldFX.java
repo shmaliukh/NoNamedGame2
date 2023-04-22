@@ -8,10 +8,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import xyz.nonamed.dto.World;
 
+import java.util.Objects;
+
 
 public class WorldFX extends World implements PrintableFx {
 
-    public static final Image WORLD_IMAGE = new Image("xyz/nonamed/gameclient/images/map/mapground.png");
+    public static final Image WORLD_IMAGE = new Image(Objects.requireNonNull(WorldFX.class.getResource("/xyz/nonamed/gameclient/images/map/mapground.png")).toString());
     public static final ImagePattern WORLD_IMAGE_PATTERN = new ImagePattern(WORLD_IMAGE);
 
     ImageView imageView = new ImageView(WORLD_IMAGE);

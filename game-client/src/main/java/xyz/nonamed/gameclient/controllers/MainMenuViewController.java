@@ -16,8 +16,10 @@ import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SoundParam;
 import xyz.nonamed.gameclient.config.UserParam;
 import xyz.nonamed.gameclient.handlers.IsAliveServerHandler;
+import xyz.nonamed.gameclient.printable.GameObjectFX;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
@@ -28,9 +30,10 @@ import static xyz.nonamed.gameclient.ClientApplication.backgroundMusic;
  */
 public class MainMenuViewController implements Initializable {
 
-    public static final Image LOCALHOST_AVAILABLE_IMAGE = new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif");
-    public static final Image LOCALHOST_NON_AVAILABLE_IMAGE = new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif");
-    public static final Image GLOBALHOST_AVAILABLE_IMAGE = new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif");
+
+    public static final Image LOCALHOST_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif")).toString());
+    public static final Image LOCALHOST_NON_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif")).toString());
+    public static final Image GLOBALHOST_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif")).toString());
 
     public AnchorPane mainView;
     public TextField userNameTextField;
@@ -100,7 +103,7 @@ public class MainMenuViewController implements Initializable {
             SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
             SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
             SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
-            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png"));
+            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png")).toString()));
         } else {
             SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
             SoundParam.BACKGROUND_VOLUME = 0;
@@ -108,7 +111,7 @@ public class MainMenuViewController implements Initializable {
             SoundParam.ELEMENT_VOLUME = 0;
             SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
             SoundParam.GAME_VOLUME = 0;
-            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png"));
+            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png")).toString()));
         }
 
         backgroundMusic.stop();
