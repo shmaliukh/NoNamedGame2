@@ -25,19 +25,21 @@ public class GameObjectFactory implements MyFactory<GameObject> {
         gameObject.collisionPosY = 140;
         gameObject.collisionHeight = 560;
         gameObject.collisionWidth = 750;
+        gameObject.isCollision = true;
         gameObject.color = "WHITE";
-        return null;
+        return gameObject;
     }
 
     private GameObject createGameObject2() {
         GameObject gameObject = new GameObject();
-        gameObject.type = GAME_OBJECT_1;
+        gameObject.type = GAME_OBJECT_2;
         gameObject.collisionPosX = 130;
         gameObject.collisionPosY = 90;
         gameObject.collisionHeight = 310;
         gameObject.collisionWidth = 588;
+        gameObject.isCollision = true;
         gameObject.color = "WHITE";
-        return null;
+        return gameObject;
     }
 
     @Override

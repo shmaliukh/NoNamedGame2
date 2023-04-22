@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class World {
 
-    public double height = 500;
-    public double width = 500;
+    public double height = 5000;
+    public double width = 3500;
 
 }

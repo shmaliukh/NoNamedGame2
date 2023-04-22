@@ -16,27 +16,27 @@ import static xyz.nonamed.dto.Hero.DEFAULT_HERO_TYPE;
 @AllArgsConstructor
 public class GameObject {
 
-    public static final String GAME_OBJECT_1 = "bot_1";
-    public static final String GAME_OBJECT_2 = "bot_2";
-    public static final String GAME_OBJECT_3 = "bot_3";
-    public static final String GAME_OBJECT_4 = "bot_4";
-    public static final String GAME_OBJECT_5 = "bot_5";
-    public static final String GAME_OBJECT_6 = "bot_6";
+    public static final String GAME_OBJECT_1 = "home1";
+    public static final String GAME_OBJECT_2 = "home2";
+    public static final String GAME_OBJECT_3 = "home3";
+    public static final String GAME_OBJECT_4 = "home4";
+    public static final String GAME_OBJECT_5 = "home5";
+    public static final String GAME_OBJECT_6 = "home6";
     public static final String DEFAULT_GAME_OBJECT_6_TYPE = GAME_OBJECT_1;
 
     public static List<String> gameObjectTypeList = Arrays.asList(
             GAME_OBJECT_1,
-            GAME_OBJECT_2,
-            GAME_OBJECT_3,
-            GAME_OBJECT_4,
-            GAME_OBJECT_5,
-            GAME_OBJECT_6
+            GAME_OBJECT_2
+//            GAME_OBJECT_3,
+//            GAME_OBJECT_4,
+//            GAME_OBJECT_5,
+//            GAME_OBJECT_6
     );
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    public Long id;
 
     public String name;
     public String sessionCode;
@@ -47,6 +47,7 @@ public class GameObject {
     public double height = 0;
     public double width = 0;
 
+    public boolean isCollision = false;
     public double collisionPosX = 0;
     public double collisionPosY = 0;
 

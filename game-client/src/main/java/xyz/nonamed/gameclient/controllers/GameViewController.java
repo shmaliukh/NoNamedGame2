@@ -9,8 +9,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import lombok.extern.slf4j.Slf4j;
+import xyz.nonamed.dto.GameObject;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.gameclient.ClientApplication;
+import xyz.nonamed.gameclient.handlers.GameObjectHandler;
 import xyz.nonamed.gameclient.printable.GameObjectFX;
 import xyz.nonamed.gameclient.printable.HeroFX;
 import xyz.nonamed.gameclient.config.ScreenParam;
@@ -49,7 +51,6 @@ public class GameViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        generateGameObjects();
 
 
         handleHeroAction();
@@ -66,23 +67,25 @@ public class GameViewController implements Initializable {
         WORLD_FX.print(gamePane);
         MY_HERO_FX.addToPane(gamePane);
         MY_HERO_FX.print(gamePane);
-        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.addToPane(gamePane));
-        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
+        generateGameObjects();
+//        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.addToPane(gamePane));
+//        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
 
 
     }
 
     private void generateGameObjects() {
-        Random random = new Random();
-
-        for (int x = 0; x < WorldFX.WORLD_IMAGE.getWidth(); x += 1500) {
-            for (int y = 0; y < WorldFX.WORLD_IMAGE.getHeight(); y += 1500) {
-                if (random.nextInt(100) > 33) {
-                    gameObjectFXList.add(new GameObjectFX(x + random.nextDouble(1500), y + random.nextDouble(1500/2)));
-                }
-            }
+        GameObjectHandler gameObjectHandler = new GameObjectHandler();
+        List<GameObject> gameObjectList = gameObjectHandler.getGameObjectList(UserParam.USERNAME, UserParam.SESSION_CODE);
+        if (gameObjectList.isEmpty()) {
+            gameObjectList = gameObjectHandler.postGenerateGameObjects(WORLD_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
         }
-
+        for (GameObject gameObject : gameObjectList) {
+            GameObjectFX gameObjectFX = new GameObjectFX(gameObject);
+            gameObjectFX.addToPane(gamePane);
+            gameObjectFX.print(gamePane);
+            gameObjectFXList.add(gameObjectFX);
+        }
     }
 
     private void handleHeroAction() {
