@@ -27,7 +27,6 @@ import xyz.nonamed.gameclient.printable.*;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SessionParam;
 import xyz.nonamed.gameclient.config.UserParam;
-import xyz.nonamed.gameclient.threads.CustomThread;
 
 import java.net.URL;
 import java.util.*;
@@ -35,7 +34,6 @@ import java.util.*;
 import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.dto.Hero.STOP;
 import static xyz.nonamed.dto.Hero.WALK;
-import static xyz.nonamed.gameclient.ClientApplication.changeScreen;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
 import static xyz.nonamed.gameclient.config.UserParam.USER_HERO;
 import static xyz.nonamed.gameclient.controllers.StaticData.*;
@@ -45,6 +43,7 @@ import static xyz.nonamed.gameclient.controllers.StaticData.*;
  */
 public class GameViewController implements Initializable {
 
+    public static final int BOT_PERIOD = 100;
     public AnchorPane mainView;
     public Pane gamePane;
     public static Pane staticGamePane;
@@ -99,7 +98,7 @@ public class GameViewController implements Initializable {
         timer2 = new Timer();
         timer3 = new Timer();
         timer1.schedule(new UpdateHeroTask(), 0, 100);
-        timer2.schedule(new UpdateBotTask(), 0, 100);
+        timer2.schedule(new UpdateBotTask(), 0, BOT_PERIOD);
         timer3.schedule(new UpdateAllHeroTask(), 0, 100);
     }
 
@@ -202,6 +201,21 @@ public class GameViewController implements Initializable {
                     .forEach(bot -> {
                         for (BotFX botFX : botFXList) {
                             if (botFX.id.equals(bot.getId())) {
+                                AnimationTimer animationTimer = new AnimationTimer() {
+                                    @Override
+                                    public void handle(long now) {
+                                        Timeline timeline = new Timeline(
+                                                new KeyFrame(Duration.ZERO, new KeyValue(botFX.getImageView().layoutXProperty(), botFX.getPosX())),
+                                                new KeyFrame(Duration.ZERO, new KeyValue(botFX.getImageView().layoutYProperty(), botFX.getPosY())),
+                                                new KeyFrame(Duration.millis(BOT_PERIOD), new KeyValue(botFX.getImageView().layoutXProperty(), bot.getPosX())),
+                                                new KeyFrame(Duration.millis(BOT_PERIOD), new KeyValue(botFX.getImageView().layoutYProperty(), bot.getPosY()))
+                                        );
+                                        timeline.play();
+                                        this.stop();
+                                    }
+                                };
+                                animationTimer.start();
+
                                 botFX.setPosX(bot.getPosX());
                                 botFX.setPosY(bot.getPosY());
                                 botFX.setHealth(bot.getHealth());
@@ -213,18 +227,23 @@ public class GameViewController implements Initializable {
                 @Override
                 public void handle(long now) {
                     botFXList.forEach(botFX -> botFX.print(gamePane));
+                    botFXList.forEach(botFX -> {
+
+
+                    });
                     botFXList.stream()
                             .filter(botFX -> botFX.getImageView().getBoundsInParent().intersects(MY_HERO_FX.getImageView().getBoundsInParent()))
                             .forEach(botFX -> {
                                 MY_HERO_FX.setHealth(MY_HERO_FX.getHealth() - botFX.getDamage());
-                                MY_HERO_FX.print(gamePane);
-                                if (MY_HERO_FX.getHealth() < 0) {
+                                if (MY_HERO_FX.getHealth() <= 0) {
                                     MY_HERO_FX.setDead(true);
                                     MY_HERO_FX.setAnimationType(STOP);
                                     new HeroHandler().postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
                                     // FIXME add alert
                                 }
+                                MY_HERO_FX.print(gamePane);
                             });
+
                     this.stop();
                 }
             };
@@ -328,10 +347,10 @@ public class GameViewController implements Initializable {
             timeline.setCycleCount(1);
 
             AudioClip gunshot = new AudioClip(getClass().getResource("/xyz/nonamed/gameclient/music/gunshot.mp3").toString());
-
             gunshot.play();
             MY_HERO_FX.setAnimationType(sceneX > 0 ? HeroFX.RIGHT_ATTACK : HeroFX.LEFT_ATTACK);
             MY_HERO_FX.print(gamePane);
+
             timeline.play();
             timeline.setOnFinished(event -> {
                 gamePane.getChildren().remove(bullet);
