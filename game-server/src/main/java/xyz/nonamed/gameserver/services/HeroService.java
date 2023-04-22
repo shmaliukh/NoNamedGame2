@@ -32,6 +32,11 @@ public class HeroService {
         return null;
     }
 
+    public Hero readHeroByNameAndSession(String userName, String sessionCode) {
+        return heroRepository.readByNameEqualsIgnoreCaseAndSessionCodeEqualsIgnoreCase(userName, sessionCode);
+    }
+
+
     public Hero registerHero(Hero hero, String userName, String sessionCode, boolean isCustom) {
         Session session = sessionService.readBySessionCode(sessionCode);
         if (session.getUserCounter() < session.getMaxUser()) {

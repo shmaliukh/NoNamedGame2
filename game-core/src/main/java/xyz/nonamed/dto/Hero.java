@@ -60,6 +60,7 @@ public class Hero {
         this.color = hero.color;
         this.animationType = hero.animationType;
         this.isDead = hero.isDead;
+        this.score = hero.score;
     }
 
     @Id
@@ -86,5 +87,7 @@ public class Hero {
     public String color;
     public String animationType = STOP;
     public boolean isDead = false;
+
+    public int score = 0;
 
 }
