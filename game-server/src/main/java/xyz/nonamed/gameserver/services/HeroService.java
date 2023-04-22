@@ -24,7 +24,10 @@ public class HeroService {
     final HeroFactory heroFactory = new HeroFactory();
 
     public Hero save(Hero entity) {
-        return heroRepository.saveAndFlush(entity);
+        if (entity != null) {
+            return heroRepository.saveAndFlush(entity);
+        }
+        return null;
     }
 
     public Hero registerHero(Hero hero, String sessionCode, boolean isCustom) {
@@ -90,4 +93,10 @@ public class HeroService {
         hero.setAnimationType(MOVE_RIGHT);
     }
 
+    public Hero postUpdateHero(Hero hero, String userName, String sessionCode) {
+        Hero hero1 = heroRepository.readByNameEqualsIgnoreCaseAndSessionCodeEqualsIgnoreCase(userName, sessionCode);
+        hero1.setPosX(hero.getPosX());
+        hero1.setPosY(hero.getPosY());
+        return save(hero1);
+    }
 }

@@ -38,7 +38,7 @@ public class ScheduleTaskExecutor {
     final SessionService sessionService;
     final WorldService worldService;
 
-    @Scheduled(fixedDelay = 10)
+    @Scheduled(fixedDelay = 20)
     public void moveBots() {
         sessionService.readAllSessions().stream()
                 .filter(Session::isRun)

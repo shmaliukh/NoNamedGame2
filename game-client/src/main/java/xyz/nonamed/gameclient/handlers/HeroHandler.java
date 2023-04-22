@@ -33,4 +33,9 @@ public class HeroHandler implements HeroAPI {
         return gameApi.postRegisterHero(hero, userName, sessionCode);
     }
 
+    @Override
+    public Hero postUpdateHero(Hero hero, String userName, String sessionCode) {
+        return gameApi.postUpdateHero(hero, userName, sessionCode);
+    }
+
 }

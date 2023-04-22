@@ -39,4 +39,11 @@ public class HeroController {
         return heroService.registerHero(hero, sessionCode, false);
     }
 
+    @PostMapping("/{userName}/{sessionCode}/postUpdateHero")
+    public Hero postUpdateHero(@RequestBody Hero hero,
+                                 @PathVariable("userName") String userName,
+                                 @PathVariable("sessionCode") String sessionCode) {
+        return heroService.postUpdateHero(hero, userName, sessionCode);
+    }
+
 }

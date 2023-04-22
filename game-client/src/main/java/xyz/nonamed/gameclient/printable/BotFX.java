@@ -41,6 +41,10 @@ public class BotFX extends Bot implements AliveFx {
        typeImageMap.put(BOT_3 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-walk.gif")).toString()));
         typeImageMap.put(BOT_3 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-attack-left.gif")).toString()));
         typeImageMap.put(BOT_3 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-attack-right.gif")).toString()));
+
+        typeImageMap.put(BOT_4 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot4-walk.gif")).toString()));
+        typeImageMap.put(BOT_4 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot4-attack-left.gif")).toString()));
+        typeImageMap.put(BOT_4 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot4-attack-right.gif")).toString()));
     }
 
     ImageView imageView = new ImageView();

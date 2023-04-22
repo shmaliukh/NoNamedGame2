@@ -1,5 +1,6 @@
 package xyz.nonamed.gameclient.controllers;
 
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -7,7 +8,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import xyz.nonamed.dto.Actions;
 import xyz.nonamed.dto.Bot;
@@ -15,19 +15,14 @@ import xyz.nonamed.dto.GameObject;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.gameclient.ClientApplication;
 import xyz.nonamed.gameclient.handlers.*;
-import xyz.nonamed.gameclient.printable.BotFX;
-import xyz.nonamed.gameclient.printable.GameObjectFX;
-import xyz.nonamed.gameclient.printable.HeroFX;
+import xyz.nonamed.gameclient.printable.*;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SessionParam;
 import xyz.nonamed.gameclient.config.UserParam;
-import xyz.nonamed.gameclient.printable.WorldFX;
 import xyz.nonamed.gameclient.threads.CustomThread;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.dto.Hero.WALK;
@@ -49,17 +44,23 @@ public class GameViewController implements Initializable {
     static WorldFX WORLD_FX;
     static List<GameObjectFX> gameObjectFXList = new ArrayList<>();
     static List<BotFX> botFXList = new ArrayList<>();
+    static List<HeroFX> heroFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
+
+    static Timer timer1 = new Timer();
+    static Timer timer2 = new Timer();
+    static Timer timer3 = new Timer();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         botFXList = new ArrayList<>();
+        heroFXList = new ArrayList<>();
         gameObjectFXList = new ArrayList<>();
-        handleHeroAction();
         setInfoPanelValues();
         setScreenSize();
         initGameSettings();
+        handleHeroAction();
 
         gamePane.setLayoutX(0);
         gamePane.setLayoutY(0);
@@ -74,56 +75,133 @@ public class GameViewController implements Initializable {
 
         generateGameObjects();
 
-        CustomThread updateMyHeroThread = new CustomThread() {
-            long delay = 40;
-            HeroHandler heroHandler = new HeroHandler();
-            @Override
-            public void doWithDelay() {
-                heroHandler.postActions(new Actions(actionList), UserParam.USERNAME, UserParam.SESSION_CODE);
-                actionList = new ArrayList<>();
-            }
-        };
-        updateMyHeroThread.start();
-        CustomThread updateBotsThread = new CustomThread() {
-            long delay = 40;
-            BotHandler botHandler = new BotHandler();
-            @Override
-            public void doWithDelay() {
-                List<Bot> serverBots = botHandler.getBotList(UserParam.USERNAME, UserParam.SESSION_CODE);
-                serverBots.stream()
-                        .filter(bot -> !containsById(bot.getId()) || botFXList.isEmpty())
-                        .forEach(bot -> {
-                            BotFX botFX = new BotFX(bot);
-                            botFXList.add(botFX);
-                            botFX.addToPane(gamePane);
-                        });
-                serverBots.stream()
-                        .filter(bot -> containsById(bot.getId()))
-                        .forEach(bot -> {
-                            for (BotFX botFX : botFXList) {
-                                if (botFX.id.equals(bot.getId())) {
-                                    botFX.setPosX(bot.getPosX());
-                                    botFX.setPosY(bot.getPosY());
-                                    botFX.setAnimationType(bot.getAnimationType());
-                                }
+        setUpThreadsWithUpdate();
+
+    }
+
+    private void setUpThreadsWithUpdate() {
+        timer1.cancel();
+        timer2.cancel();
+        timer3.cancel();
+        timer1 = new Timer();
+        timer2 = new Timer();
+        timer3 = new Timer();
+        timer1.schedule(new UpdateHeroTask(), 0, 100);
+        timer2.schedule(new UpdateBotTask(), 0, 200);
+        timer3.schedule(new UpdateAllHeroTask(), 0, 100);
+    }
+
+    private class UpdateHeroTask extends TimerTask {
+        HeroHandler heroHandler = new HeroHandler();
+
+        @Override
+        public void run() {
+            heroHandler.postActions(new Actions(actionList), UserParam.USERNAME, UserParam.SESSION_CODE);
+            actionList = new ArrayList<>();
+        }
+    }
+
+    private class UpdateAllHeroTask extends TimerTask {
+        HeroHandler heroHandler = new HeroHandler();
+
+        @Override
+        public void run() {
+            List<Hero> serverHeroeList = heroHandler.getHeroList(UserParam.USERNAME, UserParam.SESSION_CODE);
+            updateMyHero(serverHeroeList);
+            addNewHeroesFromServer(serverHeroeList);
+            updateExistsHeroes(serverHeroeList);
+            printAllHeroes();
+        }
+
+        private void printAllHeroes() {
+            AnimationTimer animationTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    botFXList.forEach(botFX -> botFX.print(gamePane));
+                    this.stop();
+                }
+            };
+            animationTimer.start();
+        }
+
+        private void updateExistsHeroes(List<Hero> serverHeroeList) {
+            serverHeroeList.stream()
+                    .filter(hero -> heroFXList.stream().anyMatch(heroFX -> hero.getId().equals(heroFX.getId())))
+                    .forEach(hero -> {
+                        for (HeroFX heroFX : heroFXList) {
+                            if (heroFX.getId().equals(hero.getId())) {
+                                heroFX.setPosX(hero.getPosX());
+                                heroFX.setPosY(hero.getPosY());
+                                heroFX.setAnimationType(hero.getAnimationType());
                             }
-                        });
-                botFXList.forEach(botFX -> botFX.print(gamePane));
-            }
-        };
-        updateBotsThread.start();
-//        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.addToPane(gamePane));
-//        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
+                        }
+                    });
+        }
 
+        private void addNewHeroesFromServer(List<Hero> serverHeroeList) {
+            serverHeroeList.stream()
+                    .filter(hero -> heroFXList.stream().noneMatch(heroFX -> hero.getId().equals(heroFX.getId())))
+                    .forEach(hero -> {
+                        HeroFX heroFX = new HeroFX(hero);
+                        heroFXList.add(heroFX);
+                        AnimationTimer animationTimer = new AnimationTimer() {
+                            @Override
+                            public void handle(long now) {
+                                heroFX.addToPane(gamePane);
+                                this.stop();
+                            }
+                        };
+                        animationTimer.start();
+                    });
+        }
 
+        private void updateMyHero(List<Hero> serverHeroeList) {
+            heroHandler.postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
+            Optional<Hero> optionalHero = serverHeroeList.stream().filter(hero -> MY_HERO_FX.getId().equals(hero.getId())).findFirst();
+            optionalHero.ifPresent(serverHeroeList::remove);
+        }
     }
 
-    private void updateBotList(List<Bot> serverBots) {
+    private class UpdateBotTask extends TimerTask {
+        BotHandler botHandler = new BotHandler();
 
-    }
-
-    private boolean containsById(Long id) {
-        return botFXList.stream().anyMatch(botFX -> id.equals(botFX.getId()));
+        @Override
+        public void run() {
+            List<Bot> serverBots = botHandler.getBotList(UserParam.USERNAME, UserParam.SESSION_CODE);
+            serverBots.stream()
+                    .filter(bot -> botFXList.stream().noneMatch(botFX -> bot.getId().equals(botFX.getId())))
+                    .forEach(bot -> {
+                        BotFX botFX = new BotFX(bot);
+                        botFXList.add(botFX);
+                        AnimationTimer animationTimer = new AnimationTimer() {
+                            @Override
+                            public void handle(long now) {
+                                botFX.addToPane(gamePane);
+                                this.stop();
+                            }
+                        };
+                        animationTimer.start();
+                    });
+            serverBots.stream()
+                    .filter(bot -> botFXList.stream().anyMatch(botFX -> bot.getId().equals(botFX.getId())))
+                    .forEach(bot -> {
+                        for (BotFX botFX : botFXList) {
+                            if (botFX.id.equals(bot.getId())) {
+                                botFX.setPosX(bot.getPosX());
+                                botFX.setPosY(bot.getPosY());
+                                botFX.setAnimationType(bot.getAnimationType());
+                            }
+                        }
+                    });
+            AnimationTimer animationTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    botFXList.forEach(botFX -> botFX.print(gamePane));
+                    this.stop();
+                }
+            };
+            animationTimer.start();
+        }
     }
 
     private void generateGameObjects() {
@@ -165,17 +243,13 @@ public class GameViewController implements Initializable {
                     && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed())) {
                 actionList.add(MOVE_UP);
                 MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
-//                if (MY_HERO_FX.getPosY() < mainView.getHeight() / 2 - mainView.getHeight() * 0.2) {
                 gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
-//                }
             }
             if ((key == KeyCode.S || key == KeyCode.DOWN)
                     && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed())) {
                 actionList.add(MOVE_DOWN);
                 MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
-//                if (MY_HERO_FX.getPosY() > mainView.getHeight() / 2 + mainView.getHeight() * 0.2) {
                 gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
-//                }
             }
             if ((key == KeyCode.A || key == KeyCode.LEFT)
                     && !checkToCollision(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
@@ -194,11 +268,11 @@ public class GameViewController implements Initializable {
             MY_HERO_FX.print(gamePane);
         };
 
-        try {
-            mainStage.removeEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
-            mainStage.removeEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
-        } catch (Throwable throwable) {
-        }
+//        try {
+//            mainStage.removeEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
+//            mainStage.removeEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
+//        } catch (Throwable throwable) {
+//        }
 
         mainStage.addEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
         mainStage.addEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
@@ -224,7 +298,6 @@ public class GameViewController implements Initializable {
         }
     }
 
-
     private void setInfoPanelValues() {
         userNameTextLabel.setText(UserParam.USERNAME);
         codeTextLabel.setText(UserParam.SESSION_CODE);
@@ -240,12 +313,7 @@ public class GameViewController implements Initializable {
     }
 
     private static void initGameSettings() {
-        if (USER_HERO == null) {
-            USER_HERO = new Hero();
-        }
-
-        USER_HERO.setName(UserParam.USERNAME);
-        USER_HERO.setType(Hero.HERO_1);
+        USER_HERO = new Hero();
 
 
         UserHandler userHandler = new UserHandler();
@@ -253,6 +321,7 @@ public class GameViewController implements Initializable {
 
         userHandler.postRegisterUser(UserParam.USERNAME);
         sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
+        USER_HERO.setName(UserParam.USERNAME);
         USER_HERO.setType(UserParam.HERO_TYPE);
         MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
         sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);

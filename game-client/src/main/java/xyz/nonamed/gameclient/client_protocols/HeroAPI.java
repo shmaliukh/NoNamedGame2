@@ -28,4 +28,10 @@ public interface HeroAPI {
                           @Param("userName") String userName,
                           @Param("sessionCode") String sessionCode);
 
+    @RequestLine("POST /{userName}/{sessionCode}/postUpdateHero")
+    @Headers("Content-Type: application/json")
+    Hero postUpdateHero(Hero hero,
+                        @Param("userName") String userName,
+                        @Param("sessionCode") String sessionCode);
+
 }
