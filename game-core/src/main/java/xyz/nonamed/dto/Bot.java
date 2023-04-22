@@ -7,6 +7,9 @@ import xyz.nonamed.utils.DataUtils;
 import java.util.Arrays;
 import java.util.List;
 
+import static xyz.nonamed.dto.Hero.STOP;
+import static xyz.nonamed.dto.Hero.WALK;
+
 @Entity
 @Getter
 @Setter
@@ -20,13 +23,13 @@ public class Bot {
     public static final double DEFAULT_BOT_POS_X = 200;
     public static final double DEFAULT_BOT_POS_Y = 200;
 
-    public static final double DEFAULT_BOT_HEIGHT = 60;
-    public static final double DEFAULT_BOT_WIDTH = 40;
+    public static final double DEFAULT_BOT_HEIGHT = 128;
+    public static final double DEFAULT_BOT_WIDTH = 128;
 
     public static final double DEFAULT_BOT_MAX_HEALTH = 500;
     public static final double DEFAULT_BOT_DAMAGE = DEFAULT_BOT_MAX_HEALTH / 100;
     public static final double DEFAULT_BOT_SPEED = 1;
-    public static final double DEFAULT_BOT_DISTANCE_TO_ACTIVATE = 100;
+    public static final double DEFAULT_BOT_DISTANCE_TO_ACTIVATE = 200;
 
     public static final String BOT_1 = "bot_1";
     public static final String BOT_2 = "bot_2";
@@ -86,6 +89,6 @@ public class Bot {
 
     public String type = DEFAULT_BOT_TYPE;
     public String color;
-    public String animationType;
+    public String animationType = WALK;
 
 }

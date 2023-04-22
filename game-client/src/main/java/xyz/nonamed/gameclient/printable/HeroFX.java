@@ -75,7 +75,7 @@ public class HeroFX extends Hero implements AliveFx {
         label.setText(getName());
         label.setLayoutX(getPosX());
         label.setLayoutY(getPosY() - 30);
-        MY_HERO_FX.setAnimationType(STOP);
+        this.setAnimationType(STOP);
     }
 
     @Override

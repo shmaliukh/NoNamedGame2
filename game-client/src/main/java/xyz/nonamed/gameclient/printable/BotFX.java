@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import xyz.nonamed.dto.Bot;
-import xyz.nonamed.dto.Hero;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class BotFX extends Bot implements AliveFx {
     static {
         typeImageMap.put(BOT_1 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot1-walk.gif")).toString()));
         typeImageMap.put(BOT_1 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot1-attack-left.gif")).toString()));
-        typeImageMap.put(BOT_1 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/type-1/bot1-attack-right.gif")).toString()));
+        typeImageMap.put(BOT_1 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot1-attack-right.gif")).toString()));
 
         typeImageMap.put(BOT_2 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
         typeImageMap.put(BOT_2 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
@@ -49,14 +48,14 @@ public class BotFX extends Bot implements AliveFx {
 
     public BotFX(Bot bot) {
         super(bot);
-        setAnimationType(STOP);
+        setAnimationType(WALK);
     }
 
 
     public void print(Pane pane) {
+        imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
         imageView.setLayoutX(getPosX());
         imageView.setLayoutY(getPosY());
-        imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
 
         healthRectangle.setLayoutX(getPosX());
         healthRectangle.setLayoutY(getPosY() - 10.0d);
@@ -78,7 +77,7 @@ public class BotFX extends Bot implements AliveFx {
         circle.setFill(Color.TRANSPARENT);
         circle.setStroke(Color.BLACK);
         circle.setStrokeWidth(1);
-        MY_HERO_FX.setAnimationType(STOP);
+        this.setAnimationType(WALK);
     }
 
     @Override
@@ -87,6 +86,7 @@ public class BotFX extends Bot implements AliveFx {
         pane.getChildren().add(damageRectangle);
         pane.getChildren().add(healthRectangle);
         pane.getChildren().add(label);
+        pane.getChildren().add(circle);
     }
 
     @Override

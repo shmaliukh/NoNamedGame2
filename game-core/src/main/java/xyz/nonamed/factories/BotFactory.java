@@ -12,10 +12,11 @@ public class BotFactory implements MyFactory<Bot> {
         return switch (type) {
             case Bot.BOT_1 -> createBot1();
             case Bot.BOT_2 -> createBot2();
-            case Bot.BOT_3 -> createBot3();
-            case Bot.BOT_4 -> createBot4();
-            case Bot.BOT_5 -> createBot5();
-            default -> createBot6();
+//            case Bot.BOT_3 -> createBot3();
+//            case Bot.BOT_4 -> createBot4();
+//            case Bot.BOT_5 -> createBot5();
+//            case Bot.BOT_6 -> createBot5();
+            default -> createBot1();
         };
     }
 
@@ -35,10 +36,10 @@ public class BotFactory implements MyFactory<Bot> {
     public Bot createBot2() {
         Bot bot = new Bot();
         bot.setType(Bot.BOT_2);
-        bot.setMaxHealth(Bot.DEFAULT_BOT_MAX_HEALTH * 1.5);
+        bot.setMaxHealth(Bot.DEFAULT_BOT_MAX_HEALTH * 2.0);
         bot.setDamage(Bot.DEFAULT_BOT_DAMAGE * 1.2);
         bot.setSpeed(Bot.DEFAULT_BOT_SPEED * 0.6);
-        bot.setMinDistanceToActivate(Bot.DEFAULT_BOT_DISTANCE_TO_ACTIVATE * 0.8);
+        bot.setMinDistanceToActivate(Bot.DEFAULT_BOT_DISTANCE_TO_ACTIVATE * 1.3);
         bot.setColor("FORESTGREEN");
         bot.setHealth(bot.getMaxHealth());
         bot.setName(DataUtils.getRandomName());

@@ -20,7 +20,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="229.0" styleClass="text" stylesheets="@../styles/settings-menu-view-style.css" text="Музика">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="330.0" styleClass="text" stylesheets="@../styles/settings-menu-view-style.css" text="Музика">
                      <font>
                         <Font name="Arial" size="65.0" />
                      </font>
@@ -30,7 +30,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="229.0" styleClass="text" stylesheets="@../styles/settings-menu-view-style.css" text="Кнопки">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="329.0" styleClass="text" stylesheets="@../styles/settings-menu-view-style.css" text="Кнопки">
                      <font>
                         <Font name="Arial" size="65.0" />
                      </font>
@@ -40,7 +40,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="229.0" styleClass="text" stylesheets="@../styles/settings-menu-view-style.css" text="Ігрові ефекти">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="322.0" styleClass="text" stylesheets="@../styles/settings-menu-view-style.css" text="Ігрові ефекти">
                      <font>
                         <Font name="Arial" size="65.0" />
                      </font>
