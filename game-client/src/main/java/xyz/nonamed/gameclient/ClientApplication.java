@@ -3,12 +3,15 @@ package xyz.nonamed.gameclient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import xyz.nonamed.gameclient.config.SoundParam;
+import xyz.nonamed.gameclient.config.UserParam;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 import static javafx.scene.media.AudioClip.INDEFINITE;
 
@@ -42,6 +45,7 @@ public class ClientApplication extends Application {
 
         buttonEnteredSound = new AudioClip(Objects.requireNonNull(this.getClass().getResource("music/buttons/music.mp3")).toString());
         buttonClickSound = new AudioClip(Objects.requireNonNull(this.getClass().getResource("music/buttons/music.mp3")).toString());
+
 
     }
 

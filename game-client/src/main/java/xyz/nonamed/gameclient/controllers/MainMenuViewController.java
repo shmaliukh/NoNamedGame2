@@ -16,7 +16,10 @@ import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SoundParam;
 import xyz.nonamed.gameclient.config.UserParam;
 import xyz.nonamed.gameclient.handlers.IsAliveServerHandler;
+
 import xyz.nonamed.gameclient.printable.GameObjectFX;
+
+
 
 import java.net.URL;
 import java.util.Objects;
@@ -42,6 +45,8 @@ public class MainMenuViewController implements Initializable {
     public ImageView globalServerStatusImage;
     public ImageView refreshServerStatusButton;
     public ImageView volumeFastSwitchButton;
+
+    public ImageView choosenNetworkServerImageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,6 +87,8 @@ public class MainMenuViewController implements Initializable {
     @FXML
     public void onSettingsButtonClick() {
         ClientApplication.playButtonClickSound();
+
+        ClientApplication.changeScreen("views/settings-menu-view.fxml", "Налаштування");
     }
 
     @FXML
@@ -117,6 +124,10 @@ public class MainMenuViewController implements Initializable {
         backgroundMusic.stop();
         backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
         backgroundMusic.play();
+
+// FIXME
+        ClientApplication.changeScreen("views/info-menu-view.fxml", "Про програму");
+
     }
 
 
@@ -143,6 +154,30 @@ public class MainMenuViewController implements Initializable {
             }
         }).start();
     }
+    
+    public void onFastVolumeSwitchButtonClick(){
+        ClientApplication.playButtonClickSound();
+
+        if (SoundParam.BACKGROUND_VOLUME == 0){
+            SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
+            SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
+            SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
+            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png"));
+        }else {
+            SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
+            SoundParam.BACKGROUND_VOLUME = 0;
+            SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
+            SoundParam.ELEMENT_VOLUME = 0;
+            SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
+            SoundParam.GAME_VOLUME = 0;
+            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png"));
+        }
+
+        backgroundMusic.stop();
+        backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
+        backgroundMusic.play();
+    }
+
 
     public void addFilterToUserInputFields() {
         //Додаємо перевірку для обробки значення коду сесії
@@ -157,6 +192,28 @@ public class MainMenuViewController implements Initializable {
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         userNameTextField.setTextFormatter(textFormatter);
 
+    }
+
+
+    @FXML
+    public void onSwitchServerButtonPressed(){
+        if (UserParam.SELECTED_HOST.equals("localhost")){
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedLocal.gif"));
+        } else {
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedGlobal.gif"));
+        }
+    }
+
+
+    @FXML
+    public void onSwitchServerButtonReleased(){
+        if (UserParam.SELECTED_HOST.equals("localhost")){
+            UserParam.SELECTED_HOST = "globalhost";
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/switchGlobal.gif"));
+        } else {
+            UserParam.SELECTED_HOST = "localhost";
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/switchLocal.gif"));
+        }
     }
 
 }
