@@ -17,8 +17,8 @@ public class Hero {
     public static final double DEFAULT_HERO_POS_X = 200;
     public static final double DEFAULT_HERO_POS_Y = 200;
 
-    public static final double DEFAULT_HERO_HEIGHT = 60;
-    public static final double DEFAULT_HERO_WIDTH = 40;
+    public static final double DEFAULT_HERO_HEIGHT = 128;
+    public static final double DEFAULT_HERO_WIDTH = 128;
 
     public static final double DEFAULT_HERO_MAX_HEALTH = 1000;
     public static final double DEFAULT_HERO_DAMAGE = 10;
@@ -35,7 +35,13 @@ public class Hero {
             HERO_2,
             HERO_3
     );
+
     public static final int DEFAULT_HERO_DISTANCE_TO_ACTIVATE = 200;
+
+    public static final String STOP = "stop";
+    public static final String WALK = "walk";
+    public static final String LEFT_ATTACK = "left_attack";
+    public static final String RIGHT_ATTACK = "right_attack";
 
     public Hero(Hero hero) {
         this.id = hero.id;
@@ -77,6 +83,6 @@ public class Hero {
 
     public String type = DEFAULT_HERO_TYPE;
     public String color;
-    public String animationType;
+    public String animationType = STOP;
 
 }

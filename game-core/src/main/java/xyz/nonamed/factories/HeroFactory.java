@@ -11,6 +11,7 @@ public class HeroFactory implements MyFactory<Hero> {
         return switch (type) {
             case Hero.HERO_1 -> createHero1();
             case Hero.HERO_2 -> createHero2();
+            case Hero.HERO_3 -> createHero3();
             default -> createHero3();
         };
     }
@@ -30,7 +31,7 @@ public class HeroFactory implements MyFactory<Hero> {
         Hero hero = new Hero();
         hero.type = Hero.HERO_2;
         hero.damage = Hero.DEFAULT_HERO_DAMAGE * 1.3;
-        hero.maxHealth = Hero.DEFAULT_HERO_SPEED * 0.75;
+        hero.maxHealth = Hero.DEFAULT_HERO_MAX_HEALTH * 0.75;
         hero.speed = Hero.DEFAULT_HERO_SPEED * 1.15;
         hero.health = hero.maxHealth;
         hero.color = "CRIMSON";
@@ -41,7 +42,7 @@ public class HeroFactory implements MyFactory<Hero> {
         Hero hero = new Hero();
         hero.type = Hero.HERO_3;
         hero.damage = Hero.DEFAULT_HERO_DAMAGE;
-        hero.maxHealth = Hero.DEFAULT_HERO_SPEED;
+        hero.maxHealth = Hero.DEFAULT_HERO_MAX_HEALTH;
         hero.speed = Hero.DEFAULT_HERO_SPEED;
         hero.health = hero.maxHealth;
         hero.color = "DARKORCHID";
