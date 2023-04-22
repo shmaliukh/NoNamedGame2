@@ -69,6 +69,10 @@ public class GameViewController implements Initializable {
         WORLD_FX.print(gamePane);
         MY_HERO_FX.addToPane(gamePane);
         MY_HERO_FX.print(gamePane);
+
+        gamePane.setLayoutX(mainStage.getWidth() / 2 - MY_HERO_FX.getPosX() - MY_HERO_FX.getWidth() / 2);
+        gamePane.setLayoutY(mainStage.getHeight() / 2 - MY_HERO_FX.getPosY() - MY_HERO_FX.getHeight() / 2);
+
         generateGameObjects();
 //        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.addToPane(gamePane));
 //        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
@@ -154,17 +158,17 @@ public class GameViewController implements Initializable {
 
         if (playerX < 0) {
             MY_HERO_FX.setPosX(WORLD_FX.getWidth() - MY_HERO_FX.getWidth());
-            gamePane.setLayoutX(mainStage.getHeight() - WORLD_FX.getWidth());
+            gamePane.setLayoutX(mainStage.getHeight() - WORLD_FX.getWidth() - MY_HERO_FX.getHeight() / 2);
         } else if (playerX >= WORLD_FX.getWidth() - MY_HERO_FX.getWidth()) {
             MY_HERO_FX.setPosX(0);
-            gamePane.setLayoutX(0);
+            gamePane.setLayoutX(0 + mainStage.getWidth() / 2 - MY_HERO_FX.getHeight() / 2);
         }
         if (playerY < 0) {
             MY_HERO_FX.setPosY(WORLD_FX.getHeight() - MY_HERO_FX.getHeight());
-            gamePane.setLayoutY(-WORLD_FX.getHeight() + mainStage.getHeight() - 300);
+            gamePane.setLayoutY(-WORLD_FX.getHeight() + mainStage.getHeight() / 2 + MY_HERO_FX.getHeight() - MY_HERO_FX.getHeight() / 2);
         } else if (playerY >= WORLD_FX.getHeight() - MY_HERO_FX.getHeight()) {
             MY_HERO_FX.setPosY(0);
-            gamePane.setLayoutY(0);
+            gamePane.setLayoutY(0 + mainStage.getHeight() / 2 - MY_HERO_FX.getHeight() / 2);
         }
     }
 
