@@ -82,7 +82,6 @@ public class GameViewController implements Initializable {
                 }
             }
         }
-
     }
 
     private void handleHeroAction() {

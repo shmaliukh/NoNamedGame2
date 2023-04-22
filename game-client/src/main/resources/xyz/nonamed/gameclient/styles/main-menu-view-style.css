@@ -1,7 +1,7 @@
 
 
 .backgroundVBox {
-    -fx-background-image: url('../images/menusBackground.png');
+    -fx-background-image: url('../images/backgroundStyle1.png');
 
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
@@ -86,6 +86,36 @@
 .buttonGlowStyle:hover{
     -fx-background-color: rgb(93,19,155);
     -fx-text-fill: white;
+}
+
+.text {
+    -fx-background-color:
+            rgba(0, 0, 0, 0.74),
+            rgba(0,0,0,0.05),
+            linear-gradient(#b994d9, #5d139b),
+            linear-gradient(#f2e5fd 0%, #c9a6e7 20%, #9e56da 80%, #5d139b 100%),
+            linear-gradient(#b390d1, #5b1596);
+    -fx-background-insets: 0,9 9 8 9,9,10,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-highlight-fill: transparent;
+    -fx-highlight-text-fill: #000000;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 28px;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+
+.text:hover{
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#6a9f6f, #26532b),
+            linear-gradient(#deffe0 0%, #b2e7b7 20%, #89c78e 80%, #6a9f6f 100%),
+            linear-gradient(#6a9f6f, #26532b);
+    -fx-background-insets: 0,9 9 8 9,9,0,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
 }
 
 
