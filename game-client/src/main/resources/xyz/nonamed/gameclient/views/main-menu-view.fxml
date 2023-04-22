@@ -49,7 +49,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button id="button" fx:id="newGameButton" defaultButton="true" mnemonicParsing="false" onAction="#onNewGameButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Нова гра">
+                  <Button id="button" fx:id="newGameButton" defaultButton="true" mnemonicParsing="false" onAction="#onNewGameButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Нова гра">
                      <effect>
                         <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                            <color>
@@ -80,7 +80,7 @@
                   </Group>
                </children>
             </HBox>
-            <Button fx:id="settingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Сетінги">
+            <Button fx:id="settingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Сетінги">
             <effect>
                <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                   <color>
@@ -99,7 +99,7 @@
                </DropShadow>
             </effect></Button>
 
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="yellow" stylesheets="@../styles/main-menu-view-style.css" text="Вихід">
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Вихід">
                <effect>
                   <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                      <color>

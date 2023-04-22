@@ -17,8 +17,6 @@ import xyz.nonamed.gameclient.config.SoundParam;
 import xyz.nonamed.gameclient.config.UserParam;
 import xyz.nonamed.gameclient.handlers.IsAliveServerHandler;
 
-import xyz.nonamed.gameclient.printable.GameObjectFX;
-
 
 
 import java.net.URL;
@@ -37,6 +35,7 @@ public class MainMenuViewController implements Initializable {
     public static final Image LOCALHOST_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif")).toString());
     public static final Image LOCALHOST_NON_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif")).toString());
     public static final Image GLOBALHOST_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif")).toString());
+    public static final Image GLOBALHOST_NON_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/globalhostNonAvailable.gif")).toString());
 
     public AnchorPane mainView;
     public TextField userNameTextField;
@@ -82,6 +81,7 @@ public class MainMenuViewController implements Initializable {
     public void onNewGameButtonClick() {
         ClientApplication.playButtonClickSound();
         ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
+
     }
 
     @FXML
@@ -100,35 +100,36 @@ public class MainMenuViewController implements Initializable {
     @FXML
     public void onInfoButtonClick() {
         ClientApplication.playButtonClickSound();
-    }
-
-    @FXML
-    public void onFastVolumeSwitchButtonClick() {
-        ClientApplication.playButtonClickSound();
-
-        if (SoundParam.BACKGROUND_VOLUME == 0) {
-            SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
-            SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
-            SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
-            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png")).toString()));
-        } else {
-            SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
-            SoundParam.BACKGROUND_VOLUME = 0;
-            SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
-            SoundParam.ELEMENT_VOLUME = 0;
-            SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
-            SoundParam.GAME_VOLUME = 0;
-            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png")).toString()));
-        }
-
-        backgroundMusic.stop();
-        backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
-        backgroundMusic.play();
-
-// FIXME
         ClientApplication.changeScreen("views/info-menu-view.fxml", "Про програму");
-
     }
+
+//    @FXML
+//    public void onFastVolumeSwitchButtonClick() {
+//        ClientApplication.playButtonClickSound();
+//
+//        if (SoundParam.BACKGROUND_VOLUME == 0) {
+//            SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
+//            SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
+//            SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
+//            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png")).toString()));
+//        } else {
+//            SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
+//            SoundParam.BACKGROUND_VOLUME = 0;
+//            SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
+//            SoundParam.ELEMENT_VOLUME = 0;
+//            SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
+//            SoundParam.GAME_VOLUME = 0;
+//            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png")).toString()));
+//        }
+//
+//        backgroundMusic.stop();
+//        backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
+//        backgroundMusic.play();
+//
+//// FIXME
+//
+//
+//    }
 
 
     @FXML
@@ -149,8 +150,7 @@ public class MainMenuViewController implements Initializable {
             if (globalServerStatus) {
                 globalServerStatusImage.setImage(GLOBALHOST_AVAILABLE_IMAGE);
             } else {
-                System.out.println("global server unavailavle");
-                //TODO add global host not available image
+                globalServerStatusImage.setImage(GLOBALHOST_NON_AVAILABLE_IMAGE);
             }
         }).start();
     }
