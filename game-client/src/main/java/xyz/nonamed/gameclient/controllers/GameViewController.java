@@ -1,46 +1,147 @@
 package xyz.nonamed.gameclient.controllers;
 
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import lombok.extern.slf4j.Slf4j;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.gameclient.ClientApplication;
+import xyz.nonamed.gameclient.printable.GameObjectFX;
+import xyz.nonamed.gameclient.printable.HeroFX;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SessionParam;
 import xyz.nonamed.gameclient.config.UserParam;
 import xyz.nonamed.gameclient.handlers.HeroHandler;
 import xyz.nonamed.gameclient.handlers.SessionHandler;
 import xyz.nonamed.gameclient.handlers.UserHandler;
+import xyz.nonamed.gameclient.printable.WorldFX;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
+
+import static xyz.nonamed.Constants.*;
+import static xyz.nonamed.gameclient.ClientApplication.mainStage;
+import static xyz.nonamed.gameclient.controllers.StaticData.*;
 
 /**
  * @author artem1018
  */
 public class GameViewController implements Initializable {
 
-
     public AnchorPane mainView;
     public Pane gamePane;
     public Label userNameTextLabel;
     public Label codeTextLabel;
-
-
-    public static Hero MY_HERO;
+    public Pane miniMapPane;
+    public Pane hudPane;
+    static WorldFX WORLD_FX = new WorldFX();
+    static List<GameObjectFX> gameObjectFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            setInfoPanelValues();
-            setScreenSize();
+        generateGameObjects();
 
 
-            initGameSettings();
+        handleHeroAction();
+        setInfoPanelValues();
+        setScreenSize();
+        initGameSettings();
+
+        gamePane.setLayoutX(0);
+        gamePane.setLayoutY(0);
+
+        MY_HERO_FX.setSpeed(50); // dev
+
+        WORLD_FX.addToPane(gamePane);
+        WORLD_FX.print(gamePane);
+        MY_HERO_FX.addToPane(gamePane);
+        MY_HERO_FX.print(gamePane);
+        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.addToPane(gamePane));
+        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
+
+
     }
+
+    private void generateGameObjects() {
+        Random random = new Random();
+
+        for (int x = 0; x < WorldFX.WORLD_IMAGE.getWidth(); x += 1500) {
+            for (int y = 0; y < WorldFX.WORLD_IMAGE.getHeight(); y += 1500) {
+                if (random.nextInt(100) > 33) {
+                    gameObjectFXList.add(new GameObjectFX(x + random.nextDouble(1500), y + random.nextDouble(1500/2)));
+                }
+            }
+        }
+
+    }
+
+    private void handleHeroAction() {
+        EventHandler<KeyEvent> heroActionHandler = e -> {
+            KeyCode key = e.getCode();
+            if (key == KeyCode.W || key == KeyCode.UP) {
+                actionList.add(MOVE_UP);
+                MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
+//                if (MY_HERO_FX.getPosY() < mainView.getHeight() / 2 - mainView.getHeight() * 0.2) {
+                gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
+//                }
+            }
+            if (key == KeyCode.S || key == KeyCode.DOWN) {
+                actionList.add(MOVE_DOWN);
+                MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
+//                if (MY_HERO_FX.getPosY() > mainView.getHeight() / 2 + mainView.getHeight() * 0.2) {
+                gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
+//                }
+            }
+            if (key == KeyCode.A || key == KeyCode.LEFT) {
+                actionList.add(MOVE_LEFT);
+                MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed());
+                gamePane.setLayoutX(gamePane.getLayoutX() + MY_HERO_FX.getSpeed());
+            }
+            if (key == KeyCode.D || key == KeyCode.RIGHT) {
+                actionList.add(MOVE_RIGHT);
+                MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed());
+                gamePane.setLayoutX(gamePane.getLayoutX() - MY_HERO_FX.getSpeed());
+            }
+            wrapPlayer();
+            MY_HERO_FX.print(gamePane);
+            System.out.println(gamePane.getLayoutY());
+
+        };
+
+        mainStage.addEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
+        mainStage.addEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
+    }
+
+    public void wrapPlayer() {
+        double playerX = MY_HERO_FX.getPosX();
+        double playerY = MY_HERO_FX.getPosY();
+
+        if (playerX < 0) {
+            MY_HERO_FX.setPosX(WORLD_FX.getWidth() - MY_HERO_FX.getWidth());
+            gamePane.setLayoutX(mainStage.getHeight() - WORLD_FX.getWidth());
+        } else if (playerX >= WORLD_FX.getWidth() - MY_HERO_FX.getWidth()) {
+            MY_HERO_FX.setPosX(0);
+            gamePane.setLayoutX(0);
+        }
+        if (playerY < 0) {
+            MY_HERO_FX.setPosY(WORLD_FX.getHeight() - MY_HERO_FX.getHeight());
+            gamePane.setLayoutY(-WORLD_FX.getHeight() + mainStage.getHeight() - 300);
+        } else if (playerY >= WORLD_FX.getHeight() - MY_HERO_FX.getHeight()) {
+            MY_HERO_FX.setPosY(0);
+            gamePane.setLayoutY(0);
+        }
+    }
+
 
     private void setInfoPanelValues() {
         userNameTextLabel.setText(UserParam.USERNAME);
@@ -52,17 +153,17 @@ public class GameViewController implements Initializable {
         mainView.setPrefHeight(Screen.getPrimary().getBounds().getHeight() * ScreenParam.SCREEN_HEIGHT_RATIO);
     }
 
-    public void onSessionViewButtonClick(){
+    public void onSessionViewButtonClick() {
         ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
     }
 
-    private static void initGameSettings(){
-        if (UserParam.USER_HERO == null)
+    private static void initGameSettings() {
+        if (UserParam.USER_HERO == null) {
             UserParam.USER_HERO = new Hero();
+        }
 
         UserParam.USER_HERO.setName(UserParam.USERNAME);
         UserParam.USER_HERO.setType(Hero.HERO_1);
-
 
 
         UserHandler userHandler = new UserHandler();
@@ -70,8 +171,8 @@ public class GameViewController implements Initializable {
 
         userHandler.postRegisterUser(UserParam.USERNAME);
         sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
-        MY_HERO = heroHandler.postRegisterHero(UserParam.USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE); // need to update our hero stats from server
-        sessionHandler.postRunSession(UserParam.USERNAME,  UserParam.SESSION_CODE);
+        MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(UserParam.USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
+        sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);
 
         System.out.println("<- connected ->  ");
         System.out.println("Імʼя користувача: " + UserParam.USERNAME);

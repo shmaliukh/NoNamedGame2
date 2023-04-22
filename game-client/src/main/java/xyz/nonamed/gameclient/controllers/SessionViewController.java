@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
@@ -52,20 +51,18 @@ public class SessionViewController implements Initializable {
     public Label connectionAlertMaxUsers;
     @FXML
     public Label userNameLabelText;
-    public Label heroType;
     public TextField sessionMaxUsersTextField;
 
-    private ObservableList<SessionData> tvObservableList = FXCollections.observableArrayList();
+    private final ObservableList<SessionData> tvObservableList = FXCollections.observableArrayList();
 
     public String userName = "User";
-    public String userSessionCode = null;
     public int sessionMaxUsers = 2;
 
     private final TableColumn<SessionData, Integer> colCode = new TableColumn<>("Код сесії");
     private final TableColumn<SessionData, String> colName = new TableColumn<>("Гравці");
     private final TableColumn<SessionData, Integer> colMaxUsers = new TableColumn<>("Ліміт гравців");
     private final TableColumn<SessionData, Integer> colActiveUsers = new TableColumn<>("На сервері");
-    TableColumn<SessionData, Void> colBtn = new TableColumn("");
+    TableColumn<SessionData, Void> colBtn = new TableColumn<>("");
 
     static UserHandler userHandler = new UserHandler();
     static SessionHandler sessionHandler = new SessionHandler();
@@ -84,31 +81,10 @@ public class SessionViewController implements Initializable {
         activeSessionInfoTable.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
         activeSessionInfoTable.getStyleClass().add("table-view");
 
-
-
         addFilterToUserInputFields();
 
         fillTableDataFromServer();
-
-
-
-
-
-
     }
-
-
-    private static void initGameSetting() {
-
-
-
-        userHandler.postRegisterUser(UserParam.USERNAME);
-
-        sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
-        sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);
-    }
-
-
 
     private void fillTableDataFromServer(){
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -275,11 +251,8 @@ public class SessionViewController implements Initializable {
                             }
 
                         });
-
-
                         btn.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
                         btn.getStyleClass().add("yellow");
-
                     }
 
                     @Override
