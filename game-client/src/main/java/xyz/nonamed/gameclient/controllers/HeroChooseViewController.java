@@ -43,6 +43,7 @@ public class HeroChooseViewController implements Initializable {
 
         heroImages.add(new Image("xyz/nonamed/gameclient/images/heroes/type-1/heroWalkType-1.gif"));
         heroImages.add(new Image("xyz/nonamed/gameclient/images/heroes/type-2/heroWalkType-2.gif"));
+        heroImages.add(new Image("xyz/nonamed/gameclient/images/heroes/type-3/hero3-walk.gif"));
 
 
         initHeroValues();
@@ -65,10 +66,10 @@ public class HeroChooseViewController implements Initializable {
     }
 
     @FXML
-    public void onPrevButtonClick(){
-        if (currentHeroOnScreen - 1 < 0){
+    public void onPrevButtonClick() {
+        if (currentHeroOnScreen - 1 < 0) {
             currentHeroOnScreen = heroImages.size() - 1;
-        }else{
+        } else {
             currentHeroOnScreen -= 1;
         }
 
@@ -82,8 +83,10 @@ public class HeroChooseViewController implements Initializable {
 
         if (currentHeroOnScreen == 0) {
             hero = heroFactory.create(Hero.HERO_1);
-        } else if (currentHeroOnScreen == 1){
+        } else if (currentHeroOnScreen == 1) {
             hero = heroFactory.create(Hero.HERO_2);
+        } else if (currentHeroOnScreen == 2) {
+            hero = heroFactory.create(Hero.HERO_3);
         }
 
         assert hero != null;
