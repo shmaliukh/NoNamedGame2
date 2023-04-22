@@ -155,28 +155,28 @@ public class MainMenuViewController implements Initializable {
         }).start();
     }
     
-//    public void onFastVolumeSwitchButtonClick(){
-//        ClientApplication.playButtonClickSound();
-//
-//        if (SoundParam.BACKGROUND_VOLUME == 0){
-//            SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
-//            SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
-//            SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
-//            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png"));
-//        }else {
-//            SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
-//            SoundParam.BACKGROUND_VOLUME = 0;
-//            SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
-//            SoundParam.ELEMENT_VOLUME = 0;
-//            SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
-//            SoundParam.GAME_VOLUME = 0;
-//            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png"));
-//        }
-//
-//        backgroundMusic.stop();
-//        backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
-//        backgroundMusic.play();
-//    }
+    public void onFastVolumeSwitchButtonClick(){
+        ClientApplication.playButtonClickSound();
+
+        if (SoundParam.BACKGROUND_VOLUME == 0){
+            SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
+            SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
+            SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
+            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png"));
+        }else {
+            SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
+            SoundParam.BACKGROUND_VOLUME = 0;
+            SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
+            SoundParam.ELEMENT_VOLUME = 0;
+            SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
+            SoundParam.GAME_VOLUME = 0;
+            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png"));
+        }
+
+        backgroundMusic.stop();
+        backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
+        backgroundMusic.play();
+    }
 
 
     public void addFilterToUserInputFields() {

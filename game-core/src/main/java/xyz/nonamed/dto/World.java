@@ -23,6 +23,8 @@ public class World {
             WORLD_2,
             WORLD_3
     );
+    public static final double DEFAULT_HEIGHT = 5111;
+    public static final double DEFAULT_WIDTH = 10222;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +33,8 @@ public class World {
 
     public String sessionCode;
 
-    public double height = 5111;
-    public double width = 10222;
+    public double height = DEFAULT_HEIGHT;
+    public double width = DEFAULT_WIDTH;
     public String type = DEFAULT_WORLD_TYPE;
 
 }

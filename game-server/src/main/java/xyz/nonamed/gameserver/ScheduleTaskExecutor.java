@@ -9,10 +9,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import xyz.nonamed.dto.Bot;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.dto.Session;
+import xyz.nonamed.dto.World;
 import xyz.nonamed.factories.BotFactory;
 import xyz.nonamed.gameserver.services.BotService;
 import xyz.nonamed.gameserver.services.HeroService;
 import xyz.nonamed.gameserver.services.SessionService;
+import xyz.nonamed.gameserver.services.WorldService;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +36,9 @@ public class ScheduleTaskExecutor {
     final BotService botService;
     final HeroService heroService;
     final SessionService sessionService;
+    final WorldService worldService;
 
-    @Scheduled(fixedDelay = 50)
+    @Scheduled(fixedDelay = 10)
     public void moveBots() {
         sessionService.readAllSessions().stream()
                 .filter(Session::isRun)
@@ -45,7 +48,7 @@ public class ScheduleTaskExecutor {
 
     private void moveBotsBySession(String sessionCode) {
         List<Bot> botList = botService.readBotListBySessionCode(sessionCode).stream()
-                .filter(bot -> bot.getUserName() != null)
+                .filter(bot -> bot.getUserName() == null)
                 .collect(Collectors.toList()); // todo
         List<Hero> heroEntities = heroService.readHeroesBySessionCode(sessionCode);
 
@@ -57,7 +60,7 @@ public class ScheduleTaskExecutor {
             if (theClosestHero.isPresent()) {
                 moveToClosestHero(bot, botSpeed, botPosX, botPosY, theClosestHero);
             } else {
-//            freeMove(bot, botSpeed);
+                freeMove(bot, botSpeed);
             }
         }
         botService.save(botList);
@@ -97,6 +100,7 @@ public class ScheduleTaskExecutor {
         if (random.nextBoolean()) {
             bot.setPosY(bot.getPosY() - botSpeed);
         }
+        log.info("free move bot '{}'", bot);
     }
 
     @Scheduled(fixedDelay = 5000)
@@ -105,13 +109,14 @@ public class ScheduleTaskExecutor {
     }
 
     private void generateNewBotToSession(Session session) {
+        World world = worldService.readWorldBySessionCode(session.getSessionCode());
         if (session.getBotCounter() < session.getBotMaxCounter()) {
             BotFactory botFactory = new BotFactory();
             String randomType = getRandomType(botFactory);
 
             Bot bot = botFactory.create(randomType);
-            bot.setPosX(random.nextInt(1000));
-            bot.setPosY(random.nextInt(1000));
+            bot.setPosX(random.nextDouble(World.DEFAULT_WIDTH));
+            bot.setPosY(random.nextDouble(World.DEFAULT_HEIGHT));
             botService.addNewBotToSession(bot, session.getSessionCode());
             session.setBotCounter(session.getBotCounter() + 1);
             sessionService.save(session);
