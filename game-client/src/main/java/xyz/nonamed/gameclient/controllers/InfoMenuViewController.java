@@ -36,7 +36,7 @@ public class InfoMenuViewController implements Initializable {
     @FXML
     public void onBackButtonClick(){
         ClientApplication.playButtonClickSound();
-        ClientApplication.changeScreen("views/main-menu-view.fxml", "Головне меню");
+        ClientApplication.changeScreen("views/main-menu-view.fxml", "Вибір сесії");
     }
 
     @FXML

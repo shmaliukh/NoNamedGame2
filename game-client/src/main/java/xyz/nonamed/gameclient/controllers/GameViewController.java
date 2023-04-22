@@ -7,7 +7,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import xyz.nonamed.dto.Actions;
 import xyz.nonamed.dto.Bot;
@@ -25,9 +24,7 @@ import xyz.nonamed.gameclient.printable.WorldFX;
 import xyz.nonamed.gameclient.threads.CustomThread;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.dto.Hero.WALK;
@@ -51,6 +48,13 @@ public class GameViewController implements Initializable {
     static List<BotFX> botFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
+
+    public Timer heroMovetimer;
+
+    public boolean isMoveUp = false;
+    public boolean isMoveDown = false;
+    public boolean isMoveRight = false;
+    public boolean isMoveLeft = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,7 +120,72 @@ public class GameViewController implements Initializable {
 //        gameObjectFXList.forEach(gameObjectFX -> gameObjectFX.print(gamePane));
 
 
+        //add delay timer
+       // setUpThreadForHeroMove();
+
+//        mainStage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+//            if (keyEvent.getCode() == KeyCode.W){
+//                isMoveUp = !isMoveUp;
+//                System.out.println(keyEvent.getCode() + "..." + isMoveUp);
+//            }
+//            if (keyEvent.getCode() == KeyCode.S){
+//                isMoveDown = !isMoveDown;
+//                System.out.println(keyEvent.getCode() + "..." + isMoveDown);
+//            }
+//        });
+//
+//        mainStage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
+//            if (keyEvent.getCode() == KeyCode.W){
+//                isMoveUp = !isMoveUp;
+//                System.out.println(keyEvent.getCode() + "..." + isMoveUp);
+//            }
+//            if (keyEvent.getCode() == KeyCode.S){
+//                isMoveDown = !isMoveDown;
+//                System.out.println(keyEvent.getCode() + "..." + isMoveDown);
+//            }
+//        });
+
     }
+
+    private void setUpThreadForHeroMove() {
+        heroMovetimer = new Timer();
+        heroMovetimer.schedule(new HeroMove(), 0, 20);
+    }
+
+    private class HeroMove extends TimerTask {
+        public void run() {
+            System.out.println("Hero move thread run");
+            if (isMoveUp){
+                if (!checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed())){
+                    //actionList.add(MOVE_UP);
+                    MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
+//                if (MY_HERO_FX.getPosY() < mainView.getHeight() / 2 - mainView.getHeight() * 0.2) {
+                    gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
+                    System.out.println("Action UP");
+                }
+
+            }
+
+            if (isMoveDown){
+                if (!checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed())){
+                    //actionList.add(MOVE_DOWN);
+                    MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
+//                if (MY_HERO_FX.getPosY() > mainView.getHeight() / 2 + mainView.getHeight() * 0.2) {
+                    gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
+                    System.out.println("Action DOWN");
+//                }
+                }
+            }
+
+
+            wrapPlayer();
+            MY_HERO_FX.setAnimationType(WALK);
+            MY_HERO_FX.print(gamePane);
+        }
+    }
+
+
+
 
     private void updateBotList(List<Bot> serverBots) {
 
@@ -154,6 +223,8 @@ public class GameViewController implements Initializable {
                 System.out.println(pointX + " " + pointY);
                 return true; // collision detected
             }
+
+            wrapPlayer();
         }
         return false;
     }
@@ -192,6 +263,7 @@ public class GameViewController implements Initializable {
             wrapPlayer();
             MY_HERO_FX.setAnimationType(WALK);
             MY_HERO_FX.print(gamePane);
+
         };
 
         try {
@@ -236,7 +308,9 @@ public class GameViewController implements Initializable {
     }
 
     public void onSessionViewButtonClick() {
+        ClientApplication.gameStage.close();
         ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
+        mainStage.show();
     }
 
     private static void initGameSettings() {
@@ -255,6 +329,7 @@ public class GameViewController implements Initializable {
         sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
         USER_HERO.setType(UserParam.HERO_TYPE);
         MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
+        UserParam.HERO_FX = MY_HERO_FX;
         sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);
 
         System.out.println("<- connected ->  ");

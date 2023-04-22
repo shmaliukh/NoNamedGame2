@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +63,9 @@ public class SessionViewController implements Initializable {
     private final TableColumn<SessionData, String> colName = new TableColumn<>("Гравці");
     private final TableColumn<SessionData, Integer> colMaxUsers = new TableColumn<>("Ліміт гравців");
     private final TableColumn<SessionData, Integer> colActiveUsers = new TableColumn<>("На сервері");
+    public Group sessionAvailableTable;
+    public Group createSessionELementsGroup;
+    public HBox groupHBox;
     TableColumn<SessionData, Void> colBtn = new TableColumn<>("");
 
     static UserHandler userHandler = new UserHandler();
@@ -86,6 +90,8 @@ public class SessionViewController implements Initializable {
         fillTableDataFromServer();
 
 
+
+        groupHBox.getChildren().remove(sessionAvailableTable);
     }
 
 
@@ -99,11 +105,27 @@ public class SessionViewController implements Initializable {
     }
 
 
+    @FXML
+    public void onBackButtonClick(){
+        ClientApplication.playButtonClickSound();
+        ClientApplication.changeScreen("views/main-menu-view.fxml", "Головне меню");
+    }
+
     private void fillTableDataFromServer() {
+        int minWidth = 110;
+        int maxWidth = 400;
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colCode.setMinWidth(minWidth);
+        colCode.setMaxWidth(maxWidth);
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colName.setMinWidth(minWidth);
+        colName.setMaxWidth(maxWidth);
         colMaxUsers.setCellValueFactory(new PropertyValueFactory<>("maxUsers"));
+        colMaxUsers.setMinWidth(minWidth);
+        colMaxUsers.setMaxWidth(maxWidth);
         colActiveUsers.setCellValueFactory(new PropertyValueFactory<>("activeUsers"));
+        colActiveUsers.setMinWidth(minWidth);
+        colActiveUsers.setMaxWidth(maxWidth);
 
         activeSessionInfoTable.getColumns().addAll(colCode, colMaxUsers, colActiveUsers);
 
@@ -115,6 +137,7 @@ public class SessionViewController implements Initializable {
 
     @FXML
     public void connectToSession() {
+        ClientApplication.playButtonClickSound();
         if (Integer.parseInt(sessionMaxUsersTextField.getText()) > 10 ||
                 Integer.parseInt(sessionMaxUsersTextField.getText()) < 2) {
             userInputAlert.setText("від 2 до 10");
@@ -132,6 +155,22 @@ public class SessionViewController implements Initializable {
         } else {
             codeInputAlert.setText("Введіть код сесії!");
             codeInputAlert.setVisible(true);
+        }
+    }
+
+    public void onButtonCreateNewSession(){
+        ClientApplication.playButtonClickSound();
+        if (!groupHBox.getChildren().contains(createSessionELementsGroup)){
+            groupHBox.getChildren().add(createSessionELementsGroup);
+            groupHBox.getChildren().remove(sessionAvailableTable);
+        }
+    }
+
+    public void onButtonChooseFromSession(){
+        ClientApplication.playButtonClickSound();
+        if (!groupHBox.getChildren().contains(sessionAvailableTable)){
+            groupHBox.getChildren().add(sessionAvailableTable);
+            groupHBox.getChildren().remove(createSessionELementsGroup);
         }
     }
 
@@ -154,6 +193,11 @@ public class SessionViewController implements Initializable {
     }
 
 
+    @FXML
+    public void onMouseMovedEntered() {
+        ClientApplication.playButtonEnteredSound();
+    }
+
 
 
     @FXML
@@ -168,6 +212,7 @@ public class SessionViewController implements Initializable {
 
     @FXML
     public void onMainMenuButtonClick() {
+        ClientApplication.playButtonClickSound();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("views/main-menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -265,6 +310,9 @@ public class SessionViewController implements Initializable {
                         });
                         btn.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
                         btn.getStyleClass().add("yellow");
+                        btn.setOnMouseEntered(e -> {
+                            onMouseMovedEntered();
+                        });
                     }
 
                     @Override

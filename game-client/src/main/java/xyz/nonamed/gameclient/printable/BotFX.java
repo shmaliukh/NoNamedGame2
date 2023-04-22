@@ -3,6 +3,7 @@ package xyz.nonamed.gameclient.printable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import xyz.nonamed.dto.Bot;
+import xyz.nonamed.gameclient.config.UserParam;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class BotFX extends Bot implements AliveFx {
         typeImageMap.put(BOT_2 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
         typeImageMap.put(BOT_2 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
 
-       typeImageMap.put(BOT_3 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-walk.gif")).toString()));
+        typeImageMap.put(BOT_3 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-walk.gif")).toString()));
         typeImageMap.put(BOT_3 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-attack-left.gif")).toString()));
         typeImageMap.put(BOT_3 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot3-attack-right.gif")).toString()));
     }
@@ -52,7 +54,17 @@ public class BotFX extends Bot implements AliveFx {
     public BotFX(Bot bot) {
         super(bot);
         setAnimationType(WALK);
+
+        this.imageView.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            System.out.println("Bot image view clicked");
+            System.out.println(this.posX + " ...." + this.posY);
+            System.out.println(UserParam.HERO_FX.posX + " ...." + UserParam.HERO_FX.posY);
+        });
+
+
     }
+
+
 
 
     public void print(Pane pane) {
@@ -85,11 +97,12 @@ public class BotFX extends Bot implements AliveFx {
 
     @Override
     public void addToPane(Pane pane) {
+        pane.getChildren().add(circle);
         pane.getChildren().add(imageView);
         pane.getChildren().add(damageRectangle);
         pane.getChildren().add(healthRectangle);
         pane.getChildren().add(label);
-        pane.getChildren().add(circle);
+
     }
 
     @Override

@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.factories.HeroFactory;
 import xyz.nonamed.gameclient.ClientApplication;
@@ -55,6 +56,12 @@ public class HeroChooseViewController implements Initializable {
     }
 
     @FXML
+    public void onBackButtonClick(){
+        ClientApplication.playButtonClickSound();
+        ClientApplication.changeScreen("views/session-view.fxml", "");
+    }
+
+    @FXML
     public void onNextButtonClick() {
 
         if (currentHeroOnScreen + 1 == heroImages.size()) {
@@ -98,6 +105,7 @@ public class HeroChooseViewController implements Initializable {
         heroTypeImageView.setImage(heroImages.get(currentHeroOnScreen));
 
         UserParam.HERO_TYPE = hero.getType();
+        System.out.println(UserParam.USER_HERO + "   1234567");
     }
 
     @FXML
@@ -105,8 +113,12 @@ public class HeroChooseViewController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("views/game-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            ClientApplication.mainStage.setTitle("Game view");
-            ClientApplication.mainStage.setScene(scene);
+            ClientApplication.setGameStage(new Stage());
+            ClientApplication.gameStage.setTitle("Game view");
+            ClientApplication.gameStage.setScene(scene);
+            ClientApplication.mainStage.close();
+            ClientApplication.gameStage.show();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

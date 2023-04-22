@@ -18,6 +18,7 @@ import static javafx.scene.media.AudioClip.INDEFINITE;
 public class ClientApplication extends Application {
 
     public static Stage mainStage;
+    public static Stage gameStage;
     public static AudioClip backgroundMusic;
     public static AudioClip buttonEnteredSound;
 
@@ -35,6 +36,14 @@ public class ClientApplication extends Application {
 
 
         initializeMusic();
+    }
+
+    public static void setMainStage(Stage mainStage) {
+        ClientApplication.mainStage = mainStage;
+    }
+
+    public static void setGameStage(Stage gameStage) {
+        ClientApplication.gameStage = gameStage;
     }
 
     private void initializeMusic() {

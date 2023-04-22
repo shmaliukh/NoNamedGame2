@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
+import xyz.nonamed.Constants;
 import xyz.nonamed.gameclient.ClientApplication;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SoundParam;
@@ -81,6 +82,7 @@ public class MainMenuViewController implements Initializable {
     public void onNewGameButtonClick() {
         ClientApplication.playButtonClickSound();
         ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
+        System.out.println("Обраний сервер: " + Constants.BASE_URL);
 
     }
 
@@ -200,6 +202,7 @@ public class MainMenuViewController implements Initializable {
         if (UserParam.SELECTED_HOST.equals("localhost")){
             choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedLocal.gif"));
         } else {
+
             choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedGlobal.gif"));
         }
     }
@@ -209,9 +212,11 @@ public class MainMenuViewController implements Initializable {
     public void onSwitchServerButtonReleased(){
         if (UserParam.SELECTED_HOST.equals("localhost")){
             UserParam.SELECTED_HOST = "globalhost";
+            Constants.BASE_URL = Constants.AWS_URL;
             choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/switchGlobal.gif"));
         } else {
             UserParam.SELECTED_HOST = "localhost";
+            Constants.BASE_URL = Constants.LOCALHOST_URL;
             choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/switchLocal.gif"));
         }
     }
