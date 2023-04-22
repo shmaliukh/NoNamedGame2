@@ -3,10 +3,8 @@ package xyz.nonamed.gameclient.handlers;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
-import xyz.nonamed.dto.Borer;
 import xyz.nonamed.dto.GameObject;
 import xyz.nonamed.dto.World;
-import xyz.nonamed.gameclient.client_protocols.BorerAPI;
 import xyz.nonamed.gameclient.client_protocols.GameObjectAPI;
 
 import java.util.List;
@@ -29,4 +27,5 @@ public class GameObjectHandler implements GameObjectAPI {
     public List<GameObject> postGenerateGameObjects(World world, String userName, String sessionCode) {
         return gameObjectAPI.postGenerateGameObjects(world, userName, sessionCode);
     }
+
 }

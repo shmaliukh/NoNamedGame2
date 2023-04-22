@@ -4,7 +4,6 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import xyz.nonamed.dto.GameObject;
-import xyz.nonamed.dto.Hero;
 import xyz.nonamed.dto.World;
 
 import java.util.List;

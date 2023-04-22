@@ -35,6 +35,7 @@ public class Hero {
             HERO_2,
             HERO_3
     );
+
     public static final int DEFAULT_HERO_DISTANCE_TO_ACTIVATE = 200;
 
     public static final String STOP = "stop";

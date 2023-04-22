@@ -12,15 +12,12 @@ import javafx.stage.Screen;
 import xyz.nonamed.dto.GameObject;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.gameclient.ClientApplication;
-import xyz.nonamed.gameclient.handlers.GameObjectHandler;
+import xyz.nonamed.gameclient.handlers.*;
 import xyz.nonamed.gameclient.printable.GameObjectFX;
 import xyz.nonamed.gameclient.printable.HeroFX;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SessionParam;
 import xyz.nonamed.gameclient.config.UserParam;
-import xyz.nonamed.gameclient.handlers.HeroHandler;
-import xyz.nonamed.gameclient.handlers.SessionHandler;
-import xyz.nonamed.gameclient.handlers.UserHandler;
 import xyz.nonamed.gameclient.printable.WorldFX;
 
 import java.net.URL;
@@ -47,24 +44,22 @@ public class GameViewController implements Initializable {
     public Label codeTextLabel;
     public Pane miniMapPane;
     public Pane hudPane;
-    static WorldFX WORLD_FX = new WorldFX();
+    static WorldFX WORLD_FX;
     static List<GameObjectFX> gameObjectFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         handleHeroAction();
         setInfoPanelValues();
         setScreenSize();
         initGameSettings();
 
+        MY_HERO_FX.setSpeed(50); // dev
+
         gamePane.setLayoutX(0);
         gamePane.setLayoutY(0);
-
-        MY_HERO_FX.setSpeed(50); // dev
 
         WORLD_FX.addToPane(gamePane);
         WORLD_FX.print(gamePane);
@@ -211,6 +206,9 @@ public class GameViewController implements Initializable {
         System.out.println("Код сесії: " + UserParam.SESSION_CODE);
         System.out.println("Макс. гравців: " + SessionParam.SESSION_MAX_USERS);
 
+        WorldHandler worldHandler = new WorldHandler();
+        WORLD_FX = new WorldFX(worldHandler.getWorldBySession(UserParam.USERNAME, UserParam.SESSION_CODE));
+        System.out.println(WORLD_FX);
     }
 
 }
