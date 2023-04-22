@@ -38,7 +38,6 @@ public class HeroFX extends Hero implements AliveFx {
         typeImageMap.put(HERO_2 + LEFT_ATTACK, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroLeftAttackType-2.gif")).toString()));
         typeImageMap.put(HERO_2 + RIGHT_ATTACK, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroRightAttackType-2.gif")).toString()));
 
-
         typeImageMap.put(HERO_3 + STOP, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-3/hero3.gif")).toString()));
         typeImageMap.put(HERO_3 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-3/hero3-walk.gif")).toString()));
         typeImageMap.put(HERO_3 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-3/hero3-attack-left.gif")).toString()));
@@ -57,6 +56,9 @@ public class HeroFX extends Hero implements AliveFx {
 
 
     public void print(Pane pane) {
+        if (animationType == null){
+            animationType = Hero.WALK;
+        }
         imageView.setLayoutX(getPosX());
         imageView.setLayoutY(getPosY());
         imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
@@ -84,10 +86,10 @@ public class HeroFX extends Hero implements AliveFx {
     @Override
     public void addToPane(Pane pane) {
         if (!pane.getChildren().contains(imageView)) {
-            pane.getChildren().add(imageView);
             pane.getChildren().add(damageRectangle);
             pane.getChildren().add(healthRectangle);
             pane.getChildren().add(label);
+            pane.getChildren().add(imageView);
         }
     }
 

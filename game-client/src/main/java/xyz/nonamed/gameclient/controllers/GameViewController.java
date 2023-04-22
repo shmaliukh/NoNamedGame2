@@ -384,7 +384,8 @@ public class GameViewController implements Initializable {
 
             AudioClip gunshot = new AudioClip(getClass().getResource("/xyz/nonamed/gameclient/music/gunshot.mp3").toString());
             gunshot.play();
-            MY_HERO_FX.setAnimationType(sceneX > 0 ? HeroFX.RIGHT_ATTACK : HeroFX.LEFT_ATTACK);
+            System.out.println("sceneX: " + (sceneX - mainStage.getWidth() / 2));
+            MY_HERO_FX.setAnimationType(sceneX - mainStage.getWidth() / 2 > 0 ? HeroFX.RIGHT_ATTACK : HeroFX.LEFT_ATTACK);
             MY_HERO_FX.print(gamePane);
 
             timeline.play();
