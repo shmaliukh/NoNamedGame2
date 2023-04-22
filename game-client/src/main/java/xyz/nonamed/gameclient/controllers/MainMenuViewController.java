@@ -17,7 +17,12 @@ import xyz.nonamed.gameclient.config.SoundParam;
 import xyz.nonamed.gameclient.config.UserParam;
 import xyz.nonamed.gameclient.handlers.IsAliveServerHandler;
 
+import xyz.nonamed.gameclient.printable.GameObjectFX;
+
+
+
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
@@ -28,6 +33,11 @@ import static xyz.nonamed.gameclient.ClientApplication.backgroundMusic;
  */
 public class MainMenuViewController implements Initializable {
 
+
+    public static final Image LOCALHOST_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif")).toString());
+    public static final Image LOCALHOST_NON_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif")).toString());
+    public static final Image GLOBALHOST_AVAILABLE_IMAGE = new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif")).toString());
+
     public AnchorPane mainView;
     public TextField userNameTextField;
     public Button newGameButton;
@@ -35,6 +45,7 @@ public class MainMenuViewController implements Initializable {
     public ImageView globalServerStatusImage;
     public ImageView refreshServerStatusButton;
     public ImageView volumeFastSwitchButton;
+
     public ImageView choosenNetworkServerImageView;
 
     @Override
@@ -76,6 +87,7 @@ public class MainMenuViewController implements Initializable {
     @FXML
     public void onSettingsButtonClick() {
         ClientApplication.playButtonClickSound();
+
         ClientApplication.changeScreen("views/settings-menu-view.fxml", "Налаштування");
     }
 
@@ -88,10 +100,61 @@ public class MainMenuViewController implements Initializable {
     @FXML
     public void onInfoButtonClick() {
         ClientApplication.playButtonClickSound();
-        ClientApplication.changeScreen("views/info-menu-view.fxml", "Про програму");
     }
 
     @FXML
+    public void onFastVolumeSwitchButtonClick() {
+        ClientApplication.playButtonClickSound();
+
+        if (SoundParam.BACKGROUND_VOLUME == 0) {
+            SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
+            SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
+            SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
+            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png")).toString()));
+        } else {
+            SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
+            SoundParam.BACKGROUND_VOLUME = 0;
+            SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
+            SoundParam.ELEMENT_VOLUME = 0;
+            SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
+            SoundParam.GAME_VOLUME = 0;
+            volumeFastSwitchButton.setImage(new Image(Objects.requireNonNull(MainMenuViewController.class.getResource("/xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png")).toString()));
+        }
+
+        backgroundMusic.stop();
+        backgroundMusic.setVolume(SoundParam.BACKGROUND_VOLUME);
+        backgroundMusic.play();
+
+// FIXME
+        ClientApplication.changeScreen("views/info-menu-view.fxml", "Про програму");
+
+    }
+
+
+    @FXML
+    public void onRefreshServerStatus() {
+        new Thread(() -> {
+            ClientApplication.playButtonClickSound();
+            IsAliveServerHandler isAliveServerHandler = new IsAliveServerHandler();
+
+            boolean localServerStatus = isAliveServerHandler.isLocalAlive();
+            boolean globalServerStatus = isAliveServerHandler.isGlobalAlive();
+
+            if (localServerStatus) {
+                localServerStatusImage.setImage(LOCALHOST_AVAILABLE_IMAGE);
+            } else {
+                localServerStatusImage.setImage(LOCALHOST_NON_AVAILABLE_IMAGE);
+            }
+
+            if (globalServerStatus) {
+                globalServerStatusImage.setImage(GLOBALHOST_AVAILABLE_IMAGE);
+            } else {
+                System.out.println("global server unavailavle");
+                //TODO add global host not available image
+            }
+        }).start();
+    }
+    
     public void onFastVolumeSwitchButtonClick(){
         ClientApplication.playButtonClickSound();
 
@@ -115,30 +178,6 @@ public class MainMenuViewController implements Initializable {
         backgroundMusic.play();
     }
 
-
-
-
-    @FXML
-    public void onRefreshServerStatus(){
-        ClientApplication.playButtonClickSound();
-        IsAliveServerHandler isAliveServerHandler = new IsAliveServerHandler();
-
-        boolean localServerStatus = isAliveServerHandler.isLocalAlive();
-        boolean globalServerStatus = isAliveServerHandler.isGlobalAlive();
-
-        if (localServerStatus){
-            localServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostAvailable.gif"));
-        }else {
-            localServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/localhostNonAvailable.gif"));
-        }
-
-        if(globalServerStatus){
-            globalServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostAvailable.gif"));
-        }else {
-            globalServerStatusImage.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/globalhostNonAvailable.gif"));
-        }
-
-    }
 
     public void addFilterToUserInputFields() {
         //Додаємо перевірку для обробки значення коду сесії

@@ -43,9 +43,9 @@ public class ClientApplication extends Application {
         backgroundMusic.setCycleCount(INDEFINITE);
         backgroundMusic.play();
 
-        buttonEnteredSound = new AudioClip(Objects.requireNonNull(this.getClass().getResource("music/buttons/buttonSoundType1.mp3")).toString());
+        buttonEnteredSound = new AudioClip(Objects.requireNonNull(this.getClass().getResource("music/buttons/music.mp3")).toString());
+        buttonClickSound = new AudioClip(Objects.requireNonNull(this.getClass().getResource("music/buttons/music.mp3")).toString());
 
-        buttonClickSound = new AudioClip(Objects.requireNonNull(this.getClass().getResource("music/buttons/buttonClickType1.mp3")).toString());
 
     }
 

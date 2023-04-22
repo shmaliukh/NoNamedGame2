@@ -81,7 +81,6 @@ public class SessionViewController implements Initializable {
         activeSessionInfoTable.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
         activeSessionInfoTable.getStyleClass().add("table-view");
 
-
         addFilterToUserInputFields();
 
         fillTableDataFromServer();
@@ -264,11 +263,8 @@ public class SessionViewController implements Initializable {
                             }
 
                         });
-
-
                         btn.getStylesheets().add("/xyz/vshmaliukh/gameclient/styles/session-view-style.css");
                         btn.getStyleClass().add("yellow");
-
                     }
 
                     @Override
