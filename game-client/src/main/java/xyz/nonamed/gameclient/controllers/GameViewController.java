@@ -105,7 +105,7 @@ public class GameViewController implements Initializable {
         timer1.schedule(new UpdateHeroTask(), 0, 100);
         timer2.schedule(new UpdateBotTask(), 0, BOT_PERIOD);
         timer3.schedule(new UpdateAllHeroTask(), 0, 100);
-        timer4.schedule(new UpdateMiniMapTask(), 0, 200);
+        timer4.schedule(new UpdateMiniMapTask(), 0, 250);
     }
 
     private class UpdateMiniMapTask extends TimerTask {
@@ -164,7 +164,7 @@ public class GameViewController implements Initializable {
             AnimationTimer animationTimer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    botFXList.forEach(botFX -> botFX.print(gamePane));
+                    heroFXList.forEach(botFX -> botFX.print(gamePane));
                     this.stop();
                 }
             };
