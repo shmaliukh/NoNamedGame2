@@ -33,6 +33,7 @@ import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.dto.Hero.STOP;
 import static xyz.nonamed.dto.Hero.WALK;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
+import static xyz.nonamed.gameclient.config.UserParam.USER_HERO;
 import static xyz.nonamed.gameclient.controllers.StaticData.*;
 
 /**
@@ -188,12 +189,12 @@ public class GameViewController implements Initializable {
     }
 
     private static void initGameSettings() {
-        if (UserParam.USER_HERO == null) {
-            UserParam.USER_HERO = new Hero();
+        if (USER_HERO == null) {
+            USER_HERO = new Hero();
         }
 
-        UserParam.USER_HERO.setName(UserParam.USERNAME);
-        UserParam.USER_HERO.setType(Hero.HERO_1);
+        USER_HERO.setName(UserParam.USERNAME);
+        USER_HERO.setType(Hero.HERO_1);
 
 
         UserHandler userHandler = new UserHandler();
@@ -201,7 +202,8 @@ public class GameViewController implements Initializable {
 
         userHandler.postRegisterUser(UserParam.USERNAME);
         sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
-        MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(UserParam.USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
+        USER_HERO.setType(UserParam.HERO_TYPE);
+        MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
         sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);
 
         System.out.println("<- connected ->  ");

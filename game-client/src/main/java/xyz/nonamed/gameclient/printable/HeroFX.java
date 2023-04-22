@@ -53,21 +53,18 @@ public class HeroFX extends Hero implements AliveFx {
         imageView.setLayoutX(getPosX());
         imageView.setLayoutY(getPosY());
         imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
-        width = 128;
-        height = 128;
+
+        healthRectangle.setLayoutX(getPosX());
+        healthRectangle.setLayoutY(getPosY() - 10.0d);
+        healthRectangle.setWidth(getWidth() * getHealth() / getMaxHealth());
+        healthRectangle.setHeight(4);
+        healthRectangle.setFill(Color.RED);
 
         damageRectangle.setLayoutX(getPosX());
         damageRectangle.setLayoutY(getPosY() - 5.0d);
         damageRectangle.setWidth(getWidth() * getDamage() / getMaxHealth() * 20);
         damageRectangle.setHeight(4);
         damageRectangle.setFill(Color.DARKVIOLET);
-
-        healthRectangle.setFill(Color.RED);
-        healthRectangle.setLayoutX(getPosX());
-        healthRectangle.setLayoutY(getPosY() - 10.0d);
-        healthRectangle.setWidth(getWidth() * getHealth() / getMaxHealth());
-        healthRectangle.setHeight(4);
-        healthRectangle.setFill(Color.RED);
 
         label.setText(getName());
         label.setLayoutX(getPosX());

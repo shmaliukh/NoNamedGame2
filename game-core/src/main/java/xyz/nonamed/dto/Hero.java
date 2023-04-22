@@ -17,8 +17,8 @@ public class Hero {
     public static final double DEFAULT_HERO_POS_X = 200;
     public static final double DEFAULT_HERO_POS_Y = 200;
 
-    public static final double DEFAULT_HERO_HEIGHT = 60;
-    public static final double DEFAULT_HERO_WIDTH = 40;
+    public static final double DEFAULT_HERO_HEIGHT = 128;
+    public static final double DEFAULT_HERO_WIDTH = 128;
 
     public static final double DEFAULT_HERO_MAX_HEALTH = 1000;
     public static final double DEFAULT_HERO_DAMAGE = 10;
