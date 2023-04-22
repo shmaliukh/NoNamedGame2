@@ -30,4 +30,6 @@ public interface Alive {
 
     String getAnimationType();
 
+    String getColor();
+
 }

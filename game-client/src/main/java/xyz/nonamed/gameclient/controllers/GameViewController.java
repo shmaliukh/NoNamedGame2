@@ -18,8 +18,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.util.Duration;
+import xyz.nonamed.Alive;
 import xyz.nonamed.dto.*;
 import xyz.nonamed.gameclient.ClientApplication;
 import xyz.nonamed.gameclient.handlers.*;
@@ -61,6 +63,7 @@ public class GameViewController implements Initializable {
     static Timer timer1 = new Timer();
     static Timer timer2 = new Timer();
     static Timer timer3 = new Timer();
+    static Timer timer4 = new Timer();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -94,12 +97,45 @@ public class GameViewController implements Initializable {
         timer1.cancel();
         timer2.cancel();
         timer3.cancel();
+        timer4.cancel();
         timer1 = new Timer();
         timer2 = new Timer();
         timer3 = new Timer();
+        timer4 = new Timer();
         timer1.schedule(new UpdateHeroTask(), 0, 100);
         timer2.schedule(new UpdateBotTask(), 0, BOT_PERIOD);
         timer3.schedule(new UpdateAllHeroTask(), 0, 100);
+        timer4.schedule(new UpdateMiniMapTask(), 0, 200);
+    }
+
+    private class UpdateMiniMapTask extends TimerTask {
+
+        @Override
+        public void run() {
+            AnimationTimer animationTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    miniMapPane.getChildren().clear();
+                    printMiniMap(botFXList);
+                    printMiniMap(botFXList);
+                    printMiniMap(Collections.singletonList(MY_HERO_FX));
+                    this.stop();
+                }
+            };
+            animationTimer.start();
+        }
+
+        private void printMiniMap(List<? extends Alive> gameObjectList) {
+            for (Alive gameObject : gameObjectList) {
+                Rectangle mapItem = new Rectangle();
+                mapItem.setX(miniMapPane.getWidth() * gameObject.getPosX() / WORLD_FX.getWidth());
+                mapItem.setY(miniMapPane.getHeight() * gameObject.getPosY() / WORLD_FX.getHeight());
+                mapItem.setWidth(3);
+                mapItem.setHeight(3);
+                mapItem.setFill(Color.valueOf(gameObject.getColor() != null ? gameObject.getColor() : Color.WHITE.toString()));
+                miniMapPane.getChildren().add(mapItem);
+            }
+        }
     }
 
     private class UpdateHeroTask extends TimerTask {
