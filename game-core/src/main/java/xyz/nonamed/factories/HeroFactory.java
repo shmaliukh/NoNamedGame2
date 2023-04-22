@@ -11,6 +11,7 @@ public class HeroFactory implements MyFactory<Hero> {
         return switch (type) {
             case Hero.HERO_1 -> createHero1();
             case Hero.HERO_2 -> createHero2();
+            case Hero.HERO_3 -> createHero3();
             default -> createHero3();
         };
     }
