@@ -60,7 +60,8 @@ public class ScheduleTaskExecutor {
             if (theClosestHero.isPresent()) {
                 moveToClosestHero(bot, botSpeed, botPosX, botPosY, theClosestHero);
             } else {
-                freeMove(bot, botSpeed);
+                bot.setAnimationType(Hero.WALK);
+//                freeMove(bot, botSpeed);
             }
         }
         botService.save(botList);
@@ -71,10 +72,10 @@ public class ScheduleTaskExecutor {
 
         if (hero.getPosX() > botPosX) {
             bot.setPosX(botPosX + botSpeed);
-            bot.setAnimationType(MOVE_RIGHT);
+            bot.setAnimationType(Hero.RIGHT_ATTACK);
         } else if (hero.getPosX() < botPosX) {
             bot.setPosX(botPosX - botSpeed);
-            bot.setAnimationType(MOVE_LEFT);
+            bot.setAnimationType(Hero.LEFT_ATTACK);
         }
         if (hero.getPosY() > botPosY) {
             bot.setPosY(botPosY + botSpeed);

@@ -12,7 +12,7 @@ public class BotFactory implements MyFactory<Bot> {
         return switch (type) {
             case Bot.BOT_1 -> createBot1();
             case Bot.BOT_2 -> createBot2();
-//            case Bot.BOT_3 -> createBot3();
+            case Bot.BOT_3 -> createBot3();
 //            case Bot.BOT_4 -> createBot4();
 //            case Bot.BOT_5 -> createBot5();
 //            case Bot.BOT_6 -> createBot5();

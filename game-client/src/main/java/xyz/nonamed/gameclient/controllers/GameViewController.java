@@ -104,6 +104,7 @@ public class GameViewController implements Initializable {
                                 if (botFX.id.equals(bot.getId())) {
                                     botFX.setPosX(bot.getPosX());
                                     botFX.setPosY(bot.getPosY());
+                                    botFX.setAnimationType(bot.getAnimationType());
                                 }
                             }
                         });
