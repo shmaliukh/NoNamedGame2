@@ -93,15 +93,15 @@ public class MainMenuViewController implements Initializable {
     }
 
     @FXML
-    public void onFastVolumeSwitchButtonClick(){
+    public void onFastVolumeSwitchButtonClick() {
         ClientApplication.playButtonClickSound();
 
-        if (SoundParam.BACKGROUND_VOLUME == 0){
+        if (SoundParam.BACKGROUND_VOLUME == 0) {
             SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
             SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
             SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
             volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png"));
-        }else {
+        } else {
             SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
             SoundParam.BACKGROUND_VOLUME = 0;
             SoundParam.LAST_ELEMENT_VOLUME = SoundParam.ELEMENT_VOLUME;
@@ -117,10 +117,8 @@ public class MainMenuViewController implements Initializable {
     }
 
 
-
-
     @FXML
-    public void onRefreshServerStatus(){
+    public void onRefreshServerStatus() {
         new Thread(() -> {
             ClientApplication.playButtonClickSound();
             IsAliveServerHandler isAliveServerHandler = new IsAliveServerHandler();
