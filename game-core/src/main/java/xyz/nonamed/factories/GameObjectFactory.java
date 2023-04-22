@@ -5,8 +5,7 @@ import xyz.nonamed.dto.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static xyz.nonamed.dto.GameObject.GAME_OBJECT_1;
-import static xyz.nonamed.dto.GameObject.GAME_OBJECT_2;
+import static xyz.nonamed.dto.GameObject.*;
 
 public class GameObjectFactory implements MyFactory<GameObject> {
 
@@ -14,6 +13,12 @@ public class GameObjectFactory implements MyFactory<GameObject> {
         return switch (type) {
             case GAME_OBJECT_1 -> createGameObject1();
             case GAME_OBJECT_2 -> createGameObject2();
+            case GAME_OBJECT_3 -> createGameObject3();
+            case GAME_OBJECT_4 -> createGameObject4();
+            case GAME_OBJECT_5 -> createGameObject5();
+            case GAME_OBJECT_6 -> createGameObject6();
+            case GAME_OBJECT_7 -> createGameObject7();
+            case GAME_OBJECT_8 -> createGameObject8();
             default -> createGameObject1();
         };
     }
@@ -41,6 +46,79 @@ public class GameObjectFactory implements MyFactory<GameObject> {
         gameObject.color = "WHITE";
         return gameObject;
     }
+
+    private GameObject createGameObject3() {
+        GameObject gameObject = new GameObject();
+        gameObject.type = GAME_OBJECT_3;
+        gameObject.collisionPosX = 10;
+        gameObject.collisionPosY = 60;
+        gameObject.collisionHeight = 60;
+        gameObject.collisionWidth = 120;
+        gameObject.isCollision = true;
+        gameObject.color = "WHITE";
+        return gameObject;
+    }
+
+    private GameObject createGameObject4() {
+        GameObject gameObject = new GameObject();
+        gameObject.type = GAME_OBJECT_4;
+        gameObject.collisionPosX = 17;
+        gameObject.collisionPosY = 60;
+        gameObject.collisionHeight = 60;
+        gameObject.collisionWidth = 120;
+        gameObject.isCollision = true;
+        gameObject.color = "WHITE";
+        return gameObject;
+    }
+
+    private GameObject createGameObject5() {
+        GameObject gameObject = new GameObject();
+        gameObject.type = GAME_OBJECT_5;
+        gameObject.collisionPosX = 70;
+        gameObject.collisionPosY = 40;
+        gameObject.collisionWidth = 90;
+        gameObject.collisionHeight = 60;
+        gameObject.isCollision = true;
+        gameObject.color = "WHITE";
+        return gameObject;
+    }
+
+    private GameObject createGameObject6() {
+        GameObject gameObject = new GameObject();
+        gameObject.type = GAME_OBJECT_6;
+        gameObject.collisionPosX = 40;
+        gameObject.collisionPosY = 40;
+        gameObject.collisionWidth = 90;
+        gameObject.collisionHeight = 60;
+        gameObject.isCollision = true;
+        gameObject.color = "WHITE";
+        return gameObject;
+    }
+
+    private GameObject createGameObject7() {
+        GameObject gameObject = new GameObject();
+        gameObject.type = GAME_OBJECT_7;
+        gameObject.collisionPosX = 70;
+        gameObject.collisionPosY = 90;
+        gameObject.collisionWidth = 770 ;
+        gameObject.collisionHeight = 310;
+        gameObject.isCollision = true;
+        gameObject.color = "WHITE";
+        return gameObject;
+    }
+
+    private GameObject createGameObject8() {
+        GameObject gameObject = new GameObject();
+        gameObject.type = GAME_OBJECT_8;
+        gameObject.collisionPosX = 17;
+        gameObject.collisionPosY = 80;
+        gameObject.collisionWidth = 673 ;
+        gameObject.collisionHeight = 380;
+        gameObject.isCollision = true;
+        gameObject.color = "WHITE";
+        return gameObject;
+    }
+
 
     @Override
     public List<String> getTypeList() {

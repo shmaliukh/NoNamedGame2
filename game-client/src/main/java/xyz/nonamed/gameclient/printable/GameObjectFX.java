@@ -21,6 +21,12 @@ public class GameObjectFX extends GameObject implements PrintableFx {
     static {
         typeImageMap.put(GAME_OBJECT_1, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/home1.png")).toString()));
         typeImageMap.put(GAME_OBJECT_2, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/home2.png")).toString()));
+        typeImageMap.put(GAME_OBJECT_3, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/tank1.png")).toString()));
+        typeImageMap.put(GAME_OBJECT_4, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/tank2.png")).toString()));
+        typeImageMap.put(GAME_OBJECT_5, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/tank3.png")).toString()));
+        typeImageMap.put(GAME_OBJECT_6, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/tank4.png")).toString()));
+        typeImageMap.put(GAME_OBJECT_7, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/home3.png")).toString()));
+        typeImageMap.put(GAME_OBJECT_8, new Image(Objects.requireNonNull(GameObjectFX.class.getResource("/xyz/nonamed/gameclient/images/home/home4.png")).toString()));
     }
 
     ImageView imageView;
