@@ -23,6 +23,14 @@ public class ClientApplication extends Application {
 
     public static AudioClip buttonClickSound;
 
+    public static Stage gameStage;
+
+
+    public static void setGameStage(Stage gameStage) {
+        ClientApplication.gameStage = gameStage;
+    }
+
+
     @Override
     public void start(Stage stage) throws IOException {
         mainStage = stage;

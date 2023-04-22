@@ -1,18 +1,25 @@
 package xyz.nonamed.gameclient.controllers;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
-import xyz.nonamed.dto.Actions;
-import xyz.nonamed.dto.Bot;
-import xyz.nonamed.dto.GameObject;
-import xyz.nonamed.dto.Hero;
+import javafx.util.Duration;
+import xyz.nonamed.dto.*;
 import xyz.nonamed.gameclient.ClientApplication;
 import xyz.nonamed.gameclient.handlers.*;
 import xyz.nonamed.gameclient.printable.*;
@@ -26,6 +33,7 @@ import java.util.*;
 
 import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.dto.Hero.WALK;
+import static xyz.nonamed.gameclient.ClientApplication.changeScreen;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
 import static xyz.nonamed.gameclient.config.UserParam.USER_HERO;
 import static xyz.nonamed.gameclient.controllers.StaticData.*;
@@ -37,13 +45,14 @@ public class GameViewController implements Initializable {
 
     public AnchorPane mainView;
     public Pane gamePane;
+    public static Pane staticGamePane;
     public Label userNameTextLabel;
     public Label codeTextLabel;
     public Pane miniMapPane;
     public Pane hudPane;
     static WorldFX WORLD_FX;
     static List<GameObjectFX> gameObjectFXList = new ArrayList<>();
-    static List<BotFX> botFXList = new ArrayList<>();
+    public static List<BotFX> botFXList = new ArrayList<>();
     static List<HeroFX> heroFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
@@ -54,6 +63,7 @@ public class GameViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        staticGamePane = gamePane;
         botFXList = new ArrayList<>();
         heroFXList = new ArrayList<>();
         gameObjectFXList = new ArrayList<>();
@@ -87,7 +97,7 @@ public class GameViewController implements Initializable {
         timer2 = new Timer();
         timer3 = new Timer();
         timer1.schedule(new UpdateHeroTask(), 0, 100);
-        timer2.schedule(new UpdateBotTask(), 0, 200);
+        timer2.schedule(new UpdateBotTask(), 0, 100);
         timer3.schedule(new UpdateAllHeroTask(), 0, 100);
     }
 
@@ -132,6 +142,9 @@ public class GameViewController implements Initializable {
                             if (heroFX.getId().equals(hero.getId())) {
                                 heroFX.setPosX(hero.getPosX());
                                 heroFX.setPosY(hero.getPosY());
+                                heroFX.setHealth(hero.getHealth());
+                                heroFX.setSpeed(hero.getSpeed());
+                                heroFX.setDamage(hero.getDamage());
                                 heroFX.setAnimationType(hero.getAnimationType());
                             }
                         }
@@ -189,6 +202,7 @@ public class GameViewController implements Initializable {
                             if (botFX.id.equals(bot.getId())) {
                                 botFX.setPosX(bot.getPosX());
                                 botFX.setPosY(bot.getPosY());
+                                botFX.setHealth(bot.getHealth());
                                 botFX.setAnimationType(bot.getAnimationType());
                             }
                         }
@@ -276,6 +290,39 @@ public class GameViewController implements Initializable {
 
         mainStage.addEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
         mainStage.addEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
+        mainStage.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            Point2D start = new Point2D(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY());
+            Point2D end = new Point2D(mouseEvent.getX() + MY_HERO_FX.getPosX(), mouseEvent.getY() + MY_HERO_FX.getPosY());
+            Circle bullet = new Circle(3, Color.RED);
+            bullet.setEffect(new DropShadow(10, Color.BLACK));
+            bullet.setCenterX(start.getX());
+            bullet.setCenterY(start.getY());
+            gamePane.getChildren().add(bullet);
+
+            double diffX = MY_HERO_FX.getWidth() / 2;
+            double diffY = MY_HERO_FX.getHeight() / 2;
+            double sceneX = mouseEvent.getSceneX();
+            double sceneY = mouseEvent.getSceneY();
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(bullet.layoutXProperty(), diffX)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(bullet.layoutYProperty(), diffY)),
+                    new KeyFrame(Duration.seconds(1), new KeyValue(bullet.layoutXProperty(), sceneX - mainStage.getWidth() / 2 + diffX)),
+                    new KeyFrame(Duration.seconds(1), new KeyValue(bullet.layoutYProperty(), sceneY - mainStage.getHeight() / 2 + diffY))
+            );
+            timeline.setCycleCount(1);
+
+            AudioClip gunshot = new AudioClip(getClass().getResource("/xyz/nonamed/gameclient/music/gunshot.mp3").toString());
+
+            gunshot.play();
+            MY_HERO_FX.setAnimationType(sceneX > 0 ? HeroFX.RIGHT_ATTACK : HeroFX.LEFT_ATTACK);
+            MY_HERO_FX.print(gamePane);
+            timeline.play();
+            timeline.setOnFinished(event -> {
+                gamePane.getChildren().remove(bullet);
+                MY_HERO_FX.setAnimationType(WALK);
+                MY_HERO_FX.print(gamePane);
+            });
+        });
     }
 
     public void wrapPlayer() {
@@ -319,11 +366,15 @@ public class GameViewController implements Initializable {
         UserHandler userHandler = new UserHandler();
         SessionHandler sessionHandler = new SessionHandler();
 
-        userHandler.postRegisterUser(UserParam.USERNAME);
+        UserEntity user = userHandler.postRegisterUser(UserParam.USERNAME);
         sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
         USER_HERO.setName(UserParam.USERNAME);
         USER_HERO.setType(UserParam.HERO_TYPE);
         MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
+        if (MY_HERO_FX == null) {
+            System.out.println("problem to connect to session");
+            // TODO changeScreen();
+        }
         sessionHandler.postRunSession(UserParam.USERNAME, UserParam.SESSION_CODE);
 
         System.out.println("<- connected ->  ");

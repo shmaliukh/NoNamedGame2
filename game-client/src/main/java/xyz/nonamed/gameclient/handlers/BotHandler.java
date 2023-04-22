@@ -22,4 +22,9 @@ public class BotHandler implements BotAPI {
         return botAPI.getBotList(userName, sessionCode);
     }
 
+    @Override
+    public Bot postUpdateBot(Bot bot, String userName, String sessionCode) {
+        return botAPI.postUpdateBot(bot, userName, sessionCode);
+    }
+
 }

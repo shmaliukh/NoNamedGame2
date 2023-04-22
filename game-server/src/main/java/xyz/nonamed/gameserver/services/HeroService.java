@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import xyz.nonamed.Constants;
 import xyz.nonamed.dto.Actions;
 import xyz.nonamed.dto.Hero;
+import xyz.nonamed.dto.Session;
 import xyz.nonamed.factories.HeroFactory;
 import xyz.nonamed.gameserver.repositories.HeroRepository;
 
@@ -21,6 +22,7 @@ import static xyz.nonamed.Constants.MOVE_RIGHT;
 public class HeroService {
 
     final HeroRepository heroRepository;
+    final SessionService sessionService;
     final HeroFactory heroFactory = new HeroFactory();
 
     public Hero save(Hero entity) {
@@ -30,20 +32,23 @@ public class HeroService {
         return null;
     }
 
-    public Hero registerHero(Hero hero, String sessionCode, boolean isCustom) {
-        Hero heroEntity = heroRepository.readByNameEqualsIgnoreCaseAndSessionCodeEqualsIgnoreCase(hero.getName(), sessionCode);
-        if (heroEntity == null) {
-            heroEntity = heroFactory.create(hero.getType());
-            heroEntity.setName(hero.getName());
-            heroEntity.setColor(hero.getColor());
-            heroEntity.setSessionCode(sessionCode);
-//            if (isCustom) { // todo implement ???
-//                heroEntity = hero;
-//            }
-            heroEntity = save(heroEntity);
-            log.info("registered hero: '{}'", heroEntity);
+    public Hero registerHero(Hero hero, String userName, String sessionCode, boolean isCustom) {
+        Session session = sessionService.readBySessionCode(sessionCode);
+        if (session.getUserCounter() < session.getMaxUser()) {
+            Hero heroEntity = heroRepository.readByNameEqualsIgnoreCaseAndSessionCodeEqualsIgnoreCase(userName, sessionCode);
+            if (heroEntity == null) {
+                heroEntity = heroFactory.create(hero.getType());
+                heroEntity.setName(userName);
+                heroEntity.setColor(hero.getColor());
+                heroEntity.setSessionCode(sessionCode);
+                heroEntity = save(heroEntity);
+                log.info("registered hero: '{}'", heroEntity);
+                session.setUserCounter(session.getUserCounter() + 1);
+                sessionService.save(session);
+            }
+            return heroEntity;
         }
-        return heroEntity;
+        return null;
     }
 
     public List<Hero> getHeroList(String userName, String sessionCode) {

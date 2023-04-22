@@ -14,4 +14,10 @@ public interface BotAPI {
     List<Bot> getBotList(@Param("userName") String userName,
                          @Param("sessionCode") String sessionCode);
 
+    @RequestLine("POST /{userName}/{sessionCode}/postUpdateBot")
+    @Headers("Content-Type: application/json")
+    Bot postUpdateBot(Bot bot,
+                      @Param("userName") String userName,
+                      @Param("sessionCode") String sessionCode);
+
 }

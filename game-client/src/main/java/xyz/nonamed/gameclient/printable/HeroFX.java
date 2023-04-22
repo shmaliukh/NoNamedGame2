@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -73,25 +74,31 @@ public class HeroFX extends Hero implements AliveFx {
         damageRectangle.setFill(Color.DARKVIOLET);
 
         label.setText(getName());
+        label.setPrefWidth(getWidth());
+        label.setTextAlignment(TextAlignment.CENTER);
         label.setLayoutX(getPosX());
-        label.setLayoutY(getPosY() - 30);
+        label.setLayoutY(getPosY() - 35);
         this.setAnimationType(STOP);
     }
 
     @Override
     public void addToPane(Pane pane) {
-        pane.getChildren().add(imageView);
-        pane.getChildren().add(damageRectangle);
-        pane.getChildren().add(healthRectangle);
-        pane.getChildren().add(label);
+        if (!pane.getChildren().contains(imageView)) {
+            pane.getChildren().add(imageView);
+            pane.getChildren().add(damageRectangle);
+            pane.getChildren().add(healthRectangle);
+            pane.getChildren().add(label);
+        }
     }
 
     @Override
     public void deleteFromPane(Pane pane) {
-        pane.getChildren().remove(imageView);
-        pane.getChildren().remove(damageRectangle);
-        pane.getChildren().remove(healthRectangle);
-        pane.getChildren().remove(label);
+        if (pane.getChildren().contains(imageView)) {
+            pane.getChildren().remove(imageView);
+            pane.getChildren().remove(damageRectangle);
+            pane.getChildren().remove(healthRectangle);
+            pane.getChildren().remove(label);
+        }
     }
 
 }
