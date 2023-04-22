@@ -56,6 +56,10 @@ public class GameObjectService {
         double maxY = 1200;
         for (int x = 0; x < world.getWidth(); x += 1200) {
             for (int y = 0; y < world.getHeight(); y += 1200) {
+                if (x >= 0 && x < 1000
+                        && y >= 0 && y < 1000) {
+                    // TODO hero spawn
+                } else {
 //                while (prevY < 1200){
                     if (random.nextInt(100) > 33) {
                         GameObject gameObject = gameObjectFactory.create(typeList.get(random.nextInt(typeList.size())));
@@ -68,7 +72,9 @@ public class GameObjectService {
                         gameObjects.add(addNewGameObjectToSession(gameObject, sessionCode));
 //                        log.info("generated game object: '{}'", gameObject);
 //                    }
+                    }
                 }
+
             }
         }
         return gameObjects;

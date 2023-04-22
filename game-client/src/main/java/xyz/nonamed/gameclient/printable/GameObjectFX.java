@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import xyz.nonamed.dto.GameObject;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Getter
 @NoArgsConstructor
 public class GameObjectFX extends GameObject implements PrintableFx {
 
@@ -39,6 +41,8 @@ public class GameObjectFX extends GameObject implements PrintableFx {
         this.isCollision = gameObject.isCollision;
         this.collisionPosX = gameObject.collisionPosX + posX;
         this.collisionPosY = gameObject.collisionPosY + posY;
+        rectangle.setLayoutX(this.collisionPosX);
+        rectangle.setLayoutY(this.collisionPosY);
 
         this.collisionHeight = gameObject.collisionHeight;
         this.collisionWidth = gameObject.collisionWidth;
@@ -61,8 +65,7 @@ public class GameObjectFX extends GameObject implements PrintableFx {
         width = imageView.getFitWidth();
         height = imageView.getFitHeight();
 
-        rectangle.setLayoutX(collisionPosX);
-        rectangle.setLayoutY(collisionPosY);
+
         rectangle.setWidth(collisionWidth);
         rectangle.setHeight(collisionHeight);
         rectangle.setFill(Color.BROWN);

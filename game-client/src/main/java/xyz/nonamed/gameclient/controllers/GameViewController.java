@@ -7,8 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
-import lombok.extern.slf4j.Slf4j;
 import xyz.nonamed.dto.GameObject;
 import xyz.nonamed.dto.Hero;
 import xyz.nonamed.gameclient.ClientApplication;
@@ -26,8 +26,8 @@ import xyz.nonamed.gameclient.printable.WorldFX;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
@@ -88,37 +88,57 @@ public class GameViewController implements Initializable {
         }
     }
 
+    private boolean checkToCollision(double pointX, double pointY) {
+        pointX += MY_HERO_FX.getWidth() / 2;
+        pointY += MY_HERO_FX.getHeight() / 2;
+        List<GameObjectFX> collisionObjects = gameObjectFXList.stream()
+                .filter(GameObject::isCollision)
+                .toList();
+        for (GameObjectFX collisionObject : collisionObjects) {
+            if (pointX >= collisionObject.getCollisionPosX()
+                    && pointX <= collisionObject.getCollisionPosX() + collisionObject.getCollisionWidth()
+                    && pointY >= collisionObject.getCollisionPosY()
+                    && pointY <= collisionObject.getCollisionPosY() + collisionObject.getCollisionHeight()) {
+                System.out.println(pointX + " " + pointY);
+                return true; // collision detected
+            }
+        }
+        return false;
+    }
+
     private void handleHeroAction() {
         EventHandler<KeyEvent> heroActionHandler = e -> {
             KeyCode key = e.getCode();
-            if (key == KeyCode.W || key == KeyCode.UP) {
+            if ((key == KeyCode.W || key == KeyCode.UP)
+                    && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed())) {
                 actionList.add(MOVE_UP);
                 MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
 //                if (MY_HERO_FX.getPosY() < mainView.getHeight() / 2 - mainView.getHeight() * 0.2) {
                 gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
 //                }
             }
-            if (key == KeyCode.S || key == KeyCode.DOWN) {
+            if ((key == KeyCode.S || key == KeyCode.DOWN)
+                    && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed())) {
                 actionList.add(MOVE_DOWN);
                 MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
 //                if (MY_HERO_FX.getPosY() > mainView.getHeight() / 2 + mainView.getHeight() * 0.2) {
                 gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
 //                }
             }
-            if (key == KeyCode.A || key == KeyCode.LEFT) {
+            if ((key == KeyCode.A || key == KeyCode.LEFT)
+                    && !checkToCollision(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
                 actionList.add(MOVE_LEFT);
                 MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed());
                 gamePane.setLayoutX(gamePane.getLayoutX() + MY_HERO_FX.getSpeed());
             }
-            if (key == KeyCode.D || key == KeyCode.RIGHT) {
+            if ((key == KeyCode.D || key == KeyCode.RIGHT)
+                    && !checkToCollision(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
                 actionList.add(MOVE_RIGHT);
                 MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed());
                 gamePane.setLayoutX(gamePane.getLayoutX() - MY_HERO_FX.getSpeed());
             }
             wrapPlayer();
             MY_HERO_FX.print(gamePane);
-            System.out.println(gamePane.getLayoutY());
-
         };
 
         mainStage.addEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
