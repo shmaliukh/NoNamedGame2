@@ -6,6 +6,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -32,6 +33,7 @@ import java.net.URL;
 import java.util.*;
 
 import static xyz.nonamed.Constants.*;
+import static xyz.nonamed.dto.Hero.STOP;
 import static xyz.nonamed.dto.Hero.WALK;
 import static xyz.nonamed.gameclient.ClientApplication.changeScreen;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
@@ -211,6 +213,18 @@ public class GameViewController implements Initializable {
                 @Override
                 public void handle(long now) {
                     botFXList.forEach(botFX -> botFX.print(gamePane));
+                    botFXList.stream()
+                            .filter(botFX -> botFX.getImageView().getBoundsInParent().intersects(MY_HERO_FX.getImageView().getBoundsInParent()))
+                            .forEach(botFX -> {
+                                MY_HERO_FX.setHealth(MY_HERO_FX.getHealth() - botFX.getDamage());
+                                MY_HERO_FX.print(gamePane);
+                                if (MY_HERO_FX.getHealth() < 0) {
+                                    MY_HERO_FX.setDead(true);
+                                    MY_HERO_FX.setAnimationType(STOP);
+                                    new HeroHandler().postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
+                                    // FIXME add alert
+                                }
+                            });
                     this.stop();
                 }
             };
@@ -252,34 +266,36 @@ public class GameViewController implements Initializable {
 
     private void handleHeroAction() {
         EventHandler<KeyEvent> heroActionHandler = e -> {
-            KeyCode key = e.getCode();
-            if ((key == KeyCode.W || key == KeyCode.UP)
-                    && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed())) {
-                actionList.add(MOVE_UP);
-                MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
-                gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
+            if (MY_HERO_FX.isDead == false) {
+                KeyCode key = e.getCode();
+                if ((key == KeyCode.W || key == KeyCode.UP)
+                        && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed())) {
+                    actionList.add(MOVE_UP);
+                    MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() - MY_HERO_FX.getSpeed());
+                    gamePane.setLayoutY(gamePane.getLayoutY() + MY_HERO_FX.getSpeed());
+                }
+                if ((key == KeyCode.S || key == KeyCode.DOWN)
+                        && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed())) {
+                    actionList.add(MOVE_DOWN);
+                    MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
+                    gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
+                }
+                if ((key == KeyCode.A || key == KeyCode.LEFT)
+                        && !checkToCollision(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
+                    actionList.add(MOVE_LEFT);
+                    MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed());
+                    gamePane.setLayoutX(gamePane.getLayoutX() + MY_HERO_FX.getSpeed());
+                }
+                if ((key == KeyCode.D || key == KeyCode.RIGHT)
+                        && !checkToCollision(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
+                    actionList.add(MOVE_RIGHT);
+                    MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed());
+                    gamePane.setLayoutX(gamePane.getLayoutX() - MY_HERO_FX.getSpeed());
+                }
+                wrapPlayer();
+                MY_HERO_FX.setAnimationType(WALK);
+                MY_HERO_FX.print(gamePane);
             }
-            if ((key == KeyCode.S || key == KeyCode.DOWN)
-                    && !checkToCollision(MY_HERO_FX.getPosX(), MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed())) {
-                actionList.add(MOVE_DOWN);
-                MY_HERO_FX.setPosY(MY_HERO_FX.getPosY() + MY_HERO_FX.getSpeed());
-                gamePane.setLayoutY(gamePane.getLayoutY() - MY_HERO_FX.getSpeed());
-            }
-            if ((key == KeyCode.A || key == KeyCode.LEFT)
-                    && !checkToCollision(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
-                actionList.add(MOVE_LEFT);
-                MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() - MY_HERO_FX.getSpeed());
-                gamePane.setLayoutX(gamePane.getLayoutX() + MY_HERO_FX.getSpeed());
-            }
-            if ((key == KeyCode.D || key == KeyCode.RIGHT)
-                    && !checkToCollision(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed(), MY_HERO_FX.getPosY())) {
-                actionList.add(MOVE_RIGHT);
-                MY_HERO_FX.setPosX(MY_HERO_FX.getPosX() + MY_HERO_FX.getSpeed());
-                gamePane.setLayoutX(gamePane.getLayoutX() - MY_HERO_FX.getSpeed());
-            }
-            wrapPlayer();
-            MY_HERO_FX.setAnimationType(WALK);
-            MY_HERO_FX.print(gamePane);
         };
 
 //        try {

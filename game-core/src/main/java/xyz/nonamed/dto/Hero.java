@@ -59,6 +59,7 @@ public class Hero {
         this.type = hero.type;
         this.color = hero.color;
         this.animationType = hero.animationType;
+        this.isDead = hero.isDead;
     }
 
     @Id
@@ -84,5 +85,6 @@ public class Hero {
     public String type = DEFAULT_HERO_TYPE;
     public String color;
     public String animationType = STOP;
+    public boolean isDead = false;
 
 }
