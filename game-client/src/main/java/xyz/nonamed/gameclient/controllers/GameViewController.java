@@ -30,6 +30,8 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import static xyz.nonamed.Constants.*;
+import static xyz.nonamed.dto.Hero.STOP;
+import static xyz.nonamed.dto.Hero.WALK;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
 import static xyz.nonamed.gameclient.controllers.StaticData.*;
 
@@ -138,6 +140,7 @@ public class GameViewController implements Initializable {
                 gamePane.setLayoutX(gamePane.getLayoutX() - MY_HERO_FX.getSpeed());
             }
             wrapPlayer();
+            MY_HERO_FX.setAnimationType(WALK);
             MY_HERO_FX.print(gamePane);
         };
 

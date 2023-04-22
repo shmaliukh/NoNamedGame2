@@ -37,6 +37,11 @@ public class Hero {
     );
     public static final int DEFAULT_HERO_DISTANCE_TO_ACTIVATE = 200;
 
+    public static final String STOP = "stop";
+    public static final String WALK = "walk";
+    public static final String LEFT_ATTACK = "left_attack";
+    public static final String RIGHT_ATTACK = "right_attack";
+
     public Hero(Hero hero) {
         this.id = hero.id;
         this.name = hero.name;
@@ -77,6 +82,6 @@ public class Hero {
 
     public String type = DEFAULT_HERO_TYPE;
     public String color;
-    public String animationType;
+    public String animationType = STOP;
 
 }
