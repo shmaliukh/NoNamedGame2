@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,14 +31,13 @@ public class BotFX extends Bot implements AliveFx {
     public static Map<String, Image> typeImageMap = new HashMap<>();
 
     static {
-        typeImageMap.put(BOT_1 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/heroWalkType-1.gif")).toString()));
-        typeImageMap.put(BOT_1 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/heroLeftAttackType-1.gif")).toString()));
-        typeImageMap.put(BOT_1 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/heroLeftAttackType-1.gif")).toString()));
+        typeImageMap.put(BOT_1 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot1-walk.gif")).toString()));
+        typeImageMap.put(BOT_1 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot1-attack-left.gif")).toString()));
+        typeImageMap.put(BOT_1 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/type-1/bot1-attack-right.gif")).toString()));
 
-        typeImageMap.put(HERO_2 + STOP, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroType-2.gif")).toString()));
-        typeImageMap.put(HERO_2 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroWalkType-2.gif")).toString()));
-        typeImageMap.put(HERO_2 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroLeftAttackType-2.gif")).toString()));
-        typeImageMap.put(HERO_2 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroRightAttackType-2.gif")).toString()));
+        typeImageMap.put(BOT_2 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
+        typeImageMap.put(BOT_2 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
+        typeImageMap.put(BOT_2 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/bots/bot2-walk.gif")).toString()));
 
     }
 
@@ -45,9 +45,10 @@ public class BotFX extends Bot implements AliveFx {
     Rectangle healthRectangle = new Rectangle();
     Rectangle damageRectangle = new Rectangle();
     Label label = new Label();
+    Circle circle = new Circle();
 
-    public BotFX(Hero hero) {
-//        super(hero);
+    public BotFX(Bot bot) {
+        super(bot);
         setAnimationType(STOP);
     }
 
@@ -69,9 +70,14 @@ public class BotFX extends Bot implements AliveFx {
         damageRectangle.setHeight(4);
         damageRectangle.setFill(Color.DARKVIOLET);
 
-        label.setText(getName());
-        label.setLayoutX(getPosX());
-        label.setLayoutY(getPosY() - 30);
+        circle.setRadius(getMinDistanceToActivate());
+        circle.setLayoutX(getPosX());
+        circle.setLayoutY(getPosY());
+        circle.setCenterX(getWidth() / 2);
+        circle.setCenterY(getHeight() / 2);
+        circle.setFill(Color.TRANSPARENT);
+        circle.setStroke(Color.BLACK);
+        circle.setStrokeWidth(1);
         MY_HERO_FX.setAnimationType(STOP);
     }
 
