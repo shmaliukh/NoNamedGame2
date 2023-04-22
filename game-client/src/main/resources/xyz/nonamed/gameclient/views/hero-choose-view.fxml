@@ -26,7 +26,7 @@
             </HBox>
             <HBox fx:id="bodyTitleTextHBox" alignment="CENTER" prefHeight="80.0" prefWidth="1149.0" spacing="100.0">
                <children>
-                  <Label fx:id="prevHeroType" alignment="CENTER" contentDisplay="CENTER" onMouseEntered="#onMouseMovedEntered" prefHeight="60.0" prefWidth="250.0" styleClass="textNonActive" stylesheets="@../styles/session-view-style.css" text="вліво" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="prevHeroType" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onPrevButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="60.0" prefWidth="250.0" styleClass="textNonActive" stylesheets="@../styles/session-view-style.css" text="вліво" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="System Bold" size="32.0" />
                      </font>
@@ -35,7 +35,7 @@
                      <image>
                         <Image url="@../images/heroes/type-1/heroWalkType-1.gif" />
                      </image></ImageView>
-                  <Label fx:id="nextHeroType" alignment="CENTER" contentDisplay="CENTER" onMouseEntered="#onMouseMovedEntered" prefHeight="60.0" prefWidth="250.0" styleClass="textNonActive" stylesheets="@../styles/session-view-style.css" text="вправо" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="nextHeroType" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onNextButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="60.0" prefWidth="250.0" styleClass="textNonActive" stylesheets="@../styles/session-view-style.css" text="вправо" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="32.0" />
                      </font>

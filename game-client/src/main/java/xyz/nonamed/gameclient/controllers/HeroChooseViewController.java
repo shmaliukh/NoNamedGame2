@@ -13,6 +13,7 @@ import xyz.nonamed.dto.Hero;
 import xyz.nonamed.factories.HeroFactory;
 import xyz.nonamed.gameclient.ClientApplication;
 import xyz.nonamed.gameclient.config.ScreenParam;
+import xyz.nonamed.gameclient.config.UserParam;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,23 +62,39 @@ public class HeroChooseViewController implements Initializable {
             currentHeroOnScreen += 1;
         }
         initHeroValues();
+    }
 
+    @FXML
+    public void onPrevButtonClick(){
+        if (currentHeroOnScreen - 1 < 0){
+            currentHeroOnScreen = heroImages.size() - 1;
+        }else{
+            currentHeroOnScreen -= 1;
+        }
+
+        initHeroValues();
     }
 
 
     public void initHeroValues() {
         HeroFactory heroFactory = new HeroFactory();
         Hero hero = null;
+
         if (currentHeroOnScreen == 0) {
             hero = heroFactory.create(Hero.HERO_1);
+        } else if (currentHeroOnScreen == 1){
+            hero = heroFactory.create(Hero.HERO_2);
         }
+
         assert hero != null;
         damageTextValue.setText(String.valueOf(hero.getDamage()));
         healthTextValue.setText(String.valueOf(hero.getHealth()));
         speedTextValue.setText(String.valueOf(hero.getSpeed()));
         colorTextValue.setText(String.valueOf(hero.getColor()));
 
+        heroTypeImageView.setImage(heroImages.get(currentHeroOnScreen));
 
+        UserParam.HERO_TYPE = hero.getType();
     }
 
     @FXML

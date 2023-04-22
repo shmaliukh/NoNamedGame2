@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 import static xyz.nonamed.gameclient.ClientApplication.backgroundMusic;
-import static xyz.nonamed.gameclient.ClientApplication.changeScreen;
 
 /**
  * @author artem1018
@@ -36,6 +35,7 @@ public class MainMenuViewController implements Initializable {
     public ImageView globalServerStatusImage;
     public ImageView refreshServerStatusButton;
     public ImageView volumeFastSwitchButton;
+    public ImageView choosenNetworkServerImageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -153,6 +153,28 @@ public class MainMenuViewController implements Initializable {
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         userNameTextField.setTextFormatter(textFormatter);
 
+    }
+
+
+    @FXML
+    public void onSwitchServerButtonPressed(){
+        if (UserParam.SELECTED_HOST.equals("localhost")){
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedLocal.gif"));
+        } else {
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedGlobal.gif"));
+        }
+    }
+
+
+    @FXML
+    public void onSwitchServerButtonReleased(){
+        if (UserParam.SELECTED_HOST.equals("localhost")){
+            UserParam.SELECTED_HOST = "globalhost";
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/switchGlobal.gif"));
+        } else {
+            UserParam.SELECTED_HOST = "localhost";
+            choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/switchLocal.gif"));
+        }
     }
 
 }

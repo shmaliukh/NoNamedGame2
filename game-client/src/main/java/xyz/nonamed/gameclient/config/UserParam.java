@@ -14,4 +14,6 @@ public class UserParam {
 
     public static String HERO_TYPE = null;
 
+    public static String SELECTED_HOST = "localHost";
+
 }

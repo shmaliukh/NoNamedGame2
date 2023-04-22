@@ -171,7 +171,7 @@ public class SessionViewController implements Initializable {
     @FXML
     public void onMainMenuButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("main-menu-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("views/main-menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             ClientApplication.mainStage.setTitle("Session view");
             ClientApplication.mainStage.setScene(scene);

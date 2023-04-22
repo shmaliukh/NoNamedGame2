@@ -4,16 +4,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Screen;
 import xyz.nonamed.gameclient.ClientApplication;
 import xyz.nonamed.gameclient.config.ScreenParam;
 import xyz.nonamed.gameclient.config.SoundParam;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -31,6 +28,14 @@ public class SettingsMenuViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setScreenSize();
+        setPrefVolumeLevels();
+
+    }
+
+    private void setPrefVolumeLevels() {
+        sliderBackgroundVolume.setValue(SoundParam.BACKGROUND_VOLUME * 100);
+        sliderElementVolume.setValue(SoundParam.ELEMENT_VOLUME * 100);
+        sliderGameVolume.setValue(SoundParam.GAME_VOLUME * 100);
 
     }
 
