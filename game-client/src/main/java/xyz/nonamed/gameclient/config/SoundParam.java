@@ -5,7 +5,7 @@ package xyz.nonamed.gameclient.config;
  */
 public class SoundParam {
 
-    public static float BACKGROUND_VOLUME = 0.05f;
+    public static float BACKGROUND_VOLUME = 0.01f;
     public static float LAST_BACKGROUND_VOLUME = 0;
     public static float ELEMENT_VOLUME = 0.7f;
     public static float LAST_ELEMENT_VOLUME = 0;

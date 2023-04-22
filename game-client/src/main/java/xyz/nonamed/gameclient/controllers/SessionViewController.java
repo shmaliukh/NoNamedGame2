@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
@@ -52,20 +51,18 @@ public class SessionViewController implements Initializable {
     public Label connectionAlertMaxUsers;
     @FXML
     public Label userNameLabelText;
-    public Label heroType;
     public TextField sessionMaxUsersTextField;
 
-    private ObservableList<SessionData> tvObservableList = FXCollections.observableArrayList();
+    private final ObservableList<SessionData> tvObservableList = FXCollections.observableArrayList();
 
     public String userName = "User";
-    public String userSessionCode = null;
     public int sessionMaxUsers = 2;
 
     private final TableColumn<SessionData, Integer> colCode = new TableColumn<>("Код сесії");
     private final TableColumn<SessionData, String> colName = new TableColumn<>("Гравці");
     private final TableColumn<SessionData, Integer> colMaxUsers = new TableColumn<>("Ліміт гравців");
     private final TableColumn<SessionData, Integer> colActiveUsers = new TableColumn<>("На сервері");
-    TableColumn<SessionData, Void> colBtn = new TableColumn("");
+    TableColumn<SessionData, Void> colBtn = new TableColumn<>("");
 
     static UserHandler userHandler = new UserHandler();
     static SessionHandler sessionHandler = new SessionHandler();
@@ -85,21 +82,15 @@ public class SessionViewController implements Initializable {
         activeSessionInfoTable.getStyleClass().add("table-view");
 
 
-
         addFilterToUserInputFields();
 
         fillTableDataFromServer();
-
-
-
-
 
 
     }
 
 
     private static void initGameSetting() {
-
 
 
         userHandler.postRegisterUser(UserParam.USERNAME);
@@ -109,8 +100,7 @@ public class SessionViewController implements Initializable {
     }
 
 
-
-    private void fillTableDataFromServer(){
+    private void fillTableDataFromServer() {
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colMaxUsers.setCellValueFactory(new PropertyValueFactory<>("maxUsers"));
@@ -125,23 +115,19 @@ public class SessionViewController implements Initializable {
     }
 
     @FXML
-    public void connectToSession(){
+    public void connectToSession() {
         if (Integer.parseInt(sessionMaxUsersTextField.getText()) > 10 ||
-        Integer.parseInt(sessionMaxUsersTextField.getText()) < 2){
+                Integer.parseInt(sessionMaxUsersTextField.getText()) < 2) {
             userInputAlert.setText("від 2 до 10");
             userInputAlert.setVisible(true);
             return;
         }
 
-        if (UserParam.SESSION_CODE != null){
+        if (UserParam.SESSION_CODE != null) {
             SessionParam.SESSION_MAX_USERS = sessionMaxUsersTextField.getText();
             SessionParam.SESSION_CODE = sessionCodeTextField.getText();
-            //initGameSetting();
-//            System.out.println("<- connected ->  ");
-//            System.out.println("Імʼя користувача: " + UserParam.USERNAME);
-//            System.out.println("Код сесії: " + UserParam.SESSION_CODE);
-//            System.out.println("Макс. гравців: " + SessionParam.SESSION_MAX_USERS);
-        openGameView();
+
+            openGameView();
 
 
         } else {
@@ -150,26 +136,29 @@ public class SessionViewController implements Initializable {
         }
     }
 
-    public void connectToAvailableServerFromTable(){
+    public void connectToAvailableServerFromTable() {
         openGameView();
     }
 
     private void openGameView() {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("views/game-view.fxml"));
+//            Scene scene = new Scene(fxmlLoader.load());
+//            ClientApplication.mainStage.setTitle("Game view");
+//            ClientApplication.mainStage.setScene(scene);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("views/game-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            ClientApplication.mainStage.setTitle("Game view");
-            ClientApplication.mainStage.setScene(scene);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
+        ////this code open hero choose menu
+        ClientApplication.changeScreen("views/hero-choose-view.fxml", "Підготовка до гри");
     }
 
+
+
+
     @FXML
-    public void onRefreshButtonClick(){
+    public void onRefreshButtonClick() {
         System.out.println("Action button");
         List<Session> sessionList = sessionHandler.getAllSessions();
         for (int i = 0; i < sessionList.size(); i++) {
@@ -179,9 +168,9 @@ public class SessionViewController implements Initializable {
     }
 
     @FXML
-    public void onMainMenuButtonClick(){
+    public void onMainMenuButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("main-menu-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("views/main-menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             ClientApplication.mainStage.setTitle("Session view");
             ClientApplication.mainStage.setScene(scene);
@@ -189,7 +178,6 @@ public class SessionViewController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
 
 
     public void setScreenSize() {
@@ -258,10 +246,11 @@ public class SessionViewController implements Initializable {
                 final TableCell<SessionData, Void> cell = new TableCell<>() {
 
                     private final Button btn = new Button("Зайти");
+
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             SessionData sessionData = getTableView().getItems().get(getIndex());
-                            if (sessionData.getMaxUsers() > sessionData.getActiveUsers()){
+                            if (sessionData.getMaxUsers() > sessionData.getActiveUsers()) {
                                 UserParam.SESSION_CODE = String.valueOf(sessionData.getCode());
                                 SessionParam.SESSION_CODE = UserParam.SESSION_CODE;
                                 SessionParam.SESSION_MAX_USERS = String.valueOf(sessionData.getMaxUsers());
@@ -303,33 +292,31 @@ public class SessionViewController implements Initializable {
     }
 
     @FXML
-    public void setValueFromSessionCodeTextField(){
+    public void setValueFromSessionCodeTextField() {
         UserParam.SESSION_CODE = sessionCodeTextField.getText();
         // TODO change session max user on server
-            if (sessionMaxUsersTextField.getText() != null){
-                sessionMaxUsers = Integer.parseInt(sessionMaxUsersTextField.getText());
-                SessionParam.SESSION_MAX_USERS = sessionMaxUsersTextField.getText();
-            }
+        if (sessionMaxUsersTextField.getText() != null) {
+            sessionMaxUsers = Integer.parseInt(sessionMaxUsersTextField.getText());
+            SessionParam.SESSION_MAX_USERS = sessionMaxUsersTextField.getText();
+        }
 
-        if (codeInputAlert.isVisible()){
+        if (codeInputAlert.isVisible()) {
             codeInputAlert.setVisible(false);
         }
     }
 
     @FXML
-    public void setValueFromMaxUserTextField(){
+    public void setValueFromMaxUserTextField() {
         // TODO change session max user on server
-        if (sessionMaxUsersTextField.getText() != null){
+        if (sessionMaxUsersTextField.getText() != null) {
             sessionMaxUsers = Integer.parseInt(sessionMaxUsersTextField.getText());
             SessionParam.SESSION_MAX_USERS = sessionMaxUsersTextField.getText();
         }
 
-        if (userInputAlert.isVisible()){
+        if (userInputAlert.isVisible()) {
             userInputAlert.setVisible(false);
         }
     }
-
-
 
 
 }

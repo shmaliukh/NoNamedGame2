@@ -1,0 +1,209 @@
+
+.backgroundVBox {
+    -fx-background-image: url('../images/menusBackground.png');
+}
+
+* {
+    -fx-primary-color: #007acc;
+    -fx-secondary-color: #4B6EAF;
+
+    -fx-focus-color: -fx-secondary-color;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: -fx-primary-color;
+    -fx-background-radius: 0;
+}
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+    -fx-background-color: -fx-secondary-color;
+}
+.spinner .increment-arrow-button:hover:pressed,
+.spinner .decrement-arrow-button:hover:pressed,
+.spinner .increment-arrow-button:pressed,
+.spinner .decrement-arrow-button:pressed {
+    -fx-background-color: -fx-secondary-color;
+}
+.spinner .increment-arrow-button .increment-arrow,
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: white;
+}
+
+.headerHBox {
+    -fx-border-color: orange;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to bottom, rgb(178, 81, 45), rgb(241, 172, 149));
+    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-insets: 0 11px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+.table-row-cell:hover {
+
+    -fx-text-background-color: white;
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 18px;
+    -fx-background-color: rgb(106, 159, 111);
+
+}
+.table-row-cell{
+
+    -fx-text-background-color: red;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgb(106, 159, 111);
+
+}
+.table-row-cell:odd{
+    -fx-background-color: rgba(249, 201, 147, 0.07);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+
+}
+.table-row-cell:even{
+    -fx-background-color: rgba(221, 103, 29, 0.07);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+.table-view .virtual-flow .scroll-bar .increment-button,
+.table-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  linear-gradient(to bottom, rgba(221, 125, 29, 0.27), #af5a1d);
+}
+.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color:  linear-gradient(to right, rgba(221, 125, 29, 0.27), rgba(249, 208, 147, 0.27));
+}
+
+
+
+
+.yellow {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#dcca8a, #c7a740),
+            linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
+            linear-gradient(#f6ebbe, #e6c34d);
+    -fx-background-insets: 0,9 9 8 9,9,10,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 18px;
+    -fx-text-fill: #311c09;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+.yellow Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
+}
+
+.yellow:hover {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+                /*linear-gradient(#dcca8a, #c7a740),*/
+            linear-gradient(#6a9f6f, #26532b),
+                /*linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),*/
+            linear-gradient(#deffe0 0%, #b2e7b7 20%, #89c78e 80%, #6a9f6f 100%),
+                /*linear-gradient(#f6ebbe, #e6c34d);*/
+            linear-gradient(#6a9f6f, #26532b);
+    -fx-background-insets: 0,9 9 8 9,9,0,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 18px;
+    -fx-text-fill: #311c09;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+
+.text-field {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#dcca8a, #c7a740),
+            linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
+            linear-gradient(#f6ebbe, #e6c34d);
+    -fx-background-insets: 0,9 9 8 9,9,10,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-highlight-fill: transparent;
+    -fx-highlight-text-fill: #000000;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+
+}
+
+.text-field:hover{
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#6a9f6f, #26532b),
+            linear-gradient(#deffe0 0%, #b2e7b7 20%, #89c78e 80%, #6a9f6f 100%),
+            linear-gradient(#6a9f6f, #26532b);
+    -fx-background-insets: 0,9 9 8 9,9,0,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+
+
+/* Змінити колір виділеного тексту */
+/*.text-field:focused {*/
+/*    -fx-highlight-fill: transparent;*/
+/*    -fx-highlight-text-fill: #000000;*/
+/*}*/
+.textNonActive {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#b67168, #9b4035),
+            linear-gradient(#efc7be 0%, #c0715d 20%, #ad4a31 80%, #b44f31 100%),
+            linear-gradient(#b06e66, #964036);
+    -fx-background-insets: 0,9 9 8 9,9,10,11;
+    -fx-background-radius: 50;
+    -fx-padding: 15 30 15 30;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 18px;
+    -fx-text-fill: #311c09;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+.textNonActive Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
+}
+
+
+
