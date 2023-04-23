@@ -49,12 +49,12 @@
                <children>
                   <Label fx:id="userNameTextLabel" text="name" textFill="WHITE">
                      <font>
-                        <Font size="25.0" />
+                        <Font size="17.0" />
                      </font>
                   </Label>
                   <Label fx:id="codeTextLabel" text="code" textFill="WHITE">
                      <font>
-                        <Font size="25.0" />
+                        <Font size="17.0" />
                      </font>
                   </Label>
                </children>

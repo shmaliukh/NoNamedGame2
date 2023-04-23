@@ -24,6 +24,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.gameclient.ClientApplication.backgroundMusic;
 
 /**
@@ -248,8 +249,10 @@ public class MainMenuViewController implements Initializable {
     public void onSwitchServerButtonPressed(){
         if (UserParam.SELECTED_HOST.equals("localhost")){
             choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedLocal.gif"));
+            BASE_URL = LOCALHOST_URL;
         } else {
             choosenNetworkServerImageView.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/pressedGlobal.gif"));
+            BASE_URL = AWS_URL;
         }
     }
 

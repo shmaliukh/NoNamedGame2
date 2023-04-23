@@ -28,12 +28,14 @@ public class Hero {
     public static final String HERO_1 = "hero_1";
     public static final String HERO_2 = "hero_2";
     public static final String HERO_3 = "hero_3";
+    public static final String HERO_4 = "hero_4";
     public static final String DEFAULT_HERO_TYPE = HERO_1;
 
     public static final List<String> heroTypeList = Arrays.asList(
             HERO_1,
             HERO_2,
-            HERO_3
+            HERO_3,
+            HERO_4
     );
 
     public static final int DEFAULT_HERO_DISTANCE_TO_ACTIVATE = 200;
