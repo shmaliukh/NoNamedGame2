@@ -105,13 +105,17 @@ public class HeroService {
 
     public Hero postUpdateHero(Hero hero, String userName, String sessionCode) {
         if (hero != null) {
+            save(hero);
             Hero hero1 = heroRepository.readByNameEqualsIgnoreCaseAndSessionCodeEqualsIgnoreCase(userName, sessionCode);
-            hero1.setPosX(hero.getPosX());
-            hero1.setPosY(hero.getPosY());
-            hero1.setDead(hero.isDead());
-            if (hero.isDead()) {
-                hero1.setAnimationType(Hero.STOP);
+            if(hero1 != null){
+                hero1.setPosX(hero.getPosX());
+                hero1.setPosY(hero.getPosY());
+                hero1.setDead(hero.isDead());
+                if (hero.isDead()) {
+                    hero1.setAnimationType(Hero.STOP);
+                }
             }
+
             return save(hero1);
         }
         log.warn("problem to update hero // user '{}' // session code '{}'", userName, sessionCode);

@@ -18,8 +18,8 @@ public class SessionHandler implements SessionAPI {
             .target(SessionAPI.class, BASE_URL);
 
     @Override
-    public Session postConnectUserToSession(Session session, String userName, String sessionCode) {
-        return sessionAPI.postConnectUserToSession(session, userName, sessionCode);
+    public Session postConnectUserToSession(String userName, String sessionCode) {
+        return sessionAPI.postConnectUserToSession(userName, sessionCode);
     }
 
     @Override

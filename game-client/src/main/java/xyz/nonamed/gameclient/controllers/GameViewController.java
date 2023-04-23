@@ -568,11 +568,11 @@ public class GameViewController implements Initializable {
             SessionHandler sessionHandler = new SessionHandler();
 
             userHandler.postRegisterUser(UserParam.USERNAME);
-            SESSION = new Session();
-            SESSION.setSessionCode(UserParam.SESSION_CODE);
-            SESSION.setVisible(isSessionVisible);
-            SESSION.setMaxUser(maxUserForSession);
-            SESSION = sessionHandler.postConnectUserToSession(SESSION, UserParam.USERNAME, UserParam.SESSION_CODE);
+//            SESSION = new Session();
+//            SESSION.setSessionCode(UserParam.SESSION_CODE);
+//            SESSION.setVisible(isSessionVisible);
+//            SESSION.setMaxUser(maxUserForSession);
+            sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
             USER_HERO.setName(UserParam.USERNAME);
             USER_HERO.setType(UserParam.HERO_TYPE);
             MY_HERO_FX = new HeroFX(new HeroHandler().postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
