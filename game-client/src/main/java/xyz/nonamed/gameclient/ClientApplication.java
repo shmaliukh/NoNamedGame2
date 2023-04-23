@@ -42,6 +42,7 @@ public class ClientApplication extends Application {
         stage.show();
 
 
+
         initializeMusic();
     }
 

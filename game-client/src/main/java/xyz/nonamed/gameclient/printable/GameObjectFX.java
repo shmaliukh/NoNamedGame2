@@ -86,7 +86,8 @@ public class GameObjectFX extends GameObject implements PrintableFx {
 
         rectangle.setWidth(collisionWidth);
         rectangle.setHeight(collisionHeight);
-        rectangle.setFill(Color.BROWN);
+        //TODO change color
+        rectangle.setFill(Color.TRANSPARENT);
     }
 
 

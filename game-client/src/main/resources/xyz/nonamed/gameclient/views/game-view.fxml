@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="876.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.GameViewController">
+<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="876.0" prefWidth="1157.0" styleClass="background" stylesheets="@../styles/game-view-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.GameViewController">
    <children>
       <Pane fx:id="gamePane" layoutX="238.0" layoutY="258.0" prefHeight="1884.0" prefWidth="2624.0" styleClass="backgroundPane" stylesheets="@../styles/game-view-style.css" />
       <Pane fx:id="hudPane" layoutX="160.0" layoutY="566.0" prefHeight="100.0" prefWidth="695.0" style="-fx-background-color: transparent; -fx-background-radius: 50;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" />
@@ -33,12 +33,12 @@
          <children>
             <VBox alignment="CENTER" prefHeight="44.0" prefWidth="158.0">
                <children>
-                  <Label text="Your name: ">
+                  <Label text="Your name: " textFill="WHITE">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <Label text="Session code: ">
+                  <Label text="Session code: " textFill="WHITE">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -47,12 +47,12 @@
             </VBox>
             <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="266.0">
                <children>
-                  <Label fx:id="userNameTextLabel" text="name">
+                  <Label fx:id="userNameTextLabel" text="name" textFill="WHITE">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Label fx:id="codeTextLabel" text="code">
+                  <Label fx:id="codeTextLabel" text="code" textFill="WHITE">
                      <font>
                         <Font size="25.0" />
                      </font>
