@@ -32,6 +32,7 @@ import xyz.nonamed.gameclient.config.UserParam;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static xyz.nonamed.Constants.*;
 import static xyz.nonamed.dto.Hero.STOP;
@@ -53,10 +54,11 @@ public class GameViewController implements Initializable {
     public Label codeTextLabel;
     public Pane miniMapPane;
     public Pane hudPane;
-    static WorldFX WORLD_FX;
+    static WorldFX WORLD_FX = new WorldFX();
     static List<GameObjectFX> gameObjectFXList = new ArrayList<>();
     public static List<BotFX> botFXList = new ArrayList<>();
     static List<HeroFX> heroFXList = new ArrayList<>();
+    static List<BorerFX> borerFXList = new ArrayList<>();
 
     static HeroHandler heroHandler = new HeroHandler();
 
@@ -64,33 +66,41 @@ public class GameViewController implements Initializable {
     static Timer timer2 = new Timer();
     static Timer timer3 = new Timer();
     static Timer timer4 = new Timer();
+    static Timer timer5 = new Timer();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        staticGamePane = gamePane;
-        botFXList = new ArrayList<>();
-        heroFXList = new ArrayList<>();
-        gameObjectFXList = new ArrayList<>();
-        setInfoPanelValues();
-        setScreenSize();
-        initGameSettings();
-        handleHeroAction();
+        try {
+            staticGamePane = gamePane;
 
-        gamePane.setLayoutX(0);
-        gamePane.setLayoutY(0);
+            botFXList = new ArrayList<>();
+            heroFXList = new ArrayList<>();
+            gameObjectFXList = new ArrayList<>();
+            setInfoPanelValues();
+            setScreenSize();
+            initGameSettings();
+            handleHeroAction();
 
-        WORLD_FX.addToPane(gamePane);
-        WORLD_FX.print(gamePane);
-        MY_HERO_FX.addToPane(gamePane);
-        MY_HERO_FX.print(gamePane);
+            gamePane.setLayoutX(0);
+            gamePane.setLayoutY(0);
 
-        gamePane.setLayoutX(mainStage.getWidth() / 2 - MY_HERO_FX.getPosX() - MY_HERO_FX.getWidth() / 2);
-        gamePane.setLayoutY(mainStage.getHeight() / 2 - MY_HERO_FX.getPosY() - MY_HERO_FX.getHeight() / 2);
+            borerFXList = new BorerHandler().getBorerList(UserParam.USERNAME, UserParam.SESSION_CODE).stream()
+                    .map(BorerFX::new)
+                    .collect(Collectors.toList()); // TODO
+            WORLD_FX.addToPane(gamePane);
+            WORLD_FX.print(gamePane);
+            MY_HERO_FX.addToPane(gamePane);
+            MY_HERO_FX.print(gamePane);
 
-        generateGameObjects();
+            gamePane.setLayoutX(mainStage.getWidth() / 2 - MY_HERO_FX.getPosX() - MY_HERO_FX.getWidth() / 2);
+            gamePane.setLayoutY(mainStage.getHeight() / 2 - MY_HERO_FX.getPosY() - MY_HERO_FX.getHeight() / 2);
 
-        setUpThreadsWithUpdate();
+            generateGameObjects();
 
+            setUpThreadsWithUpdate();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     private void setUpThreadsWithUpdate() {
@@ -98,14 +108,33 @@ public class GameViewController implements Initializable {
         timer2.cancel();
         timer3.cancel();
         timer4.cancel();
+        timer5.cancel();
         timer1 = new Timer();
         timer2 = new Timer();
         timer3 = new Timer();
         timer4 = new Timer();
+        timer5 = new Timer();
         timer1.schedule(new UpdateHeroTask(), 0, 100);
         timer2.schedule(new UpdateBotTask(), 0, BOT_PERIOD);
         timer3.schedule(new UpdateAllHeroTask(), 0, 100);
         timer4.schedule(new UpdateMiniMapTask(), 0, 250);
+        timer5.schedule(new UpdateMiniMapTask(), 0, 250);
+    }
+
+
+    private class UpdateBorerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            AnimationTimer animationTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    // TODO implement logic to collect energy
+                    this.stop();
+                }
+            };
+            animationTimer.start();
+        }
     }
 
     private class UpdateMiniMapTask extends TimerTask {
@@ -117,7 +146,8 @@ public class GameViewController implements Initializable {
                 public void handle(long now) {
                     miniMapPane.getChildren().clear();
                     printMiniMap(botFXList);
-                    printMiniMap(botFXList);
+                    printMiniMap(heroFXList);
+                    printMiniMap(borerFXList);
                     printMiniMap(Collections.singletonList(MY_HERO_FX));
                     this.stop();
                 }
@@ -164,7 +194,9 @@ public class GameViewController implements Initializable {
             AnimationTimer animationTimer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    heroFXList.forEach(botFX -> botFX.print(gamePane));
+                    heroFXList.stream()
+                            .filter(Objects::nonNull)
+                            .forEach(botFX -> botFX.print(gamePane));
                     this.stop();
                 }
             };
@@ -173,7 +205,8 @@ public class GameViewController implements Initializable {
 
         private void updateExistsHeroes(List<Hero> serverHeroeList) {
             serverHeroeList.stream()
-                    .filter(hero -> heroFXList.stream().anyMatch(heroFX -> hero.getId().equals(heroFX.getId())))
+                    .filter(Objects::nonNull)
+                    .filter(hero -> heroFXList.stream().anyMatch(heroFX -> Objects.equals(hero.getId(), heroFX.getId())))
                     .forEach(hero -> {
                         for (HeroFX heroFX : heroFXList) {
                             if (heroFX.getId().equals(hero.getId())) {
@@ -190,7 +223,8 @@ public class GameViewController implements Initializable {
 
         private void addNewHeroesFromServer(List<Hero> serverHeroeList) {
             serverHeroeList.stream()
-                    .filter(hero -> heroFXList.stream().noneMatch(heroFX -> hero.getId().equals(heroFX.getId())))
+                    .filter(Objects::nonNull)
+                    .filter(hero -> heroFXList.stream().noneMatch(heroFX -> Objects.equals(hero.getId(), heroFX.getId())))
                     .forEach(hero -> {
                         HeroFX heroFX = new HeroFX(hero);
                         heroFXList.add(heroFX);
@@ -207,7 +241,7 @@ public class GameViewController implements Initializable {
 
         private void updateMyHero(List<Hero> serverHeroeList) {
             heroHandler.postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
-            Optional<Hero> optionalHero = serverHeroeList.stream().filter(hero -> MY_HERO_FX.getId().equals(hero.getId())).findFirst();
+            Optional<Hero> optionalHero = serverHeroeList.stream().filter(hero -> Objects.equals(MY_HERO_FX.getId(), hero.getId())).findFirst();
             optionalHero.ifPresent(serverHeroeList::remove);
         }
     }
@@ -219,7 +253,8 @@ public class GameViewController implements Initializable {
         public void run() {
             List<Bot> serverBots = botHandler.getBotList(UserParam.USERNAME, UserParam.SESSION_CODE);
             serverBots.stream()
-                    .filter(bot -> botFXList.stream().noneMatch(botFX -> bot.getId().equals(botFX.getId())))
+                    .filter(Objects::nonNull)
+                    .filter(bot -> botFXList.stream().noneMatch(botFX -> Objects.equals(bot.getId(), botFX.getId())))
                     .forEach(bot -> {
                         BotFX botFX = new BotFX(bot);
                         botFXList.add(botFX);
@@ -233,7 +268,8 @@ public class GameViewController implements Initializable {
                         animationTimer.start();
                     });
             serverBots.stream()
-                    .filter(bot -> botFXList.stream().anyMatch(botFX -> bot.getId().equals(botFX.getId())))
+                    .filter(Objects::nonNull)
+                    .filter(bot -> botFXList.stream().anyMatch(botFX -> Objects.equals(bot.getId(), botFX.getId())))
                     .forEach(bot -> {
                         for (BotFX botFX : botFXList) {
                             if (botFX.id.equals(bot.getId())) {
@@ -262,12 +298,11 @@ public class GameViewController implements Initializable {
             AnimationTimer animationTimer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    botFXList.forEach(botFX -> botFX.print(gamePane));
-                    botFXList.forEach(botFX -> {
-
-
-                    });
                     botFXList.stream()
+                            .filter(Objects::nonNull)
+                            .forEach(botFX -> botFX.print(gamePane));
+                    botFXList.stream()
+                            .filter(Objects::nonNull)
                             .filter(botFX -> botFX.getImageView().getBoundsInParent().intersects(MY_HERO_FX.getImageView().getBoundsInParent()))
                             .forEach(botFX -> {
                                 MY_HERO_FX.setHealth(MY_HERO_FX.getHealth() - botFX.getDamage());

@@ -3,6 +3,7 @@ package xyz.nonamed.gameclient.printable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import lombok.NoArgsConstructor;
 import xyz.nonamed.dto.World;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 
 
+@NoArgsConstructor
 public class WorldFX extends World implements PrintableFx {
 
     public static final Image WORLD_IMAGE_1 = new Image(Objects.requireNonNull(WorldFX.class.getResource("/xyz/nonamed/gameclient/images/map/mapground1.png")).toString());

@@ -26,6 +26,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject1() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_1;
+        gameObject.width = 1111;
+        gameObject.height = 1033;
         gameObject.collisionPosX = 130;
         gameObject.collisionPosY = 140;
         gameObject.collisionHeight = 560;
@@ -38,6 +40,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject2() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_2;
+        gameObject.width = 832;
+        gameObject.height = 589;
         gameObject.collisionPosX = 130;
         gameObject.collisionPosY = 90;
         gameObject.collisionHeight = 310;
@@ -50,6 +54,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject3() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_3;
+        gameObject.width = 154;
+        gameObject.height = 162;
         gameObject.collisionPosX = 10;
         gameObject.collisionPosY = 60;
         gameObject.collisionHeight = 60;
@@ -62,6 +68,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject4() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_4;
+        gameObject.width = 154;
+        gameObject.height = 162;
         gameObject.collisionPosX = 17;
         gameObject.collisionPosY = 60;
         gameObject.collisionHeight = 60;
@@ -74,6 +82,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject5() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_5;
+        gameObject.width = 199;
+        gameObject.height = 174;
         gameObject.collisionPosX = 70;
         gameObject.collisionPosY = 40;
         gameObject.collisionWidth = 90;
@@ -86,6 +96,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject6() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_6;
+        gameObject.width = 199;
+        gameObject.height = 174;
         gameObject.collisionPosX = 40;
         gameObject.collisionPosY = 40;
         gameObject.collisionWidth = 90;
@@ -98,6 +110,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject7() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_7;
+        gameObject.width = 940;
+        gameObject.height = 585;
         gameObject.collisionPosX = 70;
         gameObject.collisionPosY = 90;
         gameObject.collisionWidth = 770 ;
@@ -110,6 +124,8 @@ public class GameObjectFactory implements MyFactory<GameObject> {
     private GameObject createGameObject8() {
         GameObject gameObject = new GameObject();
         gameObject.type = GAME_OBJECT_8;
+        gameObject.width = 764;
+        gameObject.height = 577;
         gameObject.collisionPosX = 17;
         gameObject.collisionPosY = 80;
         gameObject.collisionWidth = 673 ;
