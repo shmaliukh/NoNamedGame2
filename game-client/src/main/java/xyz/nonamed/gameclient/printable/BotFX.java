@@ -3,6 +3,7 @@ package xyz.nonamed.gameclient.printable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -67,19 +68,22 @@ public class BotFX extends Bot implements AliveFx {
     private void addDamageHandler() {
         BotHandler botHandler = new BotHandler();
         imageView.setOnMouseClicked(mouseEvent -> {
-            System.out.println("bot got damage");
-            setHealth(getHealth() - MY_HERO_FX.getDamage());
-            Bot bot = botHandler.postUpdateBot(this, UserParam.USERNAME, UserParam.SESSION_CODE);
+            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                System.out.println("bot got damage");
+                setHealth(getHealth() - MY_HERO_FX.getDamage());
+                Bot bot = botHandler.postUpdateBot(this, UserParam.USERNAME, UserParam.SESSION_CODE);
 
-            if (bot == null) {
-                deleteFromPane(staticGamePane);
-                botFXList.remove(this);
-            } else {
-                this.posX = bot.getPosX();
-                this.posY = bot.getPosY();
-                this.health = bot.getHealth();
-                print(staticGamePane);
+                if (bot == null) {
+                    deleteFromPane(staticGamePane);
+                    botFXList.remove(this);
+                } else {
+                    this.posX = bot.getPosX();
+                    this.posY = bot.getPosY();
+                    this.health = bot.getHealth();
+                    print(staticGamePane);
+                }
             }
+
         });
     }
 
