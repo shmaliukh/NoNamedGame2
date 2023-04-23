@@ -6,7 +6,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -24,6 +23,7 @@ import javafx.util.Duration;
 import xyz.nonamed.Alive;
 import xyz.nonamed.dto.*;
 import xyz.nonamed.gameclient.ClientApplication;
+import xyz.nonamed.gameclient.config.SoundParam;
 import xyz.nonamed.gameclient.handlers.*;
 import xyz.nonamed.gameclient.printable.*;
 import xyz.nonamed.gameclient.config.ScreenParam;
@@ -418,6 +418,7 @@ public class GameViewController implements Initializable {
             timeline.setCycleCount(1);
 
             AudioClip gunshot = new AudioClip(getClass().getResource("/xyz/nonamed/gameclient/music/gunshot.mp3").toString());
+            gunshot.setVolume(SoundParam.GAME_VOLUME);
             gunshot.play();
             System.out.println("sceneX: " + (sceneX - mainStage.getWidth() / 2));
             MY_HERO_FX.setAnimationType(sceneX - mainStage.getWidth() / 2 > 0 ? HeroFX.RIGHT_ATTACK : HeroFX.LEFT_ATTACK);

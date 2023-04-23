@@ -45,13 +45,18 @@ public class HeroChooseViewController implements Initializable {
         heroImages.add(new Image("xyz/nonamed/gameclient/images/heroes/type-2/heroWalkType-2.gif"));
         heroImages.add(new Image("xyz/nonamed/gameclient/images/heroes/type-3/hero3-walk.gif"));
 
-
         initHeroValues();
     }
 
     public void setScreenSize() {
         mainView.setPrefHeight(Screen.getPrimary().getBounds().getHeight() * ScreenParam.SCREEN_HEIGHT_RATIO);
         mainView.setPrefWidth(Screen.getPrimary().getBounds().getWidth() * ScreenParam.SCREEN_WIDTH_RATIO);
+    }
+
+    @FXML
+    public void onBackButtonClick(){
+        ClientApplication.playButtonClickSound();
+        ClientApplication.changeScreen("views/session-view.fxml", "");
     }
 
     @FXML
