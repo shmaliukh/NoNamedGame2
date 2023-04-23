@@ -158,7 +158,13 @@ public class GameViewController implements Initializable {
                         printMiniMap(heroFXList);
                         printMiniMap(borerFXList);
                         printMiniMap(Collections.singletonList(MY_HERO_FX));
-
+//                        hudPane.getChildren().clear();
+                        Label label = new Label("SCORE: " + MY_HERO_FX.getScore());
+                        label.setLayoutX(854 );
+                        label.setLayoutY(65 );
+                        label.toFront();
+                        label.setTranslateZ(4);
+                        miniMapPane.getChildren().add(label);
                     });
                 } catch (Throwable error) {
                     error.printStackTrace();
@@ -240,6 +246,7 @@ public class GameViewController implements Initializable {
                                 heroFX.setSpeed(hero.getSpeed());
                                 heroFX.setDamage(hero.getDamage());
                                 heroFX.setAnimationType(hero.getAnimationType());
+                                heroFX.setScore(hero.getScore());
                             }
                         }
                     });
@@ -267,7 +274,8 @@ public class GameViewController implements Initializable {
         }
 
         private void updateMyHero(List<Hero> serverHeroeList) {
-            heroHandler.postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
+            Hero hero1 = heroHandler.postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
+            MY_HERO_FX.setScore(hero1.getScore());
             Optional<Hero> optionalHero = serverHeroeList.stream().filter(hero -> Objects.equals(MY_HERO_FX.getId(), hero.getId())).findFirst();
             optionalHero.ifPresent(serverHeroeList::remove);
         }
@@ -335,7 +343,8 @@ public class GameViewController implements Initializable {
                                     if (MY_HERO_FX.getHealth() <= 0) {
                                         MY_HERO_FX.setDead(true);
                                         MY_HERO_FX.setAnimationType(STOP);
-                                        new HeroHandler().postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
+                                        Hero hero = new HeroHandler().postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
+                                        MY_HERO_FX.setScore(hero.getScore());
                                         // FIXME add alert
                                     }
                                     MY_HERO_FX.print(gamePane);

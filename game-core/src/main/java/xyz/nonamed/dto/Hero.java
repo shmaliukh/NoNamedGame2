@@ -21,8 +21,8 @@ public class Hero {
     public static final double DEFAULT_HERO_WIDTH = 128;
 
     public static final double DEFAULT_HERO_MAX_HEALTH = 1000;
-    public static final double DEFAULT_HERO_DAMAGE = 10;
-    public static final double DEFAULT_HERO_SPEED = 50;
+    public static final double DEFAULT_HERO_DAMAGE = 15;
+    public static final double DEFAULT_HERO_SPEED = 5;
 
 
     public static final String HERO_1 = "hero_1";
