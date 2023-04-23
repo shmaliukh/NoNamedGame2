@@ -28,6 +28,7 @@ public class Hero {
     public static final String HERO_1 = "hero_1";
     public static final String HERO_2 = "hero_2";
     public static final String HERO_3 = "hero_3";
+    public static final String HERO_4 = "hero_4";
     public static final String DEFAULT_HERO_TYPE = HERO_1;
 
     public static final List<String> heroTypeList = Arrays.asList(
