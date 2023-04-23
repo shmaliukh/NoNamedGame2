@@ -88,6 +88,7 @@ public class BotFX extends Bot implements AliveFx {
         imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
         imageView.setLayoutX(getPosX());
         imageView.setLayoutY(getPosY());
+        imageView.setTranslateZ(1);
 
         healthRectangle.setLayoutX(getPosX());
         healthRectangle.setLayoutY(getPosY() - 10.0d);

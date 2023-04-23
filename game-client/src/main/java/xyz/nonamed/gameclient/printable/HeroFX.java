@@ -32,6 +32,7 @@ public class HeroFX extends Hero implements AliveFx {
         typeImageMap.put(HERO_1 + STOP, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/heroType-1.gif")).toString()));
         typeImageMap.put(HERO_1 + WALK, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/heroWalkType-1.gif")).toString()));
         typeImageMap.put(HERO_1 + LEFT_ATTACK, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/heroLeftAttackType-1.gif")).toString()));
+        typeImageMap.put(HERO_1 + RIGHT_ATTACK, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-1/hero1-attack-right.gif.gif")).toString()));
 
         typeImageMap.put(HERO_2 + STOP, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroType-2.gif")).toString()));
         typeImageMap.put(HERO_2 + WALK, new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-2/heroWalkType-2.gif")).toString()));
@@ -62,6 +63,7 @@ public class HeroFX extends Hero implements AliveFx {
         imageView.setLayoutX(getPosX());
         imageView.setLayoutY(getPosY());
         imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
+        imageView.setTranslateZ(1);
 
         healthRectangle.setLayoutX(getPosX());
         healthRectangle.setLayoutY(getPosY() - 10.0d);
