@@ -27,7 +27,7 @@ public class BotFactory implements MyFactory<Bot> {
         bot.setDamage(Bot.DEFAULT_BOT_DAMAGE * 1.1);
         bot.setSpeed(Bot.DEFAULT_BOT_SPEED);
         bot.setMinDistanceToActivate(Bot.DEFAULT_BOT_DISTANCE_TO_ACTIVATE * 1.3);
-        bot.setColor("OLIVE");
+        bot.setColor("GREENYELLOW");
         bot.setHealth(bot.getMaxHealth());
         bot.setName(DataUtils.getRandomName());
         return bot;
@@ -40,7 +40,7 @@ public class BotFactory implements MyFactory<Bot> {
         bot.setDamage(Bot.DEFAULT_BOT_DAMAGE * 1.2);
         bot.setSpeed(Bot.DEFAULT_BOT_SPEED * 0.6);
         bot.setMinDistanceToActivate(Bot.DEFAULT_BOT_DISTANCE_TO_ACTIVATE * 1.3);
-        bot.setColor("FORESTGREEN");
+        bot.setColor("CHARTREUSE");
         bot.setHealth(bot.getMaxHealth());
         bot.setName(DataUtils.getRandomName());
         return bot;
@@ -53,7 +53,7 @@ public class BotFactory implements MyFactory<Bot> {
         bot.setDamage(Bot.DEFAULT_BOT_DAMAGE);
         bot.setSpeed(Bot.DEFAULT_BOT_SPEED);
         bot.setMinDistanceToActivate(Bot.DEFAULT_BOT_DISTANCE_TO_ACTIVATE * 0.8);
-        bot.setColor("LAWNGREEN");
+        bot.setColor("AQUA");
         bot.setHealth(bot.getMaxHealth());
         bot.setName(DataUtils.getRandomName());
         return bot;

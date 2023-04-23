@@ -160,11 +160,26 @@ public class GameViewController implements Initializable {
                         printMiniMap(Collections.singletonList(MY_HERO_FX));
 //                        hudPane.getChildren().clear();
                         Label label = new Label("SCORE: " + MY_HERO_FX.getScore());
-                        label.setLayoutX(854 );
-                        label.setLayoutY(65 );
+                        label.setLayoutX(854);
+                        label.setLayoutY(65);
                         label.toFront();
                         label.setTranslateZ(4);
                         miniMapPane.getChildren().add(label);
+
+                        Rectangle healthRectangle1 = new Rectangle();
+                        healthRectangle1.setLayoutX(267);
+                        healthRectangle1.setLayoutY(97);
+                        healthRectangle1.setWidth(376);
+                        healthRectangle1.setHeight(21);
+                        healthRectangle1.setFill(Color.BLACK);
+                        Rectangle healthRectangle = new Rectangle();
+                        healthRectangle.setLayoutX(270);
+                        healthRectangle.setLayoutY(100);
+                        healthRectangle.setWidth(370 * MY_HERO_FX.getHealth() / MY_HERO_FX.getMaxHealth());
+                        healthRectangle.setHeight(15);
+                        healthRectangle.setFill(Color.GREEN);
+                        miniMapPane.getChildren().add(healthRectangle1);
+                        miniMapPane.getChildren().add(healthRectangle);
                     });
                 } catch (Throwable error) {
                     error.printStackTrace();

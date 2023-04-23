@@ -57,7 +57,7 @@ public class HeroFX extends Hero implements AliveFx {
 
 
     public void print(Pane pane) {
-        if (animationType == null){
+        if (animationType == null) {
             animationType = Hero.WALK;
         }
         imageView.setLayoutX(getPosX());
@@ -65,17 +65,19 @@ public class HeroFX extends Hero implements AliveFx {
         imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
         imageView.setTranslateZ(1);
 
-        healthRectangle.setLayoutX(getPosX());
-        healthRectangle.setLayoutY(getPosY() - 10.0d);
-        healthRectangle.setWidth(getWidth() * getHealth() / getMaxHealth());
-        healthRectangle.setHeight(4);
-        healthRectangle.setFill(Color.RED);
+        if (!getName().equalsIgnoreCase(MY_HERO_FX.getName())) {
+            healthRectangle.setLayoutX(getPosX());
+            healthRectangle.setLayoutY(getPosY() - 10.0d);
+            healthRectangle.setWidth(getWidth() * getHealth() / getMaxHealth());
+            healthRectangle.setHeight(4);
+            healthRectangle.setFill(Color.RED);
 
-        damageRectangle.setLayoutX(getPosX());
-        damageRectangle.setLayoutY(getPosY() - 5.0d);
-        damageRectangle.setWidth(getWidth() * getDamage() / getMaxHealth() * 20);
-        damageRectangle.setHeight(4);
-        damageRectangle.setFill(Color.DARKVIOLET);
+            damageRectangle.setLayoutX(getPosX());
+            damageRectangle.setLayoutY(getPosY() - 5.0d);
+            damageRectangle.setWidth(getWidth() * getDamage() / getMaxHealth() * 20);
+            damageRectangle.setHeight(4);
+            damageRectangle.setFill(Color.DARKVIOLET);
+        }
 
         label.setText(getName());
         label.setPrefWidth(getWidth());
