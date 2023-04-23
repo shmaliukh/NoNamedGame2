@@ -1,3 +1,6 @@
+.background {
+    -fx-background-image: url('../images/starBackGround.jpeg');
+}
 
 .yellow {
     -fx-background-color:

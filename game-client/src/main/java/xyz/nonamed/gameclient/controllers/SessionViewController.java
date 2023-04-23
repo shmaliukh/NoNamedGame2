@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +63,9 @@ public class SessionViewController implements Initializable {
     private final TableColumn<SessionData, String> colName = new TableColumn<>("Гравці");
     private final TableColumn<SessionData, Integer> colMaxUsers = new TableColumn<>("Ліміт гравців");
     private final TableColumn<SessionData, Integer> colActiveUsers = new TableColumn<>("На сервері");
+    public HBox groupHBox;
+    public Group createSessionELementsGroup;
+    public Group sessionAvailableTable;
     TableColumn<SessionData, Void> colBtn = new TableColumn<>("");
 
     static UserHandler userHandler = new UserHandler();
@@ -86,6 +90,15 @@ public class SessionViewController implements Initializable {
         fillTableDataFromServer();
 
 
+
+        groupHBox.getChildren().remove(sessionAvailableTable);
+
+
+    }
+
+    @FXML
+    public void onMouseMovedEntered() {
+        ClientApplication.playButtonEnteredSound();
     }
 
 
@@ -285,6 +298,22 @@ public class SessionViewController implements Initializable {
 
         activeSessionInfoTable.getColumns().add(colBtn);
 
+    }
+
+    public void onButtonCreateNewSession(){
+        ClientApplication.playButtonClickSound();
+        if (!groupHBox.getChildren().contains(createSessionELementsGroup)){
+            groupHBox.getChildren().add(createSessionELementsGroup);
+            groupHBox.getChildren().remove(sessionAvailableTable);
+        }
+    }
+
+    public void onButtonChooseFromSession(){
+        ClientApplication.playButtonClickSound();
+        if (!groupHBox.getChildren().contains(sessionAvailableTable)){
+            groupHBox.getChildren().add(sessionAvailableTable);
+            groupHBox.getChildren().remove(createSessionELementsGroup);
+        }
     }
 
     @FXML

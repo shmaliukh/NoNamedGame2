@@ -5,9 +5,10 @@ import lombok.*;
 import xyz.nonamed.utils.DataUtils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static xyz.nonamed.dto.Hero.STOP;
 import static xyz.nonamed.dto.Hero.WALK;
 
 @Entity
@@ -28,8 +29,8 @@ public class Bot {
 
     public static final double DEFAULT_BOT_MAX_HEALTH = 500;
     public static final double DEFAULT_BOT_DAMAGE = DEFAULT_BOT_MAX_HEALTH / 100;
-    public static final double DEFAULT_BOT_SPEED = 1;
-    public static final double DEFAULT_BOT_DISTANCE_TO_ACTIVATE = 200;
+    public static final double DEFAULT_BOT_SPEED = 3;
+    public static final double DEFAULT_BOT_DISTANCE_TO_ACTIVATE = 350;
 
     public static final String BOT_1 = "bot_1";
     public static final String BOT_2 = "bot_2";
@@ -47,6 +48,16 @@ public class Bot {
             BOT_5,
             BOT_6
     );
+
+    public static Map<String, Integer> botTypeScoreMap = new HashMap<>();
+    static {
+        botTypeScoreMap.put(BOT_1, 50);
+        botTypeScoreMap.put(BOT_2, 60);
+        botTypeScoreMap.put(BOT_3, 75);
+        botTypeScoreMap.put(BOT_4, 45);
+        botTypeScoreMap.put(BOT_5, 55);
+        botTypeScoreMap.put(BOT_6, 40);
+    }
 
     public Bot(Bot bot) {
         this.id = bot.id;

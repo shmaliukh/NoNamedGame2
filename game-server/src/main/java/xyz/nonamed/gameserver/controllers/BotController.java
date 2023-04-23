@@ -2,10 +2,7 @@ package xyz.nonamed.gameserver.controllers;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.nonamed.dto.Bot;
 import xyz.nonamed.gameserver.services.BotService;
 
@@ -24,6 +21,13 @@ public class BotController {
                                 @PathVariable("sessionCode") String sessionCode) {
         // TODO add check if user is active
         return botService.getBotListBySessionCode(sessionCode);
+    }
+
+    @PostMapping("/{userName}/{sessionCode}/postUpdateBot")
+    public Bot postUpdateBot(@RequestBody Bot bot,
+                                   @PathVariable("userName") String userName,
+                                   @PathVariable("sessionCode") String sessionCode) {
+        return botService.postUpdateBot(bot, userName, sessionCode);
     }
 
 }

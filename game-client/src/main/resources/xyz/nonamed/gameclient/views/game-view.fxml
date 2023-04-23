@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="876.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.GameViewController">
+<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="876.0" prefWidth="1157.0" styleClass="background" stylesheets="@../styles/game-view-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.nonamed.gameclient.controllers.GameViewController">
    <children>
       <Pane fx:id="gamePane" layoutX="238.0" layoutY="258.0" prefHeight="1884.0" prefWidth="2624.0" styleClass="backgroundPane" stylesheets="@../styles/game-view-style.css" />
-      <Pane fx:id="miniMapPane" layoutX="10.0" layoutY="516.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #8D7471;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-      <Pane fx:id="hudPane" layoutX="160.0" layoutY="566.0" prefHeight="100.0" prefWidth="695.0" style="-fx-background-color: #8D7471; -fx-background-radius: 50;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" />
+      <Pane fx:id="hudPane" layoutX="160.0" layoutY="566.0" prefHeight="100.0" prefWidth="695.0" style="-fx-background-color: transparent; -fx-background-radius: 50;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Group>
+               <children>
+                  <ImageView fitHeight="158.0" fitWidth="1076.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/gameViewImages/hud.png" />
+                     </image>
+                  </ImageView>
+                  <Pane fx:id="miniMapPane" layoutX="25.0" layoutY="19.0" prefHeight="115.0" prefWidth="202.0" style="-fx-background-color: #8D7471;" />
+               </children>
+            </Group>
+         </children>
+      </HBox>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="339.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
             <VBox alignment="CENTER" prefHeight="44.0" prefWidth="158.0">
                <children>
-                  <Label text="Your name: ">
+                  <Label text="Your name: " textFill="WHITE">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <Label text="Session code: ">
+                  <Label text="Session code: " textFill="WHITE">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -31,12 +47,12 @@
             </VBox>
             <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="266.0">
                <children>
-                  <Label fx:id="userNameTextLabel" text="name">
+                  <Label fx:id="userNameTextLabel" text="name" textFill="WHITE">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Label fx:id="codeTextLabel" text="code">
+                  <Label fx:id="codeTextLabel" text="code" textFill="WHITE">
                      <font>
                         <Font size="25.0" />
                      </font>

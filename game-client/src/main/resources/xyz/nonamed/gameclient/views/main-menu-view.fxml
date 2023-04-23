@@ -20,54 +20,72 @@
    <children>
       <VBox alignment="CENTER" layoutX="273.0" layoutY="26.0" prefHeight="399.0" prefWidth="840.0" spacing="40.0" styleClass="backgroundVBox" stylesheets="@../styles/main-menu-view-style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="161.0" prefWidth="1300.0">
                <children>
-                  <TextField fx:id="userNameTextField" alignment="BOTTOM_CENTER" onKeyTyped="#onChangeUserNameTextField" onMouseEntered="#onMouseMovedEntered" prefHeight="124.0" prefWidth="402.0" stylesheets="@../styles/main-menu-view-style.css" text="player">
-                     <font>
-                        <Font size="65.0" />
-                     </font>
-                     <effect>
-                        <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
-                           <color>
-                              <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
-                           </color>
-                           <input>
-                              <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                  <Group>
+                     <children>
+                        <ImageView fx:id="usernameImage" fitHeight="146.0" fitWidth="413.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/buttonBasic.gif" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="userNameTextField" alignment="TOP_CENTER" layoutX="4.0" layoutY="30.0" onKeyTyped="#onChangeUserNameTextField" onMouseEntered="#onUsernameFieldMouseEntered" onMouseExited="#onUsernameFieldMouseExited" prefHeight="124.0" prefWidth="402.0" styleClass="textUserName" stylesheets="@../styles/main-menu-view-style.css" text="player">
+                           <font>
+                              <Font size="65.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                                  <color>
                                     <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
                                  </color>
                                  <input>
-                                    <Reflection fraction="0.25" />
+                                    <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                                       <color>
+                                          <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                                       </color>
+                                       <input>
+                                          <Reflection fraction="0.25" />
+                                       </input>
+                                    </InnerShadow>
                                  </input>
-                              </InnerShadow>
-                           </input>
-                        </DropShadow>
-                     </effect>
-                  </TextField>
+                              </DropShadow>
+                           </effect>
+                        </TextField>
+                     </children>
+                  </Group>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button id="button" fx:id="newGameButton" defaultButton="true" mnemonicParsing="false" onAction="#onNewGameButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Нова гра">
-                     <effect>
-                        <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
-                           <color>
-                              <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
-                           </color>
-                           <input>
-                              <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                  <Group>
+                     <children>
+                        <ImageView fx:id="imageStartButton" fitHeight="72.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/buttonBasic.gif" />
+                           </image>
+                        </ImageView>
+                        <Button id="button" fx:id="newGameButton" defaultButton="true" mnemonicParsing="false" onAction="#onNewGameButtonClick" onMouseEntered="#onMouseMovedEntered" onMousePressed="#onStartGamePressed" onMouseReleased="#onStartGameReleased" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Нова гра">
+                           <effect>
+                              <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                                  <color>
                                     <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
                                  </color>
                                  <input>
-                                    <Reflection fraction="0.25" />
+                                    <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                                       <color>
+                                          <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                                       </color>
+                                       <input>
+                                          <Reflection fraction="0.25" />
+                                       </input>
+                                    </InnerShadow>
                                  </input>
-                              </InnerShadow>
-                           </input>
-                        </DropShadow>
-                     </effect>
-                  </Button>
+                              </DropShadow>
+                           </effect>
+                        </Button>
+                     </children>
+                  </Group>
                   <Group>
                      <children>
                         <ImageView fx:id="choosenNetworkServerImageView" fitHeight="150.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
@@ -80,55 +98,75 @@
                   </Group>
                </children>
             </HBox>
-            <Button fx:id="settingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Сетінги">
-            <effect>
-               <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
-                  <color>
-                     <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
-                  </color>
-                  <input>
-                     <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+            <Group>
+               <children>
+                  <ImageView fx:id="imageSettingsButton" fitHeight="72.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/buttonBasic.gif" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="settingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsButtonClick" onMouseEntered="#onMouseMovedEntered" onMousePressed="#onSettingGamePressed" onMouseReleased="#onSettingGameReleased" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Сетінги">
+                  <effect>
+                     <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                         <color>
                            <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
                         </color>
                         <input>
-                           <Reflection fraction="0.25" />
+                           <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                              <color>
+                                 <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                              </color>
+                              <input>
+                                 <Reflection fraction="0.25" />
+                              </input>
+                           </InnerShadow>
                         </input>
-                     </InnerShadow>
-                  </input>
-               </DropShadow>
-            </effect></Button>
-
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseEntered="#onMouseMovedEntered" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Вихід">
-               <effect>
-                  <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
-                     <color>
-                        <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
-                     </color>
-                     <input>
-                        <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                     </DropShadow>
+                  </effect>
+                  </Button>
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <ImageView fx:id="imageExitButton" fitHeight="72.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/buttonBasic.gif" />
+                     </image>
+                  </ImageView>
+      
+                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseEntered="#onMouseMovedEntered" onMousePressed="#onExitGamePressed" onMouseReleased="#onExitGameReleased" prefHeight="72.0" prefWidth="200.0" styleClass="text" stylesheets="@../styles/main-menu-view-style.css" text="Вихід">
+                     <effect>
+                        <DropShadow height="255.0" radius="127.0" spread="0.6" width="255.0">
                            <color>
                               <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
                            </color>
                            <input>
-                              <Reflection fraction="0.25" />
+                              <InnerShadow choke="0.6" height="60.0" radius="29.5" width="60.0">
+                                 <color>
+                                    <Color red="0.364705890417099" green="0.07450980693101883" blue="0.6078431606292725" />
+                                 </color>
+                                 <input>
+                                    <Reflection fraction="0.25" />
+                                 </input>
+                              </InnerShadow>
                            </input>
-                        </InnerShadow>
-                     </input>
-                  </DropShadow>
-               </effect>
-               <opaqueInsets>
-                  <Insets top="20.0" />
-               </opaqueInsets></Button>
+                        </DropShadow>
+                     </effect>
+                     <opaqueInsets>
+                        <Insets top="20.0" />
+                     </opaqueInsets>
+                  </Button>
+               </children>
+            </Group>
          </children>
       </VBox>
       <ImageView fx:id="infoButton" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#onInfoButtonClick" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <image>
-            <Image url="@../images/mainMenuImages/programInfoButton.png" />
+            <Image url="@../images/mainMenuImages/programInfoButton.gif" />
          </image></ImageView>
       <ImageView fx:id="volumeFastSwitchButton" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#onFastVolumeSwitchButtonClick" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="150.0">
          <image>
-            <Image url="@../images/mainMenuImages/soundInfoButtonON.png" />
+            <Image url="@../images/mainMenuImages/SoundON.gif" />
          </image></ImageView>
       <ImageView fx:id="localServerStatusImage" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
          <image>
@@ -138,9 +176,9 @@
          <image>
             <Image url="@../images/mainMenuImages/globalhostAvailable.gif" />
          </image></ImageView>
-      <ImageView fx:id="refreshServerStatusButton" fitHeight="100.0" fitWidth="100.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#onRefreshServerStatus" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="280.0">
+      <ImageView fx:id="refreshServerStatusButton" fitHeight="100.0" fitWidth="100.0" layoutX="20.0" layoutY="20.0" onMouseEntered="#onMouseMovedEntered" onMousePressed="#onRefreshButtonPressed" onMouseReleased="#onRefreshServerStatusReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="280.0">
          <image>
-            <Image url="@../images/mainMenuImages/refreshServerConnection.png" />
+            <Image url="@../images/mainMenuImages/refreshServerConnection.gif" />
          </image></ImageView>
    </children>
 </AnchorPane>

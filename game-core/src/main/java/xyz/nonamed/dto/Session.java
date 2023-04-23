@@ -13,7 +13,7 @@ public class Session {
 
     public static final boolean DEFAULT_SESSION_IS_VISIBLE = true;
     public static final int DEFAULT_SESSION_MAX_USERS = 4;
-    public static final int DEFAULT_SESSION_USER_COUNTER = 1;
+    public static final int DEFAULT_SESSION_USER_COUNTER = 0;
     public static final int DEFAULT_SESSION_MAX_BOTS = 50; // TODO
 
     @Id

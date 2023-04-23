@@ -12,6 +12,7 @@ public class HeroFactory implements MyFactory<Hero> {
             case Hero.HERO_1 -> createHero1();
             case Hero.HERO_2 -> createHero2();
             case Hero.HERO_3 -> createHero3();
+            case Hero.HERO_4 -> createHero4();
             default -> createHero3();
         };
     }
@@ -48,6 +49,18 @@ public class HeroFactory implements MyFactory<Hero> {
         hero.color = "DARKORCHID";
         return hero;
     }
+
+    private Hero createHero4() {
+        Hero hero = new Hero();
+        hero.type = Hero.HERO_4;
+        hero.damage = Hero.DEFAULT_HERO_DAMAGE * 0.95;
+        hero.maxHealth = Hero.DEFAULT_HERO_MAX_HEALTH * 1.1;
+        hero.speed = Hero.DEFAULT_HERO_SPEED * 1.3;
+        hero.health = hero.maxHealth;
+        hero.color = "GREEN";
+        return hero;
+    }
+
 
     public List<String> getTypeList() {
         return new ArrayList<>(Hero.heroTypeList);

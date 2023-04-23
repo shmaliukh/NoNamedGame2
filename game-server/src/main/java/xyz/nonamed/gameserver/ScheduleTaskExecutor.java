@@ -38,7 +38,7 @@ public class ScheduleTaskExecutor {
     final SessionService sessionService;
     final WorldService worldService;
 
-    @Scheduled(fixedDelay = 20)
+    @Scheduled(fixedDelay = 50)
     public void moveBots() {
         sessionService.readAllSessions().stream()
                 .filter(Session::isRun)
@@ -121,8 +121,9 @@ public class ScheduleTaskExecutor {
             botService.addNewBotToSession(bot, session.getSessionCode());
             session.setBotCounter(session.getBotCounter() + 1);
             sessionService.save(session);
+            log.info("generated bot to session: '{}'", session);
         } else {
-            log.info("generated max bot quantity '{}' // session: '{}'", session.getBotCounter(), session);
+            log.debug("generated max bot quantity '{}' // session: '{}'", session.getBotCounter(), session);
         }
     }
 
@@ -133,6 +134,7 @@ public class ScheduleTaskExecutor {
 
     public static Optional<Hero> getTheClosestHero(List<Hero> heroEntities, Bot bot) {
         return heroEntities.stream()
+                .filter(hero -> !hero.isDead())
                 .filter(o -> getDistance(new Point(o.posX, o.posY), new Point(bot.posX, bot.posY)) < bot.getMinDistanceToActivate())
                 .findFirst();
     }

@@ -50,33 +50,21 @@ public class GameObjectService {
         GameObjectFactory gameObjectFactory = new GameObjectFactory();
         List<String> typeList = gameObjectFactory.getTypeList();
 
-        double prevX = 0;
-        double prevY = 0;
-        double maxX = 1200;
-        double maxY = 1200;
-        for (int x = 0; x < world.getWidth(); x += 1200) {
-            for (int y = 0; y < world.getHeight(); y += 1200) {
-                if (x >= 0 && x < 1000
-                        && y >= 0 && y < 1000) {
-                    // TODO hero spawn
-                } else {
-//                while (prevY < 1200){
-                    if (random.nextInt(100) > 33) {
-                        GameObject gameObject = gameObjectFactory.create(typeList.get(random.nextInt(typeList.size())));
-
-                        gameObject.setPosX(x);
-                        gameObject.setPosY(y);
-//                        y += gameObject.getHeight();
-//                        prevY = y;
-
-                        gameObjects.add(addNewGameObjectToSession(gameObject, sessionCode));
-//                        log.info("generated game object: '{}'", gameObject);
-//                    }
-                    }
+        for (int x = 0; x < world.getWidth() - 1800; x += 400) {
+            for (int y = 0; y < world.getHeight() - 1000; y += 400) {
+                GameObject gameObject = gameObjectFactory.create(typeList.get(random.nextInt(typeList.size())));
+                if (gameObject.getWidth() > 400) {
+                    x += gameObject.getWidth() - 400;
                 }
-
+                if (gameObject.getHeight() > 400) {
+                    y += gameObject.getHeight() - 400;
+                }
+                gameObject.setPosX(x + random.nextInt(400));
+                gameObject.setPosY(y + random.nextInt(400));
+                gameObjects.add(addNewGameObjectToSession(gameObject, sessionCode));
             }
         }
+
         return gameObjects;
     }
 

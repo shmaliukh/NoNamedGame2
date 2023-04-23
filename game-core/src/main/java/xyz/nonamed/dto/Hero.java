@@ -21,8 +21,8 @@ public class Hero {
     public static final double DEFAULT_HERO_WIDTH = 128;
 
     public static final double DEFAULT_HERO_MAX_HEALTH = 1000;
-    public static final double DEFAULT_HERO_DAMAGE = 10;
-    public static final double DEFAULT_HERO_SPEED = 50;
+    public static final double DEFAULT_HERO_DAMAGE = 15;
+    public static final double DEFAULT_HERO_SPEED = 5;
 
 
     public static final String HERO_1 = "hero_1";
@@ -59,6 +59,8 @@ public class Hero {
         this.type = hero.type;
         this.color = hero.color;
         this.animationType = hero.animationType;
+        this.isDead = hero.isDead;
+        this.score = hero.score;
     }
 
     @Id
@@ -84,5 +86,8 @@ public class Hero {
     public String type = DEFAULT_HERO_TYPE;
     public String color;
     public String animationType = STOP;
+    public boolean isDead = false;
+
+    public int score = 0;
 
 }
