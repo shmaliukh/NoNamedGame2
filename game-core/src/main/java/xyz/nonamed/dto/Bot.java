@@ -30,7 +30,7 @@ public class Bot {
     public static final double DEFAULT_BOT_MAX_HEALTH = 500;
     public static final double DEFAULT_BOT_DAMAGE = DEFAULT_BOT_MAX_HEALTH / 100;
     public static final double DEFAULT_BOT_SPEED = 3;
-    public static final double DEFAULT_BOT_DISTANCE_TO_ACTIVATE = 350;
+    public static final double DEFAULT_BOT_DISTANCE_TO_ACTIVATE = 500;
 
     public static final String BOT_1 = "bot_1";
     public static final String BOT_2 = "bot_2";

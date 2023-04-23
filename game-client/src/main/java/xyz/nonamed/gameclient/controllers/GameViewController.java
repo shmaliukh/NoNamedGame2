@@ -10,6 +10,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -40,12 +42,15 @@ import static xyz.nonamed.dto.Hero.STOP;
 import static xyz.nonamed.dto.Hero.WALK;
 import static xyz.nonamed.gameclient.ClientApplication.mainStage;
 import static xyz.nonamed.gameclient.config.UserParam.USER_HERO;
+import static xyz.nonamed.gameclient.controllers.SessionViewController.*;
 import static xyz.nonamed.gameclient.controllers.StaticData.*;
 
 /**
  * @author artem1018
  */
 public class GameViewController implements Initializable {
+
+    static ImageView shipImage = new ImageView(new Image(Objects.requireNonNull(HeroFX.class.getResource("/xyz/nonamed/gameclient/images/ship.png")).toString()));
 
     public static final int BOT_PERIOD = 100;
     public AnchorPane mainView;
@@ -60,8 +65,6 @@ public class GameViewController implements Initializable {
     public static List<BotFX> botFXList = new ArrayList<>();
     static List<HeroFX> heroFXList = new ArrayList<>();
     static List<BorerFX> borerFXList = new ArrayList<>();
-
-    static HeroHandler heroHandler = new HeroHandler();
 
     static Timer timer1 = new Timer();
     static Timer timer2 = new Timer();
@@ -78,6 +81,7 @@ public class GameViewController implements Initializable {
             botFXList = new ArrayList<>();
             heroFXList = new ArrayList<>();
             gameObjectFXList = new ArrayList<>();
+
             setInfoPanelValues();
             setScreenSize();
             initGameSettings();
@@ -88,9 +92,14 @@ public class GameViewController implements Initializable {
 
             borerFXList = new BorerHandler().getBorerList(UserParam.USERNAME, UserParam.SESSION_CODE).stream()
                     .map(BorerFX::new)
-                    .collect(Collectors.toList()); // TODO
+                    .collect(Collectors.toList());
             WORLD_FX.addToPane(gamePane);
             WORLD_FX.print(gamePane);
+
+            shipImage.setLayoutX(-150);
+            shipImage.setLayoutY(-250);
+            gamePane.getChildren().add(shipImage);
+
             MY_HERO_FX.addToPane(gamePane);
             MY_HERO_FX.print(gamePane);
 
@@ -210,12 +219,16 @@ public class GameViewController implements Initializable {
         @Override
         public void run() {
             try {
-                if(MY_HERO_FX.isDead()){
+                if (MY_HERO_FX.isDead()) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Result");
                         alert.setHeaderText("RESULT");
-                        alert.setContentText("Your result is: " + MY_HERO_FX.getScore());
+                        StringBuilder resultStr = new StringBuilder("Your result is: " + MY_HERO_FX.getScore() + System.lineSeparator());
+                        for (HeroFX heroFX : heroFXList) {
+                            resultStr.append(heroFX.getName()).append(": ").append(heroFX.getScore()).append(System.lineSeparator());
+                        }
+                        alert.setContentText(resultStr.toString());
                         alert.showAndWait();
                         ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
                     });
@@ -302,8 +315,13 @@ public class GameViewController implements Initializable {
         }
 
         private void updateMyHero(List<Hero> serverHeroeList) {
+            if (STOP.equalsIgnoreCase(MY_HERO_FX.getAnimationType()) && MY_HERO_FX.getHealth() < MY_HERO_FX.getMaxHealth()) {
+                MY_HERO_FX.setHealth(MY_HERO_FX.getHealth() + MY_HERO_FX.getMaxHealth() * 0.0001);
+            }
             Hero hero1 = heroHandler.postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
-            MY_HERO_FX.setScore(hero1.getScore());
+            if (hero1 != null) {
+                MY_HERO_FX.setScore(hero1.getScore());
+            }
             Optional<Hero> optionalHero = serverHeroeList.stream().filter(hero -> Objects.equals(MY_HERO_FX.getId(), hero.getId())).findFirst();
             optionalHero.ifPresent(serverHeroeList::remove);
         }
@@ -456,6 +474,7 @@ public class GameViewController implements Initializable {
                 wrapPlayer();
                 MY_HERO_FX.setAnimationType(WALK);
                 MY_HERO_FX.print(gamePane);
+//                MY_HERO_FX.setAnimationType(STOP);
             }
         };
 
@@ -464,6 +483,10 @@ public class GameViewController implements Initializable {
 //            mainStage.removeEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
 //        } catch (Throwable throwable) {
 //        }
+//        EventDispatcher dispatcher = mainStage.getEventDispatcher();
+//        mainStage.getScene().
+//        dispatcher.
+//        mainStage.getEventDispatcher().clear();
 
         mainStage.addEventHandler(KeyEvent.KEY_PRESSED, heroActionHandler);
         mainStage.addEventHandler(KeyEvent.KEY_RELEASED, heroActionHandler);
@@ -541,16 +564,18 @@ public class GameViewController implements Initializable {
     private static void initGameSettings() {
         try {
             USER_HERO = new Hero();
-
-
             UserHandler userHandler = new UserHandler();
             SessionHandler sessionHandler = new SessionHandler();
 
-            UserEntity user = userHandler.postRegisterUser(UserParam.USERNAME);
-            sessionHandler.postConnectUserToSession(UserParam.USERNAME, UserParam.SESSION_CODE);
+            userHandler.postRegisterUser(UserParam.USERNAME);
+            SESSION = new Session();
+            SESSION.setSessionCode(UserParam.SESSION_CODE);
+            SESSION.setVisible(isSessionVisible);
+            SESSION.setMaxUser(maxUserForSession);
+            SESSION = sessionHandler.postConnectUserToSession(SESSION, UserParam.USERNAME, UserParam.SESSION_CODE);
             USER_HERO.setName(UserParam.USERNAME);
             USER_HERO.setType(UserParam.HERO_TYPE);
-            MY_HERO_FX = new HeroFX(heroHandler.postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
+            MY_HERO_FX = new HeroFX(new HeroHandler().postRegisterHero(USER_HERO, UserParam.USERNAME, UserParam.SESSION_CODE)); // need to update our hero stats from server
             if (MY_HERO_FX == null) {
                 System.out.println("problem to connect to session");
                 // TODO changeScreen();
