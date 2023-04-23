@@ -93,6 +93,7 @@ public class SessionViewController implements Initializable {
 
         groupHBox.getChildren().remove(sessionAvailableTable);
 
+
     }
 
     @FXML

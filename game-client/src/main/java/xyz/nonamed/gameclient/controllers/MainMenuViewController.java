@@ -54,7 +54,7 @@ public class MainMenuViewController implements Initializable {
 
         addFilterToUserInputFields();
 
-        onRefreshServerStatus();
+        onRefreshServerStatusReleased();
 
     }
 
@@ -133,8 +133,9 @@ public class MainMenuViewController implements Initializable {
 
 
     @FXML
-    public void onRefreshServerStatus() {
+    public void onRefreshServerStatusReleased() {
         new Thread(() -> {
+            refreshServerStatusButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/refr.gif"));
             ClientApplication.playButtonClickSound();
             IsAliveServerHandler isAliveServerHandler = new IsAliveServerHandler();
 
@@ -154,6 +155,12 @@ public class MainMenuViewController implements Initializable {
             }
         }).start();
     }
+
+    @FXML
+    public void onRefreshButtonPressed(){
+        refreshServerStatusButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/refpress.gif"));
+
+    }
     
     public void onFastVolumeSwitchButtonClick(){
         ClientApplication.playButtonClickSound();
@@ -162,7 +169,7 @@ public class MainMenuViewController implements Initializable {
             SoundParam.BACKGROUND_VOLUME = SoundParam.LAST_BACKGROUND_VOLUME;
             SoundParam.ELEMENT_VOLUME = SoundParam.LAST_ELEMENT_VOLUME;
             SoundParam.GAME_VOLUME = SoundParam.LAST_GAME_VOLUME;
-            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonON.png"));
+            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/SoundON.gif"));
         }else {
             SoundParam.LAST_BACKGROUND_VOLUME = SoundParam.BACKGROUND_VOLUME;
             SoundParam.BACKGROUND_VOLUME = 0;
@@ -170,7 +177,7 @@ public class MainMenuViewController implements Initializable {
             SoundParam.ELEMENT_VOLUME = 0;
             SoundParam.LAST_GAME_VOLUME = SoundParam.GAME_VOLUME;
             SoundParam.GAME_VOLUME = 0;
-            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/soundInfoButtonOFF.png"));
+            volumeFastSwitchButton.setImage(new Image("xyz/nonamed/gameclient/images/mainMenuImages/SoundOff.gif"));
         }
 
         backgroundMusic.stop();

@@ -23,9 +23,18 @@ public class GameObject {
     public static final String GAME_OBJECT_7 = "home3";
     public static final String GAME_OBJECT_8 = "home4";
 
-    public static final String GAME_OBJECT_9 = "home6";
-    public static final String GAME_OBJECT_10 = "home6";
-    public static final String GAME_OBJECT_11 = "home6";
+    public static final String GAME_OBJECT_9 = "bord1";
+    public static final String GAME_OBJECT_10 = "bord2";
+    public static final String GAME_OBJECT_11 = "bord3";
+    public static final String GAME_OBJECT_12 = "car1";
+    public static final String GAME_OBJECT_13 = "car2";
+    public static final String GAME_OBJECT_14 = "server1";
+    public static final String GAME_OBJECT_15 = "server2";
+    public static final String GAME_OBJECT_16 = "barrel";
+    public static final String GAME_OBJECT_17 = "box";
+    public static final String GAME_OBJECT_18 = "luckybox";
+    public static final String GAME_OBJECT_19 = "nlo";
+    public static final String GAME_OBJECT_20 = "solar";
 
     public static final String DEFAULT_GAME_OBJECT_TYPE = GAME_OBJECT_1;
 
@@ -37,7 +46,17 @@ public class GameObject {
             GAME_OBJECT_5,
             GAME_OBJECT_6,
             GAME_OBJECT_7,
-            GAME_OBJECT_8
+            GAME_OBJECT_8,
+            GAME_OBJECT_9,
+            GAME_OBJECT_10,
+            GAME_OBJECT_11,
+            GAME_OBJECT_12,
+            GAME_OBJECT_13,
+            GAME_OBJECT_14,
+            GAME_OBJECT_15,
+            GAME_OBJECT_16,
+            GAME_OBJECT_17,
+            GAME_OBJECT_18
     );
 
     @Id

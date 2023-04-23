@@ -124,11 +124,11 @@
       </VBox>
       <ImageView fx:id="infoButton" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#onInfoButtonClick" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <image>
-            <Image url="@../images/mainMenuImages/programInfoButton.png" />
+            <Image url="@../images/mainMenuImages/programInfoButton.gif" />
          </image></ImageView>
       <ImageView fx:id="volumeFastSwitchButton" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#onFastVolumeSwitchButtonClick" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="150.0">
          <image>
-            <Image url="@../images/mainMenuImages/soundInfoButtonON.png" />
+            <Image url="@../images/mainMenuImages/SoundON.gif" />
          </image></ImageView>
       <ImageView fx:id="localServerStatusImage" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
          <image>
@@ -138,9 +138,9 @@
          <image>
             <Image url="@../images/mainMenuImages/globalhostAvailable.gif" />
          </image></ImageView>
-      <ImageView fx:id="refreshServerStatusButton" fitHeight="100.0" fitWidth="100.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#onRefreshServerStatus" onMouseEntered="#onMouseMovedEntered" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="280.0">
+      <ImageView fx:id="refreshServerStatusButton" fitHeight="100.0" fitWidth="100.0" layoutX="20.0" layoutY="20.0" onMouseEntered="#onMouseMovedEntered" onMousePressed="#onRefreshButtonPressed" onMouseReleased="#onRefreshServerStatusReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="280.0">
          <image>
-            <Image url="@../images/mainMenuImages/refreshServerConnection.png" />
+            <Image url="@../images/mainMenuImages/refreshServerConnection.gif" />
          </image></ImageView>
    </children>
 </AnchorPane>
