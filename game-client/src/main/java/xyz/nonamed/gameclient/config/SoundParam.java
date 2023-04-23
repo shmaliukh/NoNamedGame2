@@ -9,7 +9,7 @@ public class SoundParam {
     public static float LAST_BACKGROUND_VOLUME = 0;
     public static float ELEMENT_VOLUME = 0.7f;
     public static float LAST_ELEMENT_VOLUME = 0;
-    public static float GAME_VOLUME = 0.4f;
+    public static float GAME_VOLUME = 0.05f;
     public static float LAST_GAME_VOLUME = 0;
 
 

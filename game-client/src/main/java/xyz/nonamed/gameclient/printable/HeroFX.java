@@ -43,6 +43,11 @@ public class HeroFX extends Hero implements AliveFx {
         typeImageMap.put(HERO_3 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-3/hero3-walk.gif")).toString()));
         typeImageMap.put(HERO_3 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-3/hero3-attack-left.gif")).toString()));
         typeImageMap.put(HERO_3 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-3/hero3-attack-right.gif")).toString()));
+
+        typeImageMap.put(HERO_4 + STOP, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-4/hero4.gif")).toString()));
+        typeImageMap.put(HERO_4 + WALK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-4/hero4_walk.gif")).toString()));
+        typeImageMap.put(HERO_4 + LEFT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-4/hero4-attack-left.gif")).toString()));
+        typeImageMap.put(HERO_4 + RIGHT_ATTACK, new Image(Objects.requireNonNull(BotFX.class.getResource("/xyz/nonamed/gameclient/images/heroes/type-4/hero4-attack-right.gif")).toString()));
     }
 
     ImageView imageView = new ImageView();
@@ -63,9 +68,9 @@ public class HeroFX extends Hero implements AliveFx {
         imageView.setLayoutX(getPosX());
         imageView.setLayoutY(getPosY());
         imageView.setImage(typeImageMap.get(getType() + getAnimationType()));
-        imageView.setTranslateZ(1);
+        imageView.setTranslateZ(5);
 
-        if (!getName().equalsIgnoreCase(MY_HERO_FX.getName())) {
+        if (getName() == null || !getName().equalsIgnoreCase(MY_HERO_FX.getName())) {
             healthRectangle.setLayoutX(getPosX());
             healthRectangle.setLayoutY(getPosY() - 10.0d);
             healthRectangle.setWidth(getWidth() * getHealth() / getMaxHealth());
