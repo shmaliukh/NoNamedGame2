@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
@@ -67,6 +68,7 @@ public class GameViewController implements Initializable {
     static Timer timer3 = new Timer();
     static Timer timer4 = new Timer();
     static Timer timer5 = new Timer();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -208,6 +210,17 @@ public class GameViewController implements Initializable {
         @Override
         public void run() {
             try {
+                if(MY_HERO_FX.isDead()){
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Result");
+                        alert.setHeaderText("RESULT");
+                        alert.setContentText("Your result is: " + MY_HERO_FX.getScore());
+                        alert.showAndWait();
+                        ClientApplication.changeScreen("views/session-view.fxml", "Вибір сесії");
+                    });
+                    this.cancel();
+                }
                 heroHandler.postActions(new Actions(actionList), UserParam.USERNAME, UserParam.SESSION_CODE);
                 actionList = new ArrayList<>();
             } catch (Throwable error) {
@@ -360,7 +373,8 @@ public class GameViewController implements Initializable {
                                         MY_HERO_FX.setAnimationType(STOP);
                                         Hero hero = new HeroHandler().postUpdateHero(MY_HERO_FX, UserParam.USERNAME, UserParam.SESSION_CODE);
                                         MY_HERO_FX.setScore(hero.getScore());
-                                        // FIXME add alert
+
+
                                     }
                                     MY_HERO_FX.print(gamePane);
                                 });
